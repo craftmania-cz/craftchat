@@ -1,5 +1,4 @@
-name: GradleTemplate
+name: CraftChat
 version: 1.0.0
-description: Template for Gradle plugins
-author: MrWakeCZ
-main: cz.craftmania.template.Main
+author: Nerdy42
+main: cz.nerdy.craftchat.Main

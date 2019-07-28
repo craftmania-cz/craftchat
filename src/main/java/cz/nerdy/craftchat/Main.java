@@ -1,5 +1,7 @@
-package cz.craftmania.template;
+package cz.nerdy.craftchat;
 
+import cz.nerdy.craftchat.listeners.ChatListener;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
@@ -9,8 +11,11 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        // Instance
+        System.out.println("Loading CraftChat v" + this.getDescription().getVersion());
         instance = this;
+
+        Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
+
     }
 
     @Override
