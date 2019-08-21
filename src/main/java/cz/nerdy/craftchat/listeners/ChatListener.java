@@ -29,7 +29,7 @@ public class ChatListener implements Listener {
         TextComponent prefixComponent = new TextComponent(TextComponent.fromLegacyText(chatGroup.getPrefix()));
         String prefixTooltip = "";
         for (String line : chatGroup.getPrefixTooltip()){
-            prefixTooltip += line + "\n";
+            prefixTooltip += line + "§r\n";
         }
         prefixComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(prefixTooltip)));
 
@@ -37,7 +37,7 @@ public class ChatListener implements Listener {
         nameComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, chatGroup.getNameClickCommand()));
         String nickTooltip = "";
         for (String line : chatGroup.getNameTooltip()){
-            nickTooltip += line + "\n";
+            nickTooltip += line + "§r\n";
         }
         nameComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(nickTooltip)));
 
