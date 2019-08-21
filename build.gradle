@@ -23,16 +23,17 @@ repositories {
     mavenCentral()
     maven { url "https://packages.craftmania.cz/repository/craftmania/" }
     maven { url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
+    flatDir { dirs 'libs' }
 }
 
 dependencies {
     compileOnly ('org.spigotmc:spigot-api:1.14.4-R0.1-SNAPSHOT') {
         exclude group: 'net.md-5'
     }
+    compileOnly name: 'spigot-1.14.4'
 
     // CM Plugins
     compileOnly group: 'cz.craftmania.craftcore', name: 'craftcore', version: '2.2.1'
-    compileOnly group: 'cz.craftmania.craftlibs', name: 'craflibs', version: '1.0.1'
 
 
 }

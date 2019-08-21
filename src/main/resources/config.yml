@@ -1,1 +1,14 @@
 # Defaultni config
+groups:
+  groupka:
+    priority: 1
+    prefix: ''
+    suffix: ''
+    name_format: ''
+    chat_color: '&7'
+    prefix_tooltip:
+      - '1. radek'
+      - '2. radek'
+    name_tooltip:
+      - '§dNick: §f%player_name%'
+    name_click_command: '/pm %player_name%'
