@@ -1,6 +1,6 @@
 package cz.nerdy.craftchat.objects;
 
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ public class ChatGroup {
     private String prefix;
     private String suffix;
     private String nameFormat;
-    private String chatColor;
+    private ChatColor chatColor;
     private List<String> prefixTooltip;
     private List<String> nameTooltip;
     private String nameClickCommand;
@@ -21,7 +21,7 @@ public class ChatGroup {
         this.prefix = ChatColor.translateAlternateColorCodes('&', prefix);
         this.suffix =  ChatColor.translateAlternateColorCodes('&', suffix);
         this.nameFormat =  ChatColor.translateAlternateColorCodes('&', nameFormat);
-        this.chatColor =  ChatColor.translateAlternateColorCodes('&', chatColor);
+        this.chatColor =  ChatColor.valueOf(chatColor);
         List<String> tempList = new ArrayList<>();
         for (String line : prefixTooltip){
             tempList.add(ChatColor.translateAlternateColorCodes('&', line));
@@ -52,7 +52,7 @@ public class ChatGroup {
         return nameFormat;
     }
 
-    public String getChatColor() {
+    public ChatColor getChatColor() {
         return chatColor;
     }
 
