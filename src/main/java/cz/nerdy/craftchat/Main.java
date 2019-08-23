@@ -16,6 +16,7 @@ public class Main extends JavaPlugin {
     private static Main instance;
     private List<ChatGroup> chatGroups;
     private PluginCompatibility pluginCompatibility;
+    private ChatManager chatManager;
 
     @Override
     public void onEnable() {
@@ -29,6 +30,8 @@ public class Main extends JavaPlugin {
 
         this.getConfig().options().copyDefaults(true);
         this.saveConfig();
+
+        this.chatManager = new ChatManager();
 
         this.chatGroups = new ArrayList<>();
         this.loadChatGroups();
@@ -88,5 +91,9 @@ public class Main extends JavaPlugin {
             System.out.println("Group " + groupSection.getName() + " loaded (prefix=" + chatGroup.getPrefix() + ",suffix=" + chatGroup.getSuffix() + ")");
         }
 
+    }
+
+    public ChatManager getChatManager(){
+        return chatManager;
     }
 }

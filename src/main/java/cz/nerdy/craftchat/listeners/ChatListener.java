@@ -12,6 +12,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
+
 public class ChatListener implements Listener {
 
     @EventHandler
@@ -21,13 +23,24 @@ public class ChatListener implements Listener {
         }
 
         Player player = event.getPlayer();
+        String message = event.getMessage();
 
         ChatGroup chatGroup = Main.getInstance().getChatGroups().get(0); // TODO getnout podle hrace (CraftChatPlayer)
+
+
+        HashMap<String, String> replacements = Main.getInstance().getChatManager().getReplacements();
+        if (player.hasPermission("craftchat.replacements")) {
+            for (String replacement : replacements.keySet()) {
+                if (message.contains(replacement)) {
+                    message = message.replaceAll(replacement, replacements.get(replacement));
+                }
+            }
+        }
 
         TextComponent space = new TextComponent(TextComponent.fromLegacyText(" "));
 
         ComponentBuilder messageComponentBuilder = new ComponentBuilder("");
-        String[] parts = event.getMessage().split(" ");
+        String[] parts = message.split(" ");
         for (String part : parts) {
             TextComponent partComponent = new TextComponent(TextComponent.fromLegacyText(part));
             partComponent.setColor(chatGroup.getChatColor());
