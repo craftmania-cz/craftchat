@@ -2,9 +2,9 @@ package cz.nerdy.craftchat.listeners;
 
 import cz.nerdy.craftchat.Main;
 import cz.nerdy.craftchat.objects.ChatGroup;
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.*;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.libs.org.apache.commons.lang3.ArrayUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,7 +27,6 @@ public class ChatListener implements Listener {
 
         ChatGroup chatGroup = Main.getInstance().getChatGroups().get(0); // TODO getnout podle hrace (CraftChatPlayer)
 
-
         HashMap<String, String> replacements = Main.getInstance().getChatManager().getReplacements();
         if (player.hasPermission("craftchat.replacements")) {
             for (String replacement : replacements.keySet()) {
@@ -37,27 +36,23 @@ public class ChatListener implements Listener {
             }
         }
 
-        TextComponent space = new TextComponent(TextComponent.fromLegacyText(" "));
-
-        ComponentBuilder messageComponentBuilder = new ComponentBuilder("");
-        String[] parts = message.split(" ");
-        for (String part : parts) {
-            TextComponent partComponent = new TextComponent(TextComponent.fromLegacyText(part));
-            partComponent.setColor(chatGroup.getChatColor());
-
-            if (part.matches("^(?i)(:item:)$")) {
-                ItemStack handItem = player.getEquipment().getItemInMainHand();
-                if (handItem.hasItemMeta() && handItem.getItemMeta().hasDisplayName()) {
-                    partComponent = new TextComponent(TextComponent.fromLegacyText(part.replaceAll("(?i):item:", handItem.getItemMeta().getDisplayName())));
-                    partComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new BaseComponent[]{new TextComponent(Main.getInstance().getPluginCompatibility().convertItemStackToJson(handItem))}));
-                    partComponent.setItalic(true);
-                }
+        if (player.hasPermission("craftchat.color")) {
+            if (!player.hasPermission("craftchat.color.format")) {
+                message = message.replaceAll("(?i)&l", "");
+                message = message.replaceAll("(?i)&n", "");
+                message = message.replaceAll("(?i)&m", "");
+                message = message.replaceAll("(?i)&o", "");
+                message = message.replaceAll("(?i)&k", "");
             }
-
-            messageComponentBuilder.append(partComponent);
-            messageComponentBuilder.append(space);
+            if(player.hasPermission("craftchat.at")){
+                message = "&e" + message; // zluta barva default pro at
+            } else {
+                message = message.replaceAll("(?i)&e", "");
+            }
+            message = ChatColor.translateAlternateColorCodes('&', message);
         }
 
+        TextComponent space = new TextComponent(TextComponent.fromLegacyText(" "));
 
         TextComponent prefixComponent = new TextComponent(TextComponent.fromLegacyText(chatGroup.getPrefix()));
         String prefixTooltip = "";
@@ -76,8 +71,7 @@ public class ChatListener implements Listener {
 
         TextComponent suffixComponent = new TextComponent(TextComponent.fromLegacyText(chatGroup.getSuffix()));
 
-        BaseComponent[] toSend = {prefixComponent, space, nameComponent, space, suffixComponent, space};
-        toSend = ArrayUtils.addAll(toSend, messageComponentBuilder.create());
+        BaseComponent[] toSend = {prefixComponent, space, nameComponent, space, suffixComponent, space, new TextComponent(TextComponent.fromLegacyText(message))};
 
         event.setFormat(ChatColor.stripColor(chatGroup.getPrefix() + " " + player.getName() + ": " + event.getMessage())); // pro konzoli
 
