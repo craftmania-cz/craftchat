@@ -1,5 +1,6 @@
 package cz.nerdy.craftchat;
 
+import cz.nerdy.craftchat.commands.PlayerCommands;
 import cz.nerdy.craftchat.listeners.ChatListener;
 import cz.nerdy.craftchat.nms.PluginCompatibility;
 import cz.nerdy.craftchat.nms.Spigot_1_14_4_Compatibility;
@@ -17,6 +18,9 @@ public class Main extends JavaPlugin {
     private List<ChatGroup> chatGroups;
     private PluginCompatibility pluginCompatibility;
     private ChatManager chatManager;
+    private TagManager tagManager;
+
+    public static String SERVER;
 
     @Override
     public void onEnable() {
@@ -31,7 +35,13 @@ public class Main extends JavaPlugin {
         this.getConfig().options().copyDefaults(true);
         this.saveConfig();
 
+        PlayerCommands playerCommands = new PlayerCommands();
+        getCommand("tags").setExecutor(playerCommands);
+
+        SERVER = getConfig().getString("server");
+
         this.chatManager = new ChatManager();
+        this.tagManager = new TagManager();
 
         this.chatGroups = new ArrayList<>();
         this.loadChatGroups();
@@ -95,5 +105,9 @@ public class Main extends JavaPlugin {
 
     public ChatManager getChatManager(){
         return chatManager;
+    }
+
+    public TagManager getTagManager() {
+        return tagManager;
     }
 }

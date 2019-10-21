@@ -2,3 +2,8 @@ name: CraftChat
 version: 1.0.0
 author: Nerdy42
 main: cz.nerdy.craftchat.Main
+depend: [CraftLibs]
+
+commands:
+ tags:
+   description: "Zobrazi všechny tagy, které jsou k dispozici"
