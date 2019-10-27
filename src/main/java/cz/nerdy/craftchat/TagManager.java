@@ -14,30 +14,36 @@ public class TagManager {
 
     private List<Tag> tagList;
 
-    public TagManager(){
+    public TagManager() {
         this.tagList = new ArrayList<>();
 
-        ArrayList<DBRow> warpRows = CraftLibs.getSqlManager().query("SELECT * FROM craftchat_tags WHERE server=?", Main.SERVER);
-        for(DBRow warpRow : warpRows){
-            this.tagList.add(new Tag(warpRow.getString("name"), warpRow.getInt("price")));
+        ArrayList<DBRow> tagRows = CraftLibs.getSqlManager().query("SELECT * FROM craftchat_tags WHERE server=?", Main.SERVER);
+        for (DBRow tagRow : tagRows) {
+            this.tagList.add(new Tag(tagRow.getString("name"), tagRow.getInt("price")));
         }
 
     }
 
-    public List<Tag> getAllTags(){
-return this.tagList;
+    public List<Tag> getAllTags() {
+        return this.tagList;
     }
 
-    public void openMenu(Player player, String type){
+    public Tag getPlayersSelectedTag(Player player) {
+        //todo
+        return null;
+    }
+
+    public void openMenu(Player player, String type) {
         List<Tag> tags = null;
-        switch (type){
+        switch (type) {
             case "mine":
                 tags = getAllTags();
             default:
-                tags = getAllTags();;
+                tags = getAllTags();
+
         }
 
-        SmartInventory.builder().size(6,9).title("Tagy").provider(new TagsGUI(tags, type)).build().open(player);
+        SmartInventory.builder().size(6, 9).title("Tagy").provider(new TagsGUI(tags, type)).build().open(player);
 
 
     }

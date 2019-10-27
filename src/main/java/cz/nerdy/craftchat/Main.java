@@ -5,11 +5,14 @@ import cz.nerdy.craftchat.listeners.ChatListener;
 import cz.nerdy.craftchat.nms.PluginCompatibility;
 import cz.nerdy.craftchat.nms.Spigot_1_14_4_Compatibility;
 import cz.nerdy.craftchat.objects.ChatGroup;
+import cz.nerdy.craftchat.objects.CraftChatPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Main extends JavaPlugin {
@@ -19,6 +22,9 @@ public class Main extends JavaPlugin {
     private PluginCompatibility pluginCompatibility;
     private ChatManager chatManager;
     private TagManager tagManager;
+    private ChatGroupManager chatGroupManager;
+
+    private HashMap<Player, CraftChatPlayer> craftChatPlayers;
 
     public static String SERVER;
 
@@ -42,9 +48,9 @@ public class Main extends JavaPlugin {
 
         this.chatManager = new ChatManager();
         this.tagManager = new TagManager();
+        this.chatGroupManager = new ChatGroupManager();
 
-        this.chatGroups = new ArrayList<>();
-        this.loadChatGroups();
+        this.craftChatPlayers = new HashMap<>();
 
         Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
     }
@@ -58,15 +64,11 @@ public class Main extends JavaPlugin {
         return instance;
     }
 
-    public List<ChatGroup> getChatGroups() {
-        return chatGroups;
-    }
-
-    public PluginCompatibility getPluginCompatibility(){
+    public PluginCompatibility getPluginCompatibility() {
         return pluginCompatibility;
     }
 
-    private boolean setupCompatibility(){
+    private boolean setupCompatibility() {
         String s;
         try {
             s = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
@@ -82,32 +84,28 @@ public class Main extends JavaPlugin {
 
     }
 
-    private void loadChatGroups() {
-
-        ConfigurationSection configurationSection = this.getConfig().getConfigurationSection("groups");
-        for (String key : configurationSection.getKeys(false)) {
-            ConfigurationSection groupSection = configurationSection.getConfigurationSection(key);
-            ChatGroup chatGroup = new ChatGroup(
-                    groupSection.getInt("priority"),
-                    groupSection.getString("prefix"),
-                    groupSection.getString("suffix"),
-                    groupSection.getString("name_format"),
-                    groupSection.getString("chat_color"),
-                    groupSection.getStringList("prefix_tooltip"),
-                    groupSection.getStringList("name_tooltip"),
-                    groupSection.getString("name_click_command")
-            );
-            this.chatGroups.add(chatGroup);
-            System.out.println("Group " + groupSection.getName() + " loaded (prefix=" + chatGroup.getPrefix() + ",suffix=" + chatGroup.getSuffix() + ")");
-        }
-
-    }
-
-    public ChatManager getChatManager(){
+    public ChatManager getChatManager() {
         return chatManager;
     }
 
     public TagManager getTagManager() {
         return tagManager;
+    }
+
+    public ChatGroupManager getChatGroupManager() {
+        return chatGroupManager;
+    }
+
+    public CraftChatPlayer getCraftChatPlayer(Player player) {
+        return this.craftChatPlayers.getOrDefault(player, null);
+    }
+
+    public void registerCraftChatPlayer(Player player) {
+        CraftChatPlayer craftChatPlayer = new CraftChatPlayer(player);
+        this.craftChatPlayers.put(player, craftChatPlayer);
+    }
+
+    public void unregisterCraftChatPlayer(Player player) {
+        this.craftChatPlayers.remove(player);
     }
 }

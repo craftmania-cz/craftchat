@@ -2,6 +2,7 @@ package cz.nerdy.craftchat.listeners;
 
 import cz.nerdy.craftchat.Main;
 import cz.nerdy.craftchat.objects.ChatGroup;
+import cz.nerdy.craftchat.objects.CraftChatPlayer;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.*;
 import org.bukkit.Bukkit;
@@ -25,7 +26,8 @@ public class ChatListener implements Listener {
         Player player = event.getPlayer();
         String message = event.getMessage();
 
-        ChatGroup chatGroup = Main.getInstance().getChatGroups().get(0); // TODO getnout podle hrace (CraftChatPlayer)
+        CraftChatPlayer craftChatPlayer = Main.getInstance().getCraftChatPlayer(player);
+        ChatGroup chatGroup = craftChatPlayer.getChatGroup();
 
         HashMap<String, String> replacements = Main.getInstance().getChatManager().getReplacements();
         if (player.hasPermission("craftchat.replacements")) {

@@ -8,6 +8,7 @@ import java.util.List;
 public class ChatGroup {
 
     private int priority;
+    private String name;
     private String prefix;
     private String suffix;
     private String nameFormat;
@@ -16,20 +17,21 @@ public class ChatGroup {
     private List<String> nameTooltip;
     private String nameClickCommand;
 
-    public ChatGroup(int priority, String prefix, String suffix, String nameFormat, String chatColor, List<String> prefixTooltip, List<String> nameTooltip, String nameClickCommand) {
+    public ChatGroup(int priority, String name, String prefix, String suffix, String nameFormat, String chatColor, List<String> prefixTooltip, List<String> nameTooltip, String nameClickCommand) {
         this.priority = priority;
+        this.name = name;
         this.prefix = ChatColor.translateAlternateColorCodes('&', prefix);
-        this.suffix =  ChatColor.translateAlternateColorCodes('&', suffix);
-        this.nameFormat =  ChatColor.translateAlternateColorCodes('&', nameFormat);
-        this.chatColor =  ChatColor.valueOf(chatColor);
+        this.suffix = ChatColor.translateAlternateColorCodes('&', suffix);
+        this.nameFormat = ChatColor.translateAlternateColorCodes('&', nameFormat);
+        this.chatColor = ChatColor.valueOf(chatColor);
         List<String> tempList = new ArrayList<>();
-        for (String line : prefixTooltip){
+        for (String line : prefixTooltip) {
             tempList.add(ChatColor.translateAlternateColorCodes('&', line));
         }
         this.prefixTooltip = tempList;
 
         tempList = new ArrayList<>();
-        for (String line : nameTooltip){
+        for (String line : nameTooltip) {
             tempList.add(ChatColor.translateAlternateColorCodes('&', line));
         }
         this.nameTooltip = tempList;
@@ -38,6 +40,10 @@ public class ChatGroup {
 
     public int getPriority() {
         return priority;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getPrefix() {
