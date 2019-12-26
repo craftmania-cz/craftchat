@@ -26,10 +26,10 @@ public class ChatListener implements Listener {
         Player player = event.getPlayer();
         String message = event.getMessage();
 
-        CraftChatPlayer craftChatPlayer = Main.getInstance().getCraftChatPlayer(player);
+        CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(player);
         ChatGroup chatGroup = craftChatPlayer.getChatGroup();
 
-        HashMap<String, String> replacements = Main.getInstance().getChatManager().getReplacements();
+        HashMap<String, String> replacements = Main.getChatManager().getReplacements();
         if (player.hasPermission("craftchat.replacements")) {
             for (String replacement : replacements.keySet()) {
                 if (message.contains(replacement)) {
@@ -46,7 +46,7 @@ public class ChatListener implements Listener {
                 message = message.replaceAll("(?i)&o", "");
                 message = message.replaceAll("(?i)&k", "");
             }
-            if(player.hasPermission("craftchat.at")){
+            if (player.hasPermission("craftchat.at")) {
                 message = "&e" + message; // zluta barva default pro at
             } else {
                 message = message.replaceAll("(?i)&e", "");
@@ -56,7 +56,7 @@ public class ChatListener implements Listener {
 
         TextComponent space = new TextComponent(TextComponent.fromLegacyText(" "));
 
-        TextComponent prefixComponent = new TextComponent(TextComponent.fromLegacyText(chatGroup.getPrefix()));
+        TextComponent prefixComponent = new TextComponent(TextComponent.fromLegacyText(craftChatPlayer.getPrefix()));
         String prefixTooltip = "";
         for (String line : chatGroup.getPrefixTooltip()) {
             prefixTooltip += line + "§r\n";

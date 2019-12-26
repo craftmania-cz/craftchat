@@ -6,25 +6,28 @@ import cz.nerdy.craftchat.nms.PluginCompatibility;
 import cz.nerdy.craftchat.nms.Spigot_1_14_4_Compatibility;
 import cz.nerdy.craftchat.objects.ChatGroup;
 import cz.nerdy.craftchat.objects.CraftChatPlayer;
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class Main extends JavaPlugin {
 
     private static Main instance;
     private List<ChatGroup> chatGroups;
     private PluginCompatibility pluginCompatibility;
-    private ChatManager chatManager;
-    private TagManager tagManager;
-    private ChatGroupManager chatGroupManager;
+    private static ChatManager chatManager;
+    private static TagManager tagManager;
+    private static ChatGroupManager chatGroupManager;
 
-    private HashMap<Player, CraftChatPlayer> craftChatPlayers;
+    private static LuckPerms luckPerms;
+
+    private static HashMap<Player, CraftChatPlayer> craftChatPlayers;
 
     public static String SERVER;
 
@@ -46,9 +49,11 @@ public class Main extends JavaPlugin {
 
         SERVER = getConfig().getString("server");
 
-        this.chatManager = new ChatManager();
-        this.tagManager = new TagManager();
-        this.chatGroupManager = new ChatGroupManager();
+        chatManager = new ChatManager();
+        tagManager = new TagManager();
+        chatGroupManager = new ChatGroupManager();
+
+        luckPerms = LuckPermsProvider.get();
 
         this.craftChatPlayers = new HashMap<>();
 
@@ -81,31 +86,40 @@ public class Main extends JavaPlugin {
                 break;
         }
         return this.pluginCompatibility != null;
-
     }
 
-    public ChatManager getChatManager() {
+    public static ChatManager getChatManager() {
         return chatManager;
     }
 
-    public TagManager getTagManager() {
+    public static TagManager getTagManager() {
         return tagManager;
     }
 
-    public ChatGroupManager getChatGroupManager() {
+    public static ChatGroupManager getChatGroupManager() {
         return chatGroupManager;
     }
 
-    public CraftChatPlayer getCraftChatPlayer(Player player) {
-        return this.craftChatPlayers.getOrDefault(player, null);
+    public static CraftChatPlayer getCraftChatPlayer(Player player) {
+        return craftChatPlayers.getOrDefault(player, null);
     }
 
     public void registerCraftChatPlayer(Player player) {
         CraftChatPlayer craftChatPlayer = new CraftChatPlayer(player);
-        this.craftChatPlayers.put(player, craftChatPlayer);
+        craftChatPlayers.put(player, craftChatPlayer);
     }
 
     public void unregisterCraftChatPlayer(Player player) {
-        this.craftChatPlayers.remove(player);
+        craftChatPlayers.remove(player);
+    }
+
+    public void updatePlayer(UUID uuid){
+        Player player = Bukkit.getPlayer(uuid);
+        if(player == null) {
+            System.out.println("Player not found .. uuid: "  + uuid.toString());
+            return;
+        }
+        this.unregisterCraftChatPlayer(player);
+        this.registerCraftChatPlayer(player);
     }
 }

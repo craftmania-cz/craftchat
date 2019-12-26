@@ -14,3 +14,4 @@ groups:
     name_tooltip:
       - '§dNick: §f%player_name%'
     name_click_command: '/pm %player_name%'
+    allow_tag_change: false # zakazani zmeny tagu

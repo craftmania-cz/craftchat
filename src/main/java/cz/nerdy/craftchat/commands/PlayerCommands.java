@@ -25,7 +25,7 @@ public class PlayerCommands implements CommandExecutor {
                 if (args.length > 0) {
                     type = args[0];
                 }
-                Main.getInstance().getTagManager().openMenu(player, type);
+                Main.getTagManager().openMenu(player, type);
         }
         return true;
     }

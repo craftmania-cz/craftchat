@@ -3,6 +3,7 @@ version: 1.0.0
 author: Nerdy42
 main: cz.nerdy.craftchat.Main
 depend: [CraftLibs]
+api-version: 1.13
 
 commands:
  tags:

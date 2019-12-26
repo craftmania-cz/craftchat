@@ -6,6 +6,7 @@ import cz.craftmania.craftcore.spigot.inventory.builder.content.InventoryContent
 import cz.craftmania.craftcore.spigot.inventory.builder.content.InventoryProvider;
 import cz.craftmania.craftcore.spigot.inventory.builder.content.Pagination;
 import cz.craftmania.craftcore.spigot.inventory.builder.content.SlotIterator;
+import cz.craftmania.craftcore.spigot.messages.chat.ChatInfo;
 import cz.nerdy.craftchat.Main;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -30,10 +31,27 @@ public class TagsGUI implements InventoryProvider {
         final Pagination pagination = contents.pagination();
         final List<ClickableItem> items = new ArrayList<>();
 
+        CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(player);
+
         for (Tag tag : this.tags) {
+            boolean hasTag = craftChatPlayer.hasTag(tag);
+            String[] lore = hasTag ?
+                    new String[]{"", "§7Klikni pro nastavení"} : new String[]{"", "§7Cena: §e" + tag.getPrice() + "CC"};
+
             ItemStack item = new ItemBuilder(Material.NAME_TAG).setName(tag.getPrefix())
-                    .setLore("", "§7Cena: §e" + tag.getPrice() + "CC").hideAllFlags().build();
+                    .setLore(lore).hideAllFlags().build();
             items.add(ClickableItem.of(item, e -> {
+                if (hasTag) {
+                    craftChatPlayer.setSelectedTag(tag);
+                    ChatInfo.info(player, "Nastavil jsi si tag: " + tag.getPrefix());
+                } else {
+                    if (Main.getTagManager().buyTag(player, tag)) {
+                        // todo zápis do db
+                        ChatInfo.success(player, "Tag " + tag.getPrefix() + " byl úspěšně zakoupen");
+                    } else {
+                        ChatInfo.error(player, "Nemáš dostatek CCk nákupu tohoto tagu");
+                    }
+                }
             }));
         }
 
@@ -44,19 +62,19 @@ public class TagsGUI implements InventoryProvider {
 
 
         ItemBuilder allTagsItem = new ItemBuilder(Material.NAME_TAG).setName("§dVšechny Tagy").hideAllFlags();
-        if(type.equals("all")) allTagsItem.setGlowing();
+        if (type.equals("all")) allTagsItem.setGlowing();
 
         ClickableItem allTags = ClickableItem.of(allTagsItem.build(), e -> {
-            Main.getInstance().getTagManager().openMenu((Player)e.getWhoClicked(), "all");
+            Main.getTagManager().openMenu((Player) e.getWhoClicked(), "all");
         });
         contents.set(5, 3, allTags);
 
 
         ItemBuilder mineTagsItem = new ItemBuilder(Material.PLAYER_HEAD).setName("§dMoje Tagy").hideAllFlags();
-        if(type.equals("mine")) mineTagsItem.setGlowing();
+        if (type.equals("mine")) mineTagsItem.setGlowing();
 
         ClickableItem mineTags = ClickableItem.of(mineTagsItem.build(), e -> {
-            Main.getInstance().getTagManager().openMenu((Player)e.getWhoClicked(), "mine");
+            Main.getTagManager().openMenu((Player) e.getWhoClicked(), "mine");
         });
         contents.set(5, 5, mineTags);
 
