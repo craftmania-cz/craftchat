@@ -11,7 +11,7 @@ public class CraftChatPlayer {
     private String uuid;
     private ChatGroup chatGroup;
     private Tag selectedTag;
-    private List<Tag> tags;
+    private List<Integer> tags;
 
     public CraftChatPlayer(Player player) {
         this.uuid = player.getUniqueId().toString();
@@ -34,7 +34,7 @@ public class CraftChatPlayer {
     }
 
     public boolean hasTag(Tag tag) {
-        return this.tags.contains(tag);
+        return this.tags.contains(tag.getId());
     }
 
     public void setSelectedTag(Tag tag) {
@@ -42,7 +42,7 @@ public class CraftChatPlayer {
     }
 
     public void giveTag(Tag tag) {
-        this.tags.add(tag);
+        this.tags.add(tag.getId());
         CraftLibs.getSqlManager().query("INSERT INTO craftchat_player_tags(uuid,tag_id) VALUES(?,?)", this.uuid, tag.getId());
     }
 }

@@ -52,6 +52,7 @@ public class TagsGUI implements InventoryProvider {
                         ChatInfo.error(player, "Nemáš dostatek CCk nákupu tohoto tagu");
                     }
                 }
+                player.closeInventory();
             }));
         }
 
