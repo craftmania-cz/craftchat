@@ -1,17 +1,18 @@
 server: survival
 
 # Defaultni config
-groups:
-  groupka:
-    priority: 1
-    prefix: ''
-    suffix: ''
-    name_format: ''
-    chat_color: '&7'
+formats:
+  default:
+    priority: 14
+    prefix: '' # prefix pred jmenem, pokud nema tag
+    prefix_color: GRAY # barva prefixu i tagu
+    name_color: LIGHT_GRAY # barva jmena
+    suffix: ' &8» ' # suffix za jmenem
+    chat_color: WHITE
     prefix_tooltip:
-      - '1. radek'
-      - '2. radek'
+      - '&7&lZakladni rank'
     name_tooltip:
-      - '§dNick: §f%player_name%'
+      - '&d&lNick: &f%player_name%'
+      - '&a&lMoney: &f{money_formatted}&a$'
     name_click_command: '/pm %player_name%'
     allow_tag_change: false # zakazani zmeny tagu

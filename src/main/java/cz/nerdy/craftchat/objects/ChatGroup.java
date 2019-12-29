@@ -15,18 +15,20 @@ public class ChatGroup {
     private String name;
     private String prefix;
     private String suffix;
-    private String nameFormat;
+    private ChatColor prefixColor;
+    private ChatColor nameColor;
     private ChatColor chatColor;
     private List<String> prefixTooltip;
     private List<String> nameTooltip;
     private String nameClickCommand;
 
-    public ChatGroup(int priority, String name, String prefix, String suffix, String nameFormat, String chatColor, List<String> prefixTooltip, List<String> nameTooltip, String nameClickCommand) {
+    public ChatGroup(int priority, String name, String prefix, String suffix, String prefixColor, String nameColor, String chatColor, List<String> prefixTooltip, List<String> nameTooltip, String nameClickCommand) {
         this.priority = priority;
         this.name = name;
         this.prefix = ChatColor.translateAlternateColorCodes('&', prefix);
         this.suffix = ChatColor.translateAlternateColorCodes('&', suffix);
-        this.nameFormat = ChatColor.translateAlternateColorCodes('&', nameFormat);
+        this.prefixColor = ChatColor.valueOf(prefixColor);
+        this.nameColor = ChatColor.valueOf(nameColor);
         this.chatColor = ChatColor.valueOf(chatColor);
         List<String> tempList = new ArrayList<>();
         for (String line : prefixTooltip) {
@@ -58,8 +60,12 @@ public class ChatGroup {
         return suffix;
     }
 
-    public String getNameFormat() {
-        return nameFormat;
+    public ChatColor getPrefixColor() {
+        return prefixColor;
+    }
+
+    public ChatColor getNameColor() {
+        return nameColor;
     }
 
     public ChatColor getChatColor() {

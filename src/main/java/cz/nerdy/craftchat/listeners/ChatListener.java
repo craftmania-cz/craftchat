@@ -3,6 +3,7 @@ package cz.nerdy.craftchat.listeners;
 import cz.nerdy.craftchat.Main;
 import cz.nerdy.craftchat.objects.ChatGroup;
 import cz.nerdy.craftchat.objects.CraftChatPlayer;
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.*;
 import org.bukkit.Bukkit;
@@ -57,17 +58,20 @@ public class ChatListener implements Listener {
         TextComponent space = new TextComponent(TextComponent.fromLegacyText(" "));
 
         TextComponent prefixComponent = new TextComponent(TextComponent.fromLegacyText(craftChatPlayer.getPrefix()));
+        prefixComponent.setColor(chatGroup.getPrefixColor());
         String prefixTooltip = "";
         for (String line : chatGroup.getPrefixTooltip()) {
             prefixTooltip += line + "§r\n";
         }
         prefixComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(prefixTooltip)));
 
-        TextComponent nameComponent = new TextComponent(TextComponent.fromLegacyText(chatGroup.getNameFormat() + player.getName()));
-        nameComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, chatGroup.getNameClickCommand()));
+        TextComponent nameComponent = new TextComponent(TextComponent.fromLegacyText(player.getName()));
+        nameComponent.setColor(chatGroup.getNameColor());
+        nameComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
+                PlaceholderAPI.setPlaceholders(player, chatGroup.getNameClickCommand().replace("%player_name%", player.getName()))));
         String nickTooltip = "";
         for (String line : chatGroup.getNameTooltip()) {
-            nickTooltip += line + "§r\n";
+            nickTooltip += PlaceholderAPI.setPlaceholders(player, line.replace("%player_name%", player.getName())) + "§r\n";
         }
         nameComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(nickTooltip)));
 
@@ -75,8 +79,8 @@ public class ChatListener implements Listener {
 
         BaseComponent[] toSend = {prefixComponent, space, nameComponent, space, suffixComponent, space, new TextComponent(TextComponent.fromLegacyText(message))};
 
-        //event.setFormat(ChatColor.stripColor(chatGroup.getPrefix() + " " + player.getName() + ": " + event.getMessage())); // pro konzoli // TODO
-        event.setFormat(player.getName() + ": " + event.getMessage());
+        event.setFormat(ChatColor.stripColor(chatGroup.getPrefix() + " " + player.getName() + ": " + event.getMessage())); // pro konzoli
+        //event.setFormat(player.getName() + ": " + event.getMessage());
 
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             if (!event.getRecipients().contains(onlinePlayer)) {

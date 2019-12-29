@@ -42,6 +42,10 @@ public class Main extends JavaPlugin {
             this.getPluginLoader().disablePlugin(this);
         }
 
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) {
+            throw new RuntimeException("Could not find PlaceholderAPI!! Plugin can not work without it!");
+        }
+
         this.getConfig().options().copyDefaults(true);
         this.saveConfig();
 

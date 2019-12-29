@@ -31,6 +31,7 @@ dependencies {
         exclude group: 'net.md-5'
     }
     compileOnly name: 'spigot-1.14.4'
+    compileOnly name: 'PlaceholderAPI-2.10.4'
 
     // CM Plugins
     compileOnly group: 'cz.craftmania.craftcore', name: 'craftcore', version: '2.2.6'
