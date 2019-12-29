@@ -2,6 +2,7 @@ package cz.nerdy.craftchat;
 
 import cz.nerdy.craftchat.commands.PlayerCommands;
 import cz.nerdy.craftchat.listeners.ChatListener;
+import cz.nerdy.craftchat.listeners.PlayerListener;
 import cz.nerdy.craftchat.nms.PluginCompatibility;
 import cz.nerdy.craftchat.nms.Spigot_1_14_4_Compatibility;
 import cz.nerdy.craftchat.objects.ChatGroup;
@@ -58,6 +59,7 @@ public class Main extends JavaPlugin {
         this.craftChatPlayers = new HashMap<>();
 
         Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
     }
 
     @Override

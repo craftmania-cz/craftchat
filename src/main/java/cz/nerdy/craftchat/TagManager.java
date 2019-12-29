@@ -21,7 +21,7 @@ public class TagManager {
 
         ArrayList<DBRow> tagRows = CraftLibs.getSqlManager().query("SELECT * FROM craftchat_tags WHERE server=?", Main.SERVER);
         for (DBRow tagRow : tagRows) {
-            this.tagList.add(new Tag(tagRow.getLong("id"), tagRow.getString("name"), tagRow.getInt("price")));
+            this.tagList.add(new Tag(tagRow.getInt("id"), tagRow.getString("name"), tagRow.getInt("price")));
         }
     }
 
@@ -32,7 +32,7 @@ public class TagManager {
     public List<Tag> getAllTags(Player player) {
         ArrayList<DBRow> tagRows = CraftLibs.getSqlManager().query("SELECT t.* FROM craftchat_player_tags pt INNER JOIN craftchat_tags t ON t.id=pt.tag_id WHERE pt.player_uuid=?" /*TODO server?*/, player.getUniqueId().toString());
         for (DBRow tagRow : tagRows) {
-            this.tagList.add(new Tag(tagRow.getLong("id"), tagRow.getString("name"), tagRow.getInt("price")));
+            this.tagList.add(new Tag(tagRow.getInt("id"), tagRow.getString("name"), tagRow.getInt("price")));
         }
         return this.tagList;
     }

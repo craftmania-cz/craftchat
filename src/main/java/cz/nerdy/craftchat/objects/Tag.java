@@ -2,17 +2,17 @@ package cz.nerdy.craftchat.objects;
 
 public class Tag {
 
-    private long id;
+    private int id;
     private String prefix;
     private int price;
 
-    public Tag(long id, String prefix, int price){
+    public Tag(int id, String prefix, int price){
         this.id = id;
         this.prefix = prefix;
         this.price = price;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 

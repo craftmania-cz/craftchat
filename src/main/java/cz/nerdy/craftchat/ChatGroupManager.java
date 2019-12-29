@@ -14,7 +14,7 @@ public class ChatGroupManager {
 
         this.chatGroups = new ArrayList<>();
 
-        ConfigurationSection configurationSection = Main.getInstance().getConfig().getConfigurationSection("groups");
+        ConfigurationSection configurationSection = Main.getInstance().getConfig().getConfigurationSection("formats");
         for (String key : configurationSection.getKeys(false)) {
             ConfigurationSection groupSection = configurationSection.getConfigurationSection(key);
             ChatGroup chatGroup = new ChatGroup(
@@ -22,7 +22,7 @@ public class ChatGroupManager {
                     key,
                     groupSection.getString("prefix"),
                     groupSection.getString("suffix"),
-                    groupSection.getString("name_format"),
+                    groupSection.getString("name"),
                     groupSection.getString("chat_color"),
                     groupSection.getStringList("prefix_tooltip"),
                     groupSection.getStringList("name_tooltip"),
