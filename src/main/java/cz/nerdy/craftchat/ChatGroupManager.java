@@ -20,7 +20,6 @@ public class ChatGroupManager {
             ChatGroup chatGroup = new ChatGroup(
                     groupSection.getInt("priority"),
                     key,
-                    groupSection.getString("prefix"),
                     groupSection.getString("suffix"),
                     groupSection.getString("prefix_color"),
                     groupSection.getString("name_color"),

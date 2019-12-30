@@ -57,7 +57,7 @@ public class ChatListener implements Listener {
 
         TextComponent space = new TextComponent(TextComponent.fromLegacyText(" "));
 
-        TextComponent prefixComponent = new TextComponent(TextComponent.fromLegacyText(craftChatPlayer.getPrefix()));
+        TextComponent prefixComponent = new TextComponent(TextComponent.fromLegacyText(PlaceholderAPI.setPlaceholders(player, craftChatPlayer.getPrefix())));
         prefixComponent.setColor(chatGroup.getPrefixColor());
         String prefixTooltip = "";
         for (String line : chatGroup.getPrefixTooltip()) {
@@ -77,7 +77,7 @@ public class ChatListener implements Listener {
 
         TextComponent suffixComponent = new TextComponent(TextComponent.fromLegacyText(chatGroup.getSuffix()));
 
-        BaseComponent[] toSend = {prefixComponent, space, nameComponent, space, suffixComponent, space, new TextComponent(TextComponent.fromLegacyText(message))};
+        BaseComponent[] toSend = {prefixComponent, nameComponent, space, suffixComponent, space, new TextComponent(TextComponent.fromLegacyText(message))};
 
         event.setFormat(ChatColor.stripColor(chatGroup.getPrefix() + " " + player.getName() + ": " + event.getMessage())); // pro konzoli
         //event.setFormat(player.getName() + ": " + event.getMessage());
@@ -88,7 +88,7 @@ public class ChatListener implements Listener {
             }
             event.getRecipients().remove(onlinePlayer);
 
-            if(Main.getIgnoreManager().hasIgnored(onlinePlayer, player)){
+            if (Main.getIgnoreManager().hasIgnored(onlinePlayer, player)) {
                 continue;
             }
             onlinePlayer.spigot().sendMessage(toSend);

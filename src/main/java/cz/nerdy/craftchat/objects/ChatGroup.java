@@ -9,7 +9,6 @@ public class ChatGroup {
 
     private int priority;
     private String name;
-    private String prefix;
     private String suffix;
     private ChatColor prefixColor;
     private ChatColor nameColor;
@@ -18,10 +17,9 @@ public class ChatGroup {
     private List<String> nameTooltip;
     private String nameClickCommand;
 
-    public ChatGroup(int priority, String name, String prefix, String suffix, String prefixColor, String nameColor, String chatColor, List<String> prefixTooltip, List<String> nameTooltip, String nameClickCommand) {
+    public ChatGroup(int priority, String name, String suffix, String prefixColor, String nameColor, String chatColor, List<String> prefixTooltip, List<String> nameTooltip, String nameClickCommand) {
         this.priority = priority;
         this.name = name;
-        this.prefix = ChatColor.translateAlternateColorCodes('&', prefix);
         this.suffix = ChatColor.translateAlternateColorCodes('&', suffix);
         this.prefixColor = ChatColor.valueOf(prefixColor);
         this.nameColor = ChatColor.valueOf(nameColor);

@@ -4,7 +4,6 @@ server: survival
 formats:
   default:
     priority: 14
-    prefix: '' # prefix pred jmenem, pokud nema tag
     prefix_color: GRAY # barva prefixu i tagu
     name_color: LIGHT_GRAY # barva jmena
     suffix: ' &8» ' # suffix za jmenem

@@ -38,7 +38,6 @@ public class TagManager {
                 .thenAccept(res -> {
                     for (DBRow tagRow : res) {
                         tags.add(getTagById(tagRow.getInt("id")));
-                        System.out.println(tagRow.getInt("id"));
                     }
                 });
 

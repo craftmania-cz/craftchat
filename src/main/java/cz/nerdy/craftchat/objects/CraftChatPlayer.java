@@ -39,7 +39,7 @@ public class CraftChatPlayer {
     }
 
     public String getPrefix() {
-        return (this.selectedTag == null ? this.chatGroup.getPrefix() : this.selectedTag.getPrefix());
+        return (this.selectedTag == null ? "%luckperms_prefix%" : this.selectedTag.getPrefix() + " ");
     }
 
     public boolean hasTag(Tag tag) {
