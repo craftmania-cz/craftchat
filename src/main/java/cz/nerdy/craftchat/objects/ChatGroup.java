@@ -16,8 +16,9 @@ public class ChatGroup {
     private List<String> prefixTooltip;
     private List<String> nameTooltip;
     private String nameClickCommand;
+    private boolean allowTagChange;
 
-    public ChatGroup(int priority, String name, String suffix, String prefixColor, String nameColor, String chatColor, List<String> prefixTooltip, List<String> nameTooltip, String nameClickCommand) {
+    public ChatGroup(int priority, String name, String suffix, String prefixColor, String nameColor, String chatColor, List<String> prefixTooltip, List<String> nameTooltip, String nameClickCommand, boolean allowTagChange) {
         this.priority = priority;
         this.name = name;
         this.suffix = ChatColor.translateAlternateColorCodes('&', suffix);
@@ -36,6 +37,7 @@ public class ChatGroup {
         }
         this.nameTooltip = tempList;
         this.nameClickCommand = nameClickCommand;
+        this.allowTagChange = allowTagChange;
     }
 
     public int getPriority() {
@@ -44,10 +46,6 @@ public class ChatGroup {
 
     public String getName() {
         return name;
-    }
-
-    public String getPrefix() {
-        return prefix;
     }
 
     public String getSuffix() {
@@ -76,5 +74,9 @@ public class ChatGroup {
 
     public String getNameClickCommand() {
         return nameClickCommand;
+    }
+
+    public boolean isAllowTagChange() {
+        return allowTagChange;
     }
 }

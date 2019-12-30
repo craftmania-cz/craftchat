@@ -57,7 +57,8 @@ public class ChatListener implements Listener {
 
         TextComponent space = new TextComponent(TextComponent.fromLegacyText(" "));
 
-        TextComponent prefixComponent = new TextComponent(TextComponent.fromLegacyText(PlaceholderAPI.setPlaceholders(player, craftChatPlayer.getPrefix())));
+        String prefix = PlaceholderAPI.setPlaceholders(player, craftChatPlayer.getPrefix());
+        TextComponent prefixComponent = new TextComponent(TextComponent.fromLegacyText(prefix));
         prefixComponent.setColor(chatGroup.getPrefixColor());
         String prefixTooltip = "";
         for (String line : chatGroup.getPrefixTooltip()) {
@@ -79,8 +80,7 @@ public class ChatListener implements Listener {
 
         BaseComponent[] toSend = {prefixComponent, nameComponent, space, suffixComponent, space, new TextComponent(TextComponent.fromLegacyText(message))};
 
-        event.setFormat(ChatColor.stripColor(chatGroup.getPrefix() + " " + player.getName() + ": " + event.getMessage())); // pro konzoli
-        //event.setFormat(player.getName() + ": " + event.getMessage());
+        event.setFormat(ChatColor.stripColor(prefix + " " + player.getName() + ": " + event.getMessage())); // pro konzoli
 
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             if (!event.getRecipients().contains(onlinePlayer)) {

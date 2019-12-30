@@ -14,4 +14,4 @@ formats:
       - '&d&lNick: &f%player_name%'
       - '&a&lMoney: &f{money_formatted}&a$'
     name_click_command: '/pm %player_name%'
-    allow_tag_change: false # zakazani zmeny tagu
+    allow_tag_change: true # zakazani zmeny tagu

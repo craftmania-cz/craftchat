@@ -26,12 +26,13 @@ public class ChatGroupManager {
                     groupSection.getString("chat_color"),
                     groupSection.getStringList("prefix_tooltip"),
                     groupSection.getStringList("name_tooltip"),
-                    groupSection.getString("name_click_command")
+                    groupSection.getString("name_click_command"),
+                    groupSection.getBoolean("allow_tag_change")
             );
             this.chatGroups.add(chatGroup);
-            System.out.println("Group " + groupSection.getName() + " loaded (prefix=" + chatGroup.getPrefix() + ",suffix=" + chatGroup.getSuffix() + ")");
         }
-
+        
+        System.out.println("Nacteno celkem " + this.chatGroups.size() + " groupek");
     }
 
     public List<ChatGroup> getChatGroups() {
@@ -41,14 +42,14 @@ public class ChatGroupManager {
     public ChatGroup getChatGroup(Player player) {
         HashMap<Integer, ChatGroup> groupMap = new HashMap<>();
 
-        for (ChatGroup chatGroup : this.getChatGroups()){
+        for (ChatGroup chatGroup : this.getChatGroups()) {
             groupMap.put(chatGroup.getPriority(), chatGroup);
         }
 
         SortedSet<Integer> groupPriorities = new TreeSet<>(groupMap.keySet());
-        for(int priority : groupPriorities){
+        for (int priority : groupPriorities) {
             ChatGroup group = groupMap.get(priority);
-            if(player.hasPermission("craftchat.format." + group.getName())){
+            if (player.hasPermission("craftchat.format." + group.getName())) {
                 return group;
             }
         }

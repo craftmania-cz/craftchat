@@ -1,7 +1,7 @@
 package cz.nerdy.craftchat;
 
 import cz.nerdy.craftchat.commands.IgnoreCommand;
-import cz.nerdy.craftchat.commands.PlayerCommands;
+import cz.nerdy.craftchat.commands.TagsCommand;
 import cz.nerdy.craftchat.listeners.ChatListener;
 import cz.nerdy.craftchat.listeners.PlayerListener;
 import cz.nerdy.craftchat.nms.PluginCompatibility;
@@ -51,7 +51,7 @@ public class Main extends JavaPlugin {
         this.getConfig().options().copyDefaults(true);
         this.saveConfig();
 
-        PlayerCommands playerCommands = new PlayerCommands();
+        TagsCommand playerCommands = new TagsCommand();
         getCommand("tags").setExecutor(playerCommands);
         getCommand("ignore").setExecutor(new IgnoreCommand());
 
