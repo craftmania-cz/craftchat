@@ -35,7 +35,7 @@ dependencies {
 
     // CM Plugins
     compileOnly group: 'cz.craftmania.craftcore', name: 'craftcore', version: '2.2.6'
-    compileOnly group: 'cz.craftmania.craftlibs', name: 'craftlibs', version: '1.0.3'
+    compileOnly group: 'cz.craftmania.craftlibs', name: 'craftlibs', version: '1.0.4'
     compileOnly group: 'cz.craftmania.crafteconomy', name: 'crafteconomy', version: '1.2.4'
 
     compile 'net.luckperms:api:5.0'

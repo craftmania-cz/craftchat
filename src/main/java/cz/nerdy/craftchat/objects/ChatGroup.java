@@ -6,10 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChatGroup {
-    /*
-
-    TODO default tag
-     */
 
     private int priority;
     private String name;

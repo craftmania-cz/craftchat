@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class TagManager {
 
@@ -19,24 +20,38 @@ public class TagManager {
     public TagManager() {
         this.tagList = new ArrayList<>();
 
-        ArrayList<DBRow> tagRows = CraftLibs.getSqlManager().query("SELECT * FROM craftchat_tags WHERE server IS NULL");
-        for (DBRow tagRow : tagRows) {
-            this.tagList.add(new Tag(tagRow.getInt("id"), tagRow.getString("name"), tagRow.getInt("price")));
-        }
+        CraftLibs.getSqlManager().query("SELECT * FROM craftchat_tags WHERE server IS NULL").thenAccept(res -> {
+            for (DBRow tagRow : res) {
+                this.tagList.add(new Tag(tagRow.getInt("id"), tagRow.getString("name"), tagRow.getInt("price")));
+            }
+        });
+
     }
 
     public List<Tag> getAllTags() {
         return this.tagList;
     }
 
-    public List<Integer> getAllTags(Player player) {
-        List<Integer> tags = new ArrayList<>();
-        ArrayList<DBRow> tagRows = CraftLibs.getSqlManager().query("SELECT t.id FROM craftchat_player_tags pt INNER JOIN craftchat_tags t ON t.id=pt.tag_id WHERE pt.uuid=?" /*TODO server?*/, player.getUniqueId().toString());
-        for (DBRow tagRow : tagRows) {
-            tags.add(tagRow.getInt("id"));
-        }
+    public List<Tag> getAllTags(Player player) {
+        List<Tag> tags = new ArrayList<>();
+        CraftLibs.getSqlManager().query("SELECT t.id FROM craftchat_player_tags pt INNER JOIN craftchat_tags t ON t.id=pt.tag_id WHERE pt.uuid=?", player.getUniqueId().toString())
+                .thenAccept(res -> {
+                    for (DBRow tagRow : res) {
+                        tags.add(getTagById(tagRow.getInt("id")));
+                        System.out.println(tagRow.getInt("id"));
+                    }
+                });
 
         return tags;
+    }
+
+    public Tag getTagById(int id) {
+        for (Tag tag:tagList){
+            if(tag.getId() == id) {
+                return tag;
+            }
+        }
+        return null;
     }
 
     public Tag getPlayersSelectedTag(Player player) {
@@ -48,7 +63,9 @@ public class TagManager {
         List<Tag> tags = null;
         switch (type) {
             case "mine":
-                tags = getAllTags();
+                CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(player);
+                tags = craftChatPlayer.getTags();
+                break;
             default:
                 tags = getAllTags();
         }
@@ -70,5 +87,6 @@ public class TagManager {
     public void giveTag(Tag tag, Player player) {
         CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(player);
         craftChatPlayer.giveTag(tag);
+        craftChatPlayer.setSelectedTag(tag);
     }
 }

@@ -46,10 +46,9 @@ public class TagsGUI implements InventoryProvider {
                     ChatInfo.info(player, "Nastavil jsi si tag: " + tag.getPrefix());
                 } else {
                     if (Main.getTagManager().buyTag(player, tag)) {
-                        // todo zápis do db
                         ChatInfo.success(player, "Tag " + tag.getPrefix() + " byl úspěšně zakoupen");
                     } else {
-                        ChatInfo.error(player, "Nemáš dostatek CCk nákupu tohoto tagu");
+                        ChatInfo.error(player, "Nemáš dostatek CC k nákupu tohoto tagu");
                     }
                 }
                 player.closeInventory();

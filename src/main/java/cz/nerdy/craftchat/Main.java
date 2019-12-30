@@ -1,5 +1,6 @@
 package cz.nerdy.craftchat;
 
+import cz.nerdy.craftchat.commands.IgnoreCommand;
 import cz.nerdy.craftchat.commands.PlayerCommands;
 import cz.nerdy.craftchat.listeners.ChatListener;
 import cz.nerdy.craftchat.listeners.PlayerListener;
@@ -25,6 +26,7 @@ public class Main extends JavaPlugin {
     private static ChatManager chatManager;
     private static TagManager tagManager;
     private static ChatGroupManager chatGroupManager;
+    private static IgnoreManager ignoreManager;
 
     private static LuckPerms luckPerms;
 
@@ -51,16 +53,18 @@ public class Main extends JavaPlugin {
 
         PlayerCommands playerCommands = new PlayerCommands();
         getCommand("tags").setExecutor(playerCommands);
+        getCommand("ignore").setExecutor(new IgnoreCommand());
 
         SERVER = getConfig().getString("server");
 
         chatManager = new ChatManager();
         tagManager = new TagManager();
         chatGroupManager = new ChatGroupManager();
+        ignoreManager = new IgnoreManager();
 
         luckPerms = LuckPermsProvider.get();
 
-        this.craftChatPlayers = new HashMap<>();
+        craftChatPlayers = new HashMap<>();
 
         Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
@@ -104,6 +108,10 @@ public class Main extends JavaPlugin {
 
     public static ChatGroupManager getChatGroupManager() {
         return chatGroupManager;
+    }
+
+    public static IgnoreManager getIgnoreManager() {
+        return ignoreManager;
     }
 
     public static CraftChatPlayer getCraftChatPlayer(Player player) {

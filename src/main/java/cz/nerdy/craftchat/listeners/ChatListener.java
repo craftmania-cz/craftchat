@@ -86,8 +86,11 @@ public class ChatListener implements Listener {
             if (!event.getRecipients().contains(onlinePlayer)) {
                 continue;
             }
-
             event.getRecipients().remove(onlinePlayer);
+
+            if(Main.getIgnoreManager().hasIgnored(onlinePlayer, player)){
+                continue;
+            }
             onlinePlayer.spigot().sendMessage(toSend);
         }
     }

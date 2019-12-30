@@ -8,3 +8,5 @@ api-version: 1.13
 commands:
  tags:
    description: "Zobrazi všechny tagy, které jsou k dispozici"
+ ignore:
+   description: "Ignore command"
