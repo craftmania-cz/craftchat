@@ -34,10 +34,19 @@ public class TagManager {
 
     public List<Tag> getAllTags(Player player) {
         List<Tag> tags = new ArrayList<>();
+        for (Tag tag : this.getAllTags()) {
+            if (player.hasPermission("deluxetags.tag." + tag.getPrefix().toLowerCase())) {
+                tags.add(tag);
+            }
+        }
+
         CraftLibs.getSqlManager().query("SELECT t.id FROM craftchat_player_tags pt INNER JOIN craftchat_tags t ON t.id=pt.tag_id WHERE pt.uuid=?", player.getUniqueId().toString())
                 .thenAccept(res -> {
                     for (DBRow tagRow : res) {
-                        tags.add(getTagById(tagRow.getInt("id")));
+                        Tag tag = getTagById(tagRow.getInt("id"));
+                        if (!tags.contains(tag)) {
+                            tags.add(tag);
+                        }
                     }
                 });
 
@@ -45,8 +54,8 @@ public class TagManager {
     }
 
     public Tag getTagById(int id) {
-        for (Tag tag:tagList){
-            if(tag.getId() == id) {
+        for (Tag tag : tagList) {
+            if (tag.getId() == id) {
                 return tag;
             }
         }

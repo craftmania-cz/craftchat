@@ -31,7 +31,7 @@ public class ChatGroupManager {
             );
             this.chatGroups.add(chatGroup);
         }
-        
+
         System.out.println("Nacteno celkem " + this.chatGroups.size() + " groupek");
     }
 
