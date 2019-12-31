@@ -27,6 +27,17 @@ public class ChatListener implements Listener {
         Player player = event.getPlayer();
         String message = event.getMessage();
 
+        if (Main.getTagManager().isCreatingTag(player)) {
+            if(message.equalsIgnoreCase("stop")){
+                Main.getTagManager().stopTagCreation(player);
+                event.setCancelled(true);
+                return;
+            }
+            Main.getTagManager().createTag(player, message);
+            event.setCancelled(true);
+            return;
+        }
+
         CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(player);
         ChatGroup chatGroup = craftChatPlayer.getChatGroup();
 

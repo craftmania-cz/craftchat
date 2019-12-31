@@ -60,19 +60,30 @@ public class TagsGUI implements InventoryProvider {
         pagination.setItems(c);
         pagination.setItemsPerPage(36);
 
+        ItemBuilder crateTagItem = new ItemBuilder(Material.EMERALD).setName("§aVytvořit vlastní tag").setLore("", "§7Cena: §e1CT").hideAllFlags();
+        if (type.equals("all")) crateTagItem.setGlowing();
+        ClickableItem createTag = ClickableItem.of(crateTagItem.build(), e -> {
+            Main.getTagManager().startTagCreation(player);
+            player.closeInventory();
+        });
+        contents.set(4, 4, createTag);
 
         ItemBuilder allTagsItem = new ItemBuilder(Material.NAME_TAG).setName("§dVšechny Tagy").hideAllFlags();
         if (type.equals("all")) allTagsItem.setGlowing();
-
         ClickableItem allTags = ClickableItem.of(allTagsItem.build(), e -> {
             Main.getTagManager().openMenu((Player) e.getWhoClicked(), "all");
         });
         contents.set(5, 3, allTags);
 
+        ItemBuilder ctTagsItem = new ItemBuilder(Material.GOLD_NUGGET).setName("§dVytvořené tagy za CT").hideAllFlags();
+        if (type.equals("ct")) ctTagsItem.setGlowing();
+        ClickableItem ctTags = ClickableItem.of(ctTagsItem.build(), e -> {
+            Main.getTagManager().openMenu((Player) e.getWhoClicked(), "ct");
+        });
+        contents.set(5, 4, ctTags);
 
-        ItemBuilder mineTagsItem = new ItemBuilder(Material.PLAYER_HEAD).setName("§dMoje Tagy").hideAllFlags();
+        ItemBuilder mineTagsItem = new ItemBuilder(Material.PLAYER_HEAD).setName("§dMoje zakoupené tagy").hideAllFlags();
         if (type.equals("mine")) mineTagsItem.setGlowing();
-
         ClickableItem mineTags = ClickableItem.of(mineTagsItem.build(), e -> {
             Main.getTagManager().openMenu((Player) e.getWhoClicked(), "mine");
         });

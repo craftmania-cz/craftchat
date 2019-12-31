@@ -127,10 +127,10 @@ public class Main extends JavaPlugin {
         craftChatPlayers.remove(player);
     }
 
-    public void updatePlayer(UUID uuid){
+    public void updatePlayer(UUID uuid) {
         Player player = Bukkit.getPlayer(uuid);
-        if(player == null) {
-            System.out.println("Player not found .. uuid: "  + uuid.toString());
+        if (player == null) {
+            System.out.println("Player not found .. uuid: " + uuid.toString());
             return;
         }
         this.unregisterCraftChatPlayer(player);
