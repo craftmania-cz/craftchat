@@ -5,17 +5,18 @@ import cz.nerdy.craftchat.objects.ChatGroup;
 import cz.nerdy.craftchat.objects.CraftChatPlayer;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.*;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
-import org.bukkit.craftbukkit.libs.org.apache.commons.lang3.ArrayUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerCommandSendEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 
@@ -33,10 +34,9 @@ public class ChatListener implements Listener {
         if (Main.getTagManager().isCreatingTag(player)) {
             if (message.equalsIgnoreCase("stop")) {
                 Main.getTagManager().stopTagCreation(player);
-                event.setCancelled(true);
-                return;
+            } else {
+                Main.getTagManager().createTag(player, message);
             }
-            Main.getTagManager().createTag(player, message);
             event.setCancelled(true);
             return;
         }
@@ -44,7 +44,7 @@ public class ChatListener implements Listener {
         CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(player);
         ChatGroup chatGroup = craftChatPlayer.getChatGroup();
 
-        if (message.startsWith("ú") && craftChatPlayer.isCheckForSlashMistake()) {
+        if (message.startsWith("ú") && message.length() > 1 && craftChatPlayer.isCheckForSlashMistake()) {
             player.sendMessage("");
             player.sendMessage("§7Nepřepsal jsi se? Nechtěl jsi toto napsat jako příkaz? §8(" + message + ")");
             player.sendMessage("");

@@ -35,7 +35,7 @@ public class TagManager {
             blockedTagsPatterns.add(p);
         }
 
-        CraftLibs.getSqlManager().query("SELECT * FROM craftchat_tags WHERE server IS NULL").thenAccept(res -> {
+        CraftLibs.getSqlManager().query("SELECT * FROM craftchat_tags WHERE server IS NULL OR server=?", Main.SERVER).thenAccept(res -> {
             for (DBRow tagRow : res) {
                 this.tagList.add(new Tag(tagRow.getInt("id"), tagRow.getString("name"), tagRow.getInt("price")));
             }
@@ -153,21 +153,18 @@ public class TagManager {
             player.sendMessage("");
             player.sendMessage("§cTag nemuze byt delsi nez 12 znaku!");
             player.sendMessage("");
-            player.closeInventory();
             return false;
         }
         if (tag.contains(" ")) {
             player.sendMessage("");
             player.sendMessage("§cNelze vytvorit tag, ktery obsahuje mezeru!");
             player.sendMessage("");
-            player.closeInventory();
             return false;
         }
         if (tag.contains("&") || tag.contains("§")) {
             player.sendMessage("");
             player.sendMessage("§cNelze vytvorit tag, ktery obsahuje prefix pro barvy!");
             player.sendMessage("");
-            player.closeInventory();
             return false;
         }
         for (Pattern pattern : blockedTagsPatterns) {
@@ -177,7 +174,6 @@ public class TagManager {
                 player.sendMessage("");
                 player.sendMessage("§cTento tag je blokovany, nelze ho vytvorit!");
                 player.sendMessage("");
-                player.closeInventory();
                 return false;
             }
         }
@@ -185,7 +181,6 @@ public class TagManager {
             player.sendMessage("");
             player.sendMessage("§cNelze vytvorit tag, ktery obsahuje specialni znaky!");
             player.sendMessage("");
-            player.closeInventory();
             return false;
         }
 
@@ -204,16 +199,14 @@ public class TagManager {
 
         ChatInfo.info(player, "Vytváření tagu...");
 
-        CraftLibs.getSqlManager().query("INSERT INTO craftchat_tags (server,name,price,description) VALUE(?,?,?,?)", Main.SERVER, tag, 0, "Tag koupený za CraftToken")
+        CraftLibs.getSqlManager().insertAndReturnLastInsertedId("INSERT INTO craftchat_tags (server,name,price,description) VALUE(?,?,?,?)", Main.SERVER, tag, 0, "Tag koupený za CraftToken")
                 .thenAccept(res -> {
-                    CraftLibs.getSqlManager().query("SELECT MAX(id) AS maxId FROM craftchat_tags").thenAccept(res2 -> {
-                        Tag createdTag = new Tag(res2.get(0).getInt("maxId"), tag);
-                        craftChatPlayer.giveTag(createdTag);
+                    Tag createdTag = new Tag(res, tag);
+                    craftChatPlayer.giveTag(createdTag);
 
-                        player.sendMessage("");
-                        player.sendMessage("§aTvuj tag §f" + tag + " §abyl uspesne vytvoren! Nyni si ho aktivuj v §e/tags");
-                        player.sendMessage("");
-                    });
+                    player.sendMessage("");
+                    player.sendMessage("§aTvuj tag §f" + tag + " §abyl uspesne vytvoren! Nyni si ho aktivuj v §e/tags");
+                    player.sendMessage("");
                 });
     }
 }
