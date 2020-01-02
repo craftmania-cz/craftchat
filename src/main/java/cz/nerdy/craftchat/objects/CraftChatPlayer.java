@@ -17,6 +17,7 @@ public class CraftChatPlayer {
     private Tag selectedTag;
     private List<Tag> tags;
     private HashMap<String, String> ignoredPlayers; //nick, uuid
+    private boolean checkForSlashMistake;
 
     public CraftChatPlayer(Player player) {
         this.uuid = player.getUniqueId().toString();
@@ -24,6 +25,8 @@ public class CraftChatPlayer {
         this.chatGroup = Main.getChatGroupManager().getChatGroup(player);
         this.tags = Main.getTagManager().getAllTags(player);
         this.ignoredPlayers = Main.getIgnoreManager().getIgnoredPlayers(uuid);
+
+        this.checkForSlashMistake = true;
     }
 
     public ChatGroup getChatGroup() {
@@ -71,5 +74,13 @@ public class CraftChatPlayer {
     public void addIgnoredPlayer(Player player) {
         this.ignoredPlayers.put(player.getName(), player.getUniqueId().toString());
         CraftLibs.getSqlManager().query("INSERT INTO craftchat_ignores(uuid,ignored_uuid) VALUES(?,?)", this.uuid, player.getUniqueId().toString()).thenAccept(r -> System.out.println("Inserted"));
+    }
+
+    public boolean isCheckForSlashMistake() {
+        return checkForSlashMistake;
+    }
+
+    public void setCheckForSlashMistake(boolean checkForSlashMistake) {
+        this.checkForSlashMistake = checkForSlashMistake;
     }
 }

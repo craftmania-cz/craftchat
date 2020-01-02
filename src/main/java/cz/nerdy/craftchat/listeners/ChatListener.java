@@ -7,11 +7,14 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.*;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.craftbukkit.libs.org.apache.commons.lang3.ArrayUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerCommandSendEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
@@ -28,7 +31,7 @@ public class ChatListener implements Listener {
         String message = event.getMessage();
 
         if (Main.getTagManager().isCreatingTag(player)) {
-            if(message.equalsIgnoreCase("stop")){
+            if (message.equalsIgnoreCase("stop")) {
                 Main.getTagManager().stopTagCreation(player);
                 event.setCancelled(true);
                 return;
@@ -40,6 +43,32 @@ public class ChatListener implements Listener {
 
         CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(player);
         ChatGroup chatGroup = craftChatPlayer.getChatGroup();
+
+        if (message.startsWith("ú") && craftChatPlayer.isCheckForSlashMistake()) {
+            player.sendMessage("");
+            player.sendMessage("§7Nepřepsal jsi se? Nechtěl jsi toto napsat jako příkaz? §8(" + message + ")");
+            player.sendMessage("");
+            player.sendMessage("§8§o(Klikni pro výběr možnosti)");
+            player.playSound(player.getEyeLocation(), Sound.ENTITY_CAT_HISS, 1.0F, 1.0F);
+            TextComponent sendCommand = new TextComponent(TextComponent.fromLegacyText("Chci odeslat příkaz"));
+            sendCommand.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, message.replaceFirst("ú", "/")));
+            sendCommand.setColor(ChatColor.GREEN);
+            player.spigot().sendMessage(sendCommand);
+            sendCommand.setBold(true);
+            player.sendMessage("");
+            TextComponent messageCommand = new TextComponent(TextComponent.fromLegacyText("Chci odeslat jako zprávu"));
+            messageCommand.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, message));
+            messageCommand.setColor(ChatColor.RED);
+            messageCommand.setBold(true);
+            player.spigot().sendMessage(messageCommand);
+            player.sendMessage("");
+
+            craftChatPlayer.setCheckForSlashMistake(false);
+            event.setCancelled(true);
+            return;
+        } else {
+            craftChatPlayer.setCheckForSlashMistake(true);
+        }
 
         HashMap<String, String> replacements = Main.getChatManager().getReplacements();
         if (player.hasPermission("craftchat.replacements")) {
@@ -103,6 +132,16 @@ public class ChatListener implements Listener {
                 continue;
             }
             onlinePlayer.spigot().sendMessage(toSend);
+        }
+    }
+
+    @EventHandler
+    public void onCommand(PlayerCommandPreprocessEvent event) {
+        if (event.getMessage().startsWith("/")) {
+            CraftChatPlayer player = Main.getCraftChatPlayer(event.getPlayer());
+            if (!player.isCheckForSlashMistake()) {
+                player.setCheckForSlashMistake(true);
+            }
         }
     }
 }
