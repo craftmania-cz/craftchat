@@ -1,4 +1,4 @@
-package cz.nerdy.craftchat.objects;
+package cz.nerdy.craftchat.objects.menus;
 
 import cz.craftmania.craftcore.spigot.builders.items.ItemBuilder;
 import cz.craftmania.craftcore.spigot.inventory.builder.ClickableItem;
@@ -8,6 +8,8 @@ import cz.craftmania.craftcore.spigot.inventory.builder.content.Pagination;
 import cz.craftmania.craftcore.spigot.inventory.builder.content.SlotIterator;
 import cz.craftmania.craftcore.spigot.messages.chat.ChatInfo;
 import cz.nerdy.craftchat.Main;
+import cz.nerdy.craftchat.objects.CraftChatPlayer;
+import cz.nerdy.craftchat.objects.Tag;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -60,48 +62,27 @@ public class TagsGUI implements InventoryProvider {
         pagination.setItems(c);
         pagination.setItemsPerPage(36);
 
-        ItemBuilder crateTagItem = new ItemBuilder(Material.EMERALD).setName("§aVytvořit vlastní tag").setLore("", "§7Cena: §e1CT").hideAllFlags();
-        if (type.equals("all")) crateTagItem.setGlowing();
-        ClickableItem createTag = ClickableItem.of(crateTagItem.build(), e -> {
-            Main.getTagManager().startTagCreation(player);
-            player.closeInventory();
-        });
-        contents.set(4, 4, createTag);
+        ItemStack blueGlassItem = new ItemBuilder(Material.BLUE_STAINED_GLASS_PANE).setName("").hideAllFlags().build();
+        ClickableItem blueGlass = ClickableItem.empty(blueGlassItem);
+        contents.fillRow(0, blueGlass);
+        contents.fillRow(5, blueGlass);
 
-        ItemBuilder allTagsItem = new ItemBuilder(Material.NAME_TAG).setName("§dVšechny Tagy").hideAllFlags();
-        if (type.equals("all")) allTagsItem.setGlowing();
-        ClickableItem allTags = ClickableItem.of(allTagsItem.build(), e -> {
-            Main.getTagManager().openMenu((Player) e.getWhoClicked(), "all");
-        });
-        contents.set(5, 3, allTags);
-
-        ItemBuilder ctTagsItem = new ItemBuilder(Material.GOLD_NUGGET).setName("§dVytvořené tagy za CT").hideAllFlags();
-        if (type.equals("ct")) ctTagsItem.setGlowing();
-        ClickableItem ctTags = ClickableItem.of(ctTagsItem.build(), e -> {
-            Main.getTagManager().openMenu((Player) e.getWhoClicked(), "ct");
-        });
-        contents.set(5, 4, ctTags);
-
-        ItemBuilder mineTagsItem = new ItemBuilder(Material.PLAYER_HEAD).setName("§dMoje zakoupené tagy").hideAllFlags();
-        if (type.equals("mine")) mineTagsItem.setGlowing();
-        ClickableItem mineTags = ClickableItem.of(mineTagsItem.build(), e -> {
-            Main.getTagManager().openMenu((Player) e.getWhoClicked(), "mine");
-        });
-        contents.set(5, 5, mineTags);
-
+        ItemStack bookInfoItem = new ItemBuilder(Material.BOOK).setName("MOJE TAGY //TODO UPRAVIT").hideAllFlags().build();
+        ClickableItem bookInfo = ClickableItem.empty(bookInfoItem);
+        contents.set(0, 4, bookInfo);
 
         if (items.size() > 0 && !pagination.isLast()) {
-            contents.set(5, 7, ClickableItem.of(new ItemBuilder(Material.PAPER).setName("§f§lDalsi stranka").build(), e -> {
+            contents.set(5, 7, ClickableItem.of(new ItemBuilder(Material.ARROW).setName("§f§lDalsi stranka").build(), e -> {
                 contents.inventory().open(player, pagination.next().getPage());
             }));
         }
         if (!pagination.isFirst()) {
-            contents.set(5, 1, ClickableItem.of(new ItemBuilder(Material.PAPER).setName("§f§lPredchozi stranka").build(), e -> {
+            contents.set(5, 1, ClickableItem.of(new ItemBuilder(Material.ARROW).setName("§f§lPredchozi stranka").build(), e -> {
                 contents.inventory().open(player, pagination.previous().getPage());
             }));
         }
 
-        SlotIterator slotIterator = contents.newIterator(SlotIterator.Type.HORIZONTAL, 0, 0);
+        SlotIterator slotIterator = contents.newIterator(SlotIterator.Type.HORIZONTAL, 1, 0);
         slotIterator = slotIterator.allowOverride(false);
         pagination.addToIterator(slotIterator);
     }

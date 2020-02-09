@@ -120,7 +120,7 @@ public class ChatListener implements Listener {
 
         BaseComponent[] toSend = {prefixComponent, nameComponent, space, suffixComponent, space, new TextComponent(TextComponent.fromLegacyText(message))};
 
-        event.setFormat(ChatColor.stripColor(prefix + " " + player.getName() + ": " + event.getMessage())); // pro konzoli
+        event.setFormat(prefix + " " + player.getName() + ": " + event.getMessage()); // pro konzoli
 
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             if (!event.getRecipients().contains(onlinePlayer)) {

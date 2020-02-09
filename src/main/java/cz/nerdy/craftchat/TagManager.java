@@ -8,13 +8,13 @@ import cz.craftmania.craftlibs.CraftLibs;
 import cz.craftmania.craftlibs.sql.DBRow;
 import cz.nerdy.craftchat.objects.CraftChatPlayer;
 import cz.nerdy.craftchat.objects.Tag;
-import cz.nerdy.craftchat.objects.TagsGUI;
+import cz.nerdy.craftchat.objects.menus.TagsGUI;
+import cz.nerdy.craftchat.objects.menus.TagsMainMenuGUI;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -99,6 +99,10 @@ public class TagManager {
         }
 
         SmartInventory.builder().size(6, 9).title("Seznam tagů").provider(new TagsGUI(tags, type)).build().open(player);
+    }
+
+    public void openMainMenu(Player player) {
+        SmartInventory.builder().size(6, 9).title("Tagy").provider(new TagsMainMenuGUI()).build().open(player);
     }
 
     public boolean buyTag(Player player, Tag tag) {

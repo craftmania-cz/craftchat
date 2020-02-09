@@ -29,7 +29,7 @@ public class TagsCommand implements CommandExecutor {
         if (args.length > 0) {
             type = args[0];
         }
-        Main.getTagManager().openMenu(player, type);
+        Main.getTagManager().openMainMenu(player);
 
         return true;
     }
