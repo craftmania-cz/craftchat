@@ -1,5 +1,8 @@
 package cz.nerdy.craftchat;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import cz.craftmania.craftcore.spigot.inventory.builder.SmartInventory;
 import cz.craftmania.craftcore.spigot.messages.chat.ChatInfo;
 import cz.craftmania.crafteconomy.api.CraftCoinsAPI;
@@ -15,6 +18,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -47,7 +51,9 @@ public class TagManager {
         return this.tagList;
     }
 
-    public List<Tag> getAllTags(Player player) {
+    public CompletableFuture<List<Tag>> getAllTags(Player player) {
+        CompletableFuture<List<Tag>> completableFuture = new CompletableFuture<>();
+
         List<Tag> tags = new ArrayList<>();
         for (Tag tag : this.getAllTags()) {
             if (player.hasPermission("deluxetags.tag." + tag.getPrefix().toLowerCase())) {
@@ -58,15 +64,18 @@ public class TagManager {
         CraftLibs.getSqlManager().query("SELECT t.id FROM craftchat_player_tags pt INNER JOIN craftchat_tags t ON t.id=pt.tag_id " +
                 "WHERE pt.uuid=? AND t.server IS NULL OR t.server=?", player.getUniqueId().toString(), Main.SERVER)
                 .thenAccept(res -> {
+                    List<Tag> dbTags = new ArrayList<>();
                     for (DBRow tagRow : res) {
                         Tag tag = getTagById(tagRow.getInt("id"));
                         if (!tags.contains(tag)) {
-                            tags.add(tag);
+                            dbTags.add(tag);
                         }
                     }
+                    tags.addAll(dbTags);
+                    completableFuture.complete(tags);
                 });
 
-        return tags;
+        return completableFuture;
     }
 
     public Tag getTagById(int id) {
@@ -78,9 +87,27 @@ public class TagManager {
         return null;
     }
 
-    public Tag getPlayersSelectedTag(Player player) {
-        //todo vzit odnekud z db
-        return null;
+    public void fetchSelectedTag(CraftChatPlayer craftChatPlayer, Player player) {
+        //ChatInfo.info(player, "Načítání předchozího tagu..");
+        //CraftLibs.getSqlManager().query("SELECT JSON_EXTRACT(`tags`, CONCAT('$.','survival')) as tag_id FROM player_profile WHERE uuid=?", TODO pomocí SQL jsonu
+        //CraftLibs.getSqlManager().query("SELECT JSON_EXTRACT(`tags`, CONCAT('$.','survival')) AS tags FROM player_profile WHERE nick='Nerdy42'"
+        CraftLibs.getSqlManager().query("SELECT tags FROM player_profile WHERE uuid=?", player.getUniqueId().toString()
+        ).thenAccept(res -> {
+            if (res.size() > 0) {
+                JsonObject jsonObject = new JsonParser().parse(res.get(0).getString("tags")).getAsJsonObject();
+                int tagId = jsonObject.get(Main.SERVER).getAsInt();
+
+                if (tagId == 0) {
+                    return;
+                }
+                Tag tag = this.getTagById(tagId);
+                ChatInfo.success(player, "Předchozí tag načten §7(" + tag.getPrefix() + ")");
+
+                craftChatPlayer.setSelectedTagWithoutSavingIntoDatabase(tag);
+            } else {
+                System.out.println("res size je NULA");
+            }
+        });
     }
 
     public void openMenu(Player player, String type) {

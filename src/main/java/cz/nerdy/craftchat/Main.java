@@ -130,7 +130,7 @@ public class Main extends JavaPlugin {
     public void updatePlayer(UUID uuid) {
         Player player = Bukkit.getPlayer(uuid);
         if (player == null) {
-            System.out.println("Player not found .. uuid: " + uuid.toString());
+            System.out.println("[CraftChat] updating player: Player not found .. uuid: " + uuid.toString());
             return;
         }
         this.unregisterCraftChatPlayer(player);

@@ -21,10 +21,15 @@ public class CraftChatPlayer {
 
     public CraftChatPlayer(Player player) {
         this.uuid = player.getUniqueId().toString();
-        this.selectedTag = Main.getTagManager().getPlayersSelectedTag(player);
         this.chatGroup = Main.getChatGroupManager().getChatGroup(player);
-        this.tags = Main.getTagManager().getAllTags(player);
         this.ignoredPlayers = Main.getIgnoreManager().getIgnoredPlayers(uuid);
+
+
+        Main.getTagManager().getAllTags(player).thenAccept(res -> {
+            this.tags = res;
+            Main.getTagManager().fetchSelectedTag(this, player);
+        });
+
 
         this.checkForSlashMistake = true;
     }
@@ -50,6 +55,11 @@ public class CraftChatPlayer {
     }
 
     public void setSelectedTag(Tag tag) {
+        this.selectedTag = tag;
+        CraftLibs.getSqlManager().query("UPDATE player_profile SET tags = JSON_SET(tags, '$." + Main.SERVER + "', ?) WHERE uuid=?", tag.getId(), this.uuid);
+    }
+
+    public void setSelectedTagWithoutSavingIntoDatabase(Tag tag) {
         this.selectedTag = tag;
     }
 
