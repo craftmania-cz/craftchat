@@ -6,7 +6,7 @@ apply plugin: 'java'
 apply plugin: 'maven'
 
 group 'cz.nerdy.craftchat'
-version '1.0.0'
+version '1.0.1'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -31,6 +31,7 @@ dependencies {
         exclude group: 'net.md-5'
     }
     compileOnly name: 'spigot-1.14.4'
+    compileOnly name: 'spigot-1.15.2'
     compileOnly name: 'PlaceholderAPI-2.10.4'
 
     // CM Plugins
