@@ -11,6 +11,7 @@ import cz.craftmania.craftlibs.CraftLibs;
 import cz.craftmania.craftlibs.sql.DBRow;
 import cz.nerdy.craftchat.objects.CraftChatPlayer;
 import cz.nerdy.craftchat.objects.Tag;
+import cz.nerdy.craftchat.objects.TagMenuType;
 import cz.nerdy.craftchat.objects.menus.TagsGUI;
 import cz.nerdy.craftchat.objects.menus.TagsMainMenuGUI;
 import org.bukkit.Sound;
@@ -110,22 +111,30 @@ public class TagManager {
         });
     }
 
-    public void openMenu(Player player, String type) {
+    public void openMenu(Player player, TagMenuType type) {
         List<Tag> tags = null;
+        String title = null;
         CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(player);
 
         switch (type) {
-            case "mine": // veškeré zakoupené tagy
-                tags = craftChatPlayer.getTags();
+            case BUY:
+                tags = getAllTags();
+                title = "Nákup tagů";
                 break;
-            case "ct": // tagy vytvořené za CT
+            case OWNED: // veškeré zakoupené tagy
+                tags = craftChatPlayer.getTags();
+                title = "Vlastněné tagy";
+                break;
+            case SELF_CREATED: // tagy vytvořené za CT
                 tags = craftChatPlayer.getTags();  // TODO tagy za CT
+                title = "Vytvořené tagy";
                 break;
             default:
+                title = "Všechny tagy";
                 tags = getAllTags();
         }
 
-        SmartInventory.builder().size(6, 9).title("Seznam tagů").provider(new TagsGUI(tags, type)).build().open(player);
+        SmartInventory.builder().size(6, 9).title(title).provider(new TagsGUI(tags, type)).build().open(player);
     }
 
     public void openMainMenu(Player player) {

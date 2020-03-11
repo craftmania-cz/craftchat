@@ -10,6 +10,7 @@ import cz.craftmania.craftcore.spigot.messages.chat.ChatInfo;
 import cz.nerdy.craftchat.Main;
 import cz.nerdy.craftchat.objects.CraftChatPlayer;
 import cz.nerdy.craftchat.objects.Tag;
+import cz.nerdy.craftchat.objects.TagMenuType;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -20,11 +21,13 @@ import java.util.List;
 public class TagsGUI implements InventoryProvider {
 
     private List<Tag> tags;
-    private String type;
+    private TagMenuType type;
+    private ItemStack menuMainItem;
 
-    public TagsGUI(List<Tag> tags, String type) {
+    public TagsGUI(List<Tag> tags, TagMenuType type) {
         this.tags = tags;
         this.type = type;
+        this.menuMainItem = resolveTitle(type);
     }
 
     @Override
@@ -38,7 +41,7 @@ public class TagsGUI implements InventoryProvider {
         for (Tag tag : this.tags) {
             boolean hasTag = craftChatPlayer.hasTag(tag);
             String[] lore = hasTag ?
-                    new String[]{"", "§7Klikni pro nastavení"} : new String[]{"", "§7Cena: §e" + tag.getPrice() + "CC"};
+                    new String[]{"", "§7Klikni pro nastavení"} : new String[]{"§7Cena: §e" + tag.getPrice() + "CC"};
 
             ItemStack item = new ItemBuilder(Material.NAME_TAG).setName(tag.getPrefix())
                     .setLore(lore).hideAllFlags().build();
@@ -67,17 +70,17 @@ public class TagsGUI implements InventoryProvider {
         contents.fillRow(0, blueGlass);
         contents.fillRow(5, blueGlass);
 
-        ItemStack bookInfoItem = new ItemBuilder(Material.BOOK).setName("MOJE TAGY //TODO UPRAVIT").hideAllFlags().build();
+        ItemStack bookInfoItem = this.menuMainItem;
         ClickableItem bookInfo = ClickableItem.empty(bookInfoItem);
         contents.set(0, 4, bookInfo);
 
         if (items.size() > 0 && !pagination.isLast()) {
-            contents.set(5, 7, ClickableItem.of(new ItemBuilder(Material.ARROW).setName("§f§lDalsi stranka").build(), e -> {
+            contents.set(5, 7, ClickableItem.of(new ItemBuilder(Material.ARROW).setName("§f§lDalší stránka").build(), e -> {
                 contents.inventory().open(player, pagination.next().getPage());
             }));
         }
         if (!pagination.isFirst()) {
-            contents.set(5, 1, ClickableItem.of(new ItemBuilder(Material.ARROW).setName("§f§lPredchozi stranka").build(), e -> {
+            contents.set(5, 1, ClickableItem.of(new ItemBuilder(Material.ARROW).setName("§f§lPředchozí stránka").build(), e -> {
                 contents.inventory().open(player, pagination.previous().getPage());
             }));
         }
@@ -90,5 +93,22 @@ public class TagsGUI implements InventoryProvider {
     @Override
     public void update(Player player, InventoryContents contents) {
 
+    }
+
+    private ItemStack resolveTitle(TagMenuType type){
+        switch (type) {
+            case BUY:
+                return new ItemBuilder(Material.BOOK).setName("§d§lZakoupit tag").setLore("§7Zde je seznam tagů", "§7které si můžeš zakoupit!").hideAllFlags().build();
+            case OWNED:
+                return new ItemBuilder(Material.BOOK).setName("§e§lZakoupené tagy").setLore("§7Zde je seznam tagů", "§7které jsi si zakoupil!").hideAllFlags().build();
+            case ACHIEVEMENT:
+                return new ItemBuilder(Material.BOOK).setName("§b§lAchievement tagy").setLore("§7Zde je seznam tagů", "§7které se dají získat", "§7plněním achievementů.").hideAllFlags().build();
+            case SELF_CREATED:
+                return new ItemBuilder(Material.BOOK).setName("§e§lVytvořené tagy").setLore("§7Zde je seznam tagů", "§7jsi si vytvořil(a).").hideAllFlags().build();
+            case SPECIAL:
+                return new ItemBuilder(Material.BOOK).setName("§c§lSpeciální tagy").setLore("§7Zde je seznam tagů", "§7které jsou speciální nebo limitované!").hideAllFlags().build();
+            default:
+                return new ItemBuilder(Material.BOOK).setName("§7Default book").build();
+        }
     }
 }
