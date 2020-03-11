@@ -39,13 +39,7 @@ public class TagsMainMenuGUI implements InventoryProvider {
         ClickableItem achievementTags = ClickableItem.of(achievementTagsItem.build(), e -> {
             Main.getTagManager().openMenu((Player) e.getWhoClicked(), TagMenuType.ACHIEVEMENT);
         });
-        contents.set(2, 4, achievementTags);
-
-        ItemBuilder ctTagsItem = new ItemBuilder(Material.BOOK).setName("§e§lVytvořené tagy za CT").hideAllFlags();
-        ClickableItem ctTags = ClickableItem.of(ctTagsItem.build(), e -> {
-            Main.getTagManager().openMenu((Player) e.getWhoClicked(), TagMenuType.SELF_CREATED);
-        });
-        contents.set(2, 5, ctTags);
+        contents.set(2, 5, achievementTags);
 
         ItemBuilder specialTagsItem = new ItemBuilder(Material.NETHER_STAR).setName("§c§lSpeciální tagy").hideAllFlags();
         ClickableItem specialTags = ClickableItem.of(specialTagsItem.build(), e -> {

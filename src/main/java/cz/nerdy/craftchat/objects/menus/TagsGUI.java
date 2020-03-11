@@ -25,11 +25,13 @@ public class TagsGUI implements InventoryProvider {
     private TagMenuType type;
     private ItemStack menuMainItem;
     private TagManager tagManager = new TagManager();
+    private boolean showOnlyOwned;
 
-    public TagsGUI(List<Tag> tags, TagMenuType type) {
+    public TagsGUI(List<Tag> tags, TagMenuType type, boolean showOnlyOwned) {
         this.tags = tags;
         this.type = type;
         this.menuMainItem = resolveTitle(type);
+        this.showOnlyOwned = showOnlyOwned;
     }
 
     @Override
@@ -42,24 +44,29 @@ public class TagsGUI implements InventoryProvider {
 
         for (Tag tag : this.tags) {
             boolean hasTag = craftChatPlayer.hasTag(tag);
-            String[] lore = hasTag ?
-                    new String[]{"§7Klikni pro nastavení"} : new String[]{"§7Cena: §e" + tag.getPrice() + "CC"};
-
-            ItemStack item = new ItemBuilder(Material.NAME_TAG).setName(tag.getPrefix())
-                    .setLore(lore).hideAllFlags().build();
-            items.add(ClickableItem.of(item, e -> {
-                if (hasTag) {
+            if (showOnlyOwned && hasTag) {
+                String[] lore = new String[]{"§7Klikni pro nastavení"};
+                ItemStack item = new ItemBuilder(Material.NAME_TAG).setName(tag.getPrefix()).setLore(lore).hideAllFlags().build();
+                items.add(ClickableItem.of(item, e -> {
                     craftChatPlayer.setSelectedTag(tag);
                     ChatInfo.info(player, "Nastavil jsi si tag: " + tag.getPrefix());
-                } else {
+                    player.closeInventory();
+                }));
+            } else {
+                if (hasTag) {
+                    continue;
+                }
+                String[] lore = new String[]{"§7Cena: §e" + tag.getPrice() + "CC"};
+                ItemStack item = new ItemBuilder(Material.NAME_TAG).setName(tag.getPrefix()).setLore(lore).hideAllFlags().build();
+                items.add(ClickableItem.of(item, e -> {
                     if (Main.getTagManager().buyTag(player, tag)) {
                         ChatInfo.success(player, "Tag " + tag.getPrefix() + " byl úspěšně zakoupen");
                     } else {
                         ChatInfo.error(player, "Nemáš dostatek CC k nákupu tohoto tagu");
                     }
-                }
-                player.closeInventory();
-            }));
+                    player.closeInventory();
+                }));
+            }
         }
 
         ClickableItem[] c = new ClickableItem[items.size()];

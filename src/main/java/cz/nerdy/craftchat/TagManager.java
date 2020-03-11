@@ -114,27 +114,31 @@ public class TagManager {
     public void openMenu(Player player, TagMenuType type) {
         List<Tag> tags = null;
         String title = null;
+        boolean showOnlyOwned = false;
         CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(player);
 
         switch (type) {
             case BUY:
                 tags = getAllTags();
                 title = "Nákup tagů";
+                showOnlyOwned = false;
                 break;
             case OWNED: // veškeré zakoupené tagy
                 tags = craftChatPlayer.getTags();
                 title = "Vlastněné tagy";
+                showOnlyOwned = true;
                 break;
             case SELF_CREATED: // tagy vytvořené za CT
                 tags = craftChatPlayer.getTags();  // TODO tagy za CT
                 title = "Vytvořené tagy";
+                showOnlyOwned = true;
                 break;
             default:
                 title = "Všechny tagy";
                 tags = getAllTags();
         }
 
-        SmartInventory.builder().size(6, 9).title(title).provider(new TagsGUI(tags, type)).build().open(player);
+        SmartInventory.builder().size(6, 9).title(title).provider(new TagsGUI(tags, type, showOnlyOwned)).build().open(player);
     }
 
     public void openMainMenu(Player player) {
