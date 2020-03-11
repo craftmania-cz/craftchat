@@ -56,7 +56,7 @@ public class CraftChatPlayer {
 
     public void setSelectedTag(Tag tag) {
         this.selectedTag = tag;
-        CraftLibs.getSqlManager().query("UPDATE player_profile SET tags = JSON_SET(tags, '$." + Main.SERVER + "', ?) WHERE uuid=?", tag.getId(), this.uuid);
+        CraftLibs.getSqlManager().query("UPDATE player_profile SET tags = JSON_REPLACE(tags, '$." + Main.SERVER + "', ?) WHERE uuid=?", tag.getId(), this.uuid);
     }
 
     public void setSelectedTagWithoutSavingIntoDatabase(Tag tag) {
