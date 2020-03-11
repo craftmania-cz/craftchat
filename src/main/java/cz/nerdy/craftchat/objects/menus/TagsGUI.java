@@ -43,6 +43,9 @@ public class TagsGUI implements InventoryProvider {
         CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(player);
 
         for (Tag tag : this.tags) {
+            if (tag == null) {
+                continue;
+            }
             boolean hasTag = craftChatPlayer.hasTag(tag);
             if (showOnlyOwned && hasTag) {
                 String[] lore = new String[]{"§7Klikni pro nastavení"};
