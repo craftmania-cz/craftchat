@@ -8,6 +8,7 @@ import cz.craftmania.craftcore.spigot.inventory.builder.content.Pagination;
 import cz.craftmania.craftcore.spigot.inventory.builder.content.SlotIterator;
 import cz.craftmania.craftcore.spigot.messages.chat.ChatInfo;
 import cz.nerdy.craftchat.Main;
+import cz.nerdy.craftchat.TagManager;
 import cz.nerdy.craftchat.objects.CraftChatPlayer;
 import cz.nerdy.craftchat.objects.Tag;
 import cz.nerdy.craftchat.objects.TagMenuType;
@@ -23,6 +24,7 @@ public class TagsGUI implements InventoryProvider {
     private List<Tag> tags;
     private TagMenuType type;
     private ItemStack menuMainItem;
+    private TagManager tagManager = new TagManager();
 
     public TagsGUI(List<Tag> tags, TagMenuType type) {
         this.tags = tags;
@@ -41,7 +43,7 @@ public class TagsGUI implements InventoryProvider {
         for (Tag tag : this.tags) {
             boolean hasTag = craftChatPlayer.hasTag(tag);
             String[] lore = hasTag ?
-                    new String[]{"", "§7Klikni pro nastavení"} : new String[]{"§7Cena: §e" + tag.getPrice() + "CC"};
+                    new String[]{"§7Klikni pro nastavení"} : new String[]{"§7Cena: §e" + tag.getPrice() + "CC"};
 
             ItemStack item = new ItemBuilder(Material.NAME_TAG).setName(tag.getPrefix())
                     .setLore(lore).hideAllFlags().build();
@@ -65,7 +67,7 @@ public class TagsGUI implements InventoryProvider {
         pagination.setItems(c);
         pagination.setItemsPerPage(36);
 
-        ItemStack blueGlassItem = new ItemBuilder(Material.BLUE_STAINED_GLASS_PANE).setName("").hideAllFlags().build();
+        ItemStack blueGlassItem = new ItemBuilder(Material.BLUE_STAINED_GLASS_PANE).setName("§7").hideAllFlags().build();
         ClickableItem blueGlass = ClickableItem.empty(blueGlassItem);
         contents.fillRow(0, blueGlass);
         contents.fillRow(5, blueGlass);
@@ -84,6 +86,11 @@ public class TagsGUI implements InventoryProvider {
                 contents.inventory().open(player, pagination.previous().getPage());
             }));
         }
+
+        ItemStack backItem = new ItemBuilder(Material.SPECTRAL_ARROW).setName("§eZpět do menu").hideAllFlags().build();
+        contents.set(5, 4, ClickableItem.of(backItem, e -> {
+            tagManager.openMainMenu((Player) e.getWhoClicked());
+        }));
 
         SlotIterator slotIterator = contents.newIterator(SlotIterator.Type.HORIZONTAL, 1, 0);
         slotIterator = slotIterator.allowOverride(false);
