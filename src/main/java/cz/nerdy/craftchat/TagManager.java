@@ -133,9 +133,17 @@ public class TagManager {
                 title = "Vytvořené tagy";
                 showOnlyOwned = true;
                 break;
+            case ACHIEVEMENT:
+                tags = new ArrayList<>();
+                title = "Achievement tagy";
+                showOnlyOwned = true;
+            case SPECIAL:
+                tags = new ArrayList<>();
+                title = "Special tagy";
+                showOnlyOwned = true;
             default:
                 title = "Všechny tagy";
-                tags = getAllTags();
+                tags = new ArrayList<>();
         }
 
         SmartInventory.builder().size(6, 9).title(title).provider(new TagsGUI(tags, type, showOnlyOwned)).build().open(player);
