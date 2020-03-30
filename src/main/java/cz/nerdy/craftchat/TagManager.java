@@ -56,11 +56,11 @@ public class TagManager {
         CompletableFuture<List<Tag>> completableFuture = new CompletableFuture<>();
 
         List<Tag> tags = new ArrayList<>();
-        for (Tag tag : this.getAllTags()) {
+        /*for (Tag tag : this.getAllTags()) {
             if (player.hasPermission("deluxetags.tag." + tag.getPrefix().toLowerCase())) {
                 tags.add(tag);
             }
-        }
+        }*/
 
         CraftLibs.getSqlManager().query("SELECT t.id FROM craftchat_player_tags pt INNER JOIN craftchat_tags t ON t.id=pt.tag_id " +
                 "WHERE pt.uuid=? AND t.server IS NULL OR t.server=?", player.getUniqueId().toString(), Main.SERVER)

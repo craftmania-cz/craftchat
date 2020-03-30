@@ -5,6 +5,7 @@ import cz.nerdy.craftchat.commands.TagsCommand;
 import cz.nerdy.craftchat.listeners.ChatListener;
 import cz.nerdy.craftchat.listeners.PlayerListener;
 import cz.nerdy.craftchat.nms.PluginCompatibility;
+import cz.nerdy.craftchat.nms.Spigot_1_12_2_Compatibility;
 import cz.nerdy.craftchat.nms.Spigot_1_14_4_Compatibility;
 import cz.nerdy.craftchat.nms.Spigot_1_15_2_Compatibility;
 import cz.nerdy.craftchat.objects.ChatGroup;
@@ -92,6 +93,9 @@ public class Main extends JavaPlugin {
             return false;
         }
         switch (s) {
+            case "v1_12_R1":
+                this.pluginCompatibility = new Spigot_1_12_2_Compatibility();
+                break;
             case "v1_14_R1":
                 this.pluginCompatibility = new Spigot_1_14_4_Compatibility();
                 break;
