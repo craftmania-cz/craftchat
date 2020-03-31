@@ -104,6 +104,10 @@ public class CraftChatPlayer {
     }
 
     public void loadChatColor() {
+        if (!this.player.hasPermission("craftchat.chatcolor")) {
+            this.chatColor = ChatColor.WHITE;
+            return;
+        }
         CraftLibs.getSqlManager().query("SELECT chatcolor FROM player_settings WHERE nick = ?", this.player.getName()).thenAccept(res -> {
             for (DBRow row : res) {
                 this.chatColor = Colors.resolveColorById(row.getInt("chatcolor"));

@@ -37,7 +37,7 @@ public class ChatColorCommand implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        if (player.hasPermission("craftmanager.chatcolor")) {
+        if (player.hasPermission("craftchat.chatcolor")) {
             SmartInventory.builder().size(6, 9).title("Změna barvy psaní").provider(new ChatColorMenu()).build().open(player);
             return true;
         } else {
