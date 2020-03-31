@@ -118,7 +118,10 @@ public class ChatListener implements Listener {
 
         TextComponent suffixComponent = new TextComponent(TextComponent.fromLegacyText(chatGroup.getSuffix()));
 
-        BaseComponent[] toSend = {prefixComponent, nameComponent, space, suffixComponent, space, new TextComponent(TextComponent.fromLegacyText(message))};
+        TextComponent playerMessage = new TextComponent();
+        playerMessage.addExtra(craftChatPlayer.getSelectedChatColor() + message);
+
+        BaseComponent[] toSend = {prefixComponent, nameComponent, space, suffixComponent, space, playerMessage};
 
         event.setFormat(prefix + " %s: %s"); // pro konzoli
 

@@ -1,8 +1,11 @@
 package cz.nerdy.craftchat.objects;
 
 import cz.craftmania.craftlibs.CraftLibs;
+import cz.craftmania.craftlibs.sql.DBRow;
 import cz.nerdy.craftchat.Main;
+import cz.nerdy.craftchat.utils.Colors;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -13,23 +16,25 @@ import java.util.concurrent.ExecutionException;
 public class CraftChatPlayer {
 
     private String uuid;
+    private Player player;
     private ChatGroup chatGroup;
     private Tag selectedTag;
     private List<Tag> tags;
     private HashMap<String, String> ignoredPlayers; //nick, uuid
     private boolean checkForSlashMistake;
+    private ChatColor chatColor = ChatColor.WHITE; // Pro VIP
 
     public CraftChatPlayer(Player player) {
         this.uuid = player.getUniqueId().toString();
+        this.player = player;
         this.chatGroup = Main.getChatGroupManager().getChatGroup(player);
         this.ignoredPlayers = Main.getIgnoreManager().getIgnoredPlayers(uuid);
-
+        this.loadChatColor();
 
         Main.getTagManager().getAllTags(player).thenAccept(res -> {
             this.tags = res;
             Main.getTagManager().fetchSelectedTag(this, player);
         });
-
 
         this.checkForSlashMistake = true;
     }
@@ -44,6 +49,10 @@ public class CraftChatPlayer {
 
     public List<Tag> getTags() {
         return tags;
+    }
+
+    public ChatColor getSelectedChatColor() {
+        return this.chatColor;
     }
 
     public String getPrefix() {
@@ -92,5 +101,22 @@ public class CraftChatPlayer {
 
     public void setCheckForSlashMistake(boolean checkForSlashMistake) {
         this.checkForSlashMistake = checkForSlashMistake;
+    }
+
+    public void loadChatColor() {
+        CraftLibs.getSqlManager().query("SELECT chatcolor FROM player_settings WHERE nick = ?", this.player.getName()).thenAccept(res -> {
+            for (DBRow row : res) {
+                this.chatColor = Colors.resolveColorById(row.getInt("chatcolor"));
+            }
+        });
+    }
+
+    public void setChatColor(ChatColor color, int id) {
+        this.chatColor = color;
+        CraftLibs.getSqlManager().query("UPDATE player_settings SET chatcolor = " + id + " WHERE nick = ?", this.player.getName());
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }

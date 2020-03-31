@@ -1,5 +1,6 @@
 package cz.nerdy.craftchat;
 
+import cz.nerdy.craftchat.commands.ChatColorCommand;
 import cz.nerdy.craftchat.commands.IgnoreCommand;
 import cz.nerdy.craftchat.commands.TagsCommand;
 import cz.nerdy.craftchat.listeners.ChatListener;
@@ -55,6 +56,7 @@ public class Main extends JavaPlugin {
         TagsCommand playerCommands = new TagsCommand();
         getCommand("tags").setExecutor(playerCommands);
         getCommand("ignore").setExecutor(new IgnoreCommand());
+        getCommand("chatcolor").setExecutor(new ChatColorCommand());
 
         SERVER = getConfig().getString("server");
 
