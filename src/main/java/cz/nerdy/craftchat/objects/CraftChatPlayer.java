@@ -108,6 +108,10 @@ public class CraftChatPlayer {
             this.chatColor = ChatColor.WHITE;
             return;
         }
+        if (this.player.hasPermission("craftchat.chatcolor.at")) {
+            this.chatColor = ChatColor.YELLOW;
+            return;
+        }
         CraftLibs.getSqlManager().query("SELECT chatcolor FROM player_settings WHERE nick = ?", this.player.getName()).thenAccept(res -> {
             for (DBRow row : res) {
                 this.chatColor = Colors.resolveColorById(row.getInt("chatcolor"));
@@ -116,6 +120,10 @@ public class CraftChatPlayer {
     }
 
     public void setChatColor(ChatColor color, int id) {
+        if (this.player.hasPermission("craftchat.chatcolor.at")) {
+            this.chatColor = ChatColor.YELLOW;
+            return;
+        }
         this.chatColor = color;
         CraftLibs.getSqlManager().query("UPDATE player_settings SET chatcolor = " + id + " WHERE nick = ?", this.player.getName());
     }
