@@ -18,6 +18,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.regex.Matcher;
@@ -63,7 +64,7 @@ public class TagManager {
         }
 
         CraftLibs.getSqlManager().query("SELECT t.id FROM craftchat_player_tags pt INNER JOIN craftchat_tags t ON t.id=pt.tag_id " +
-                "WHERE pt.uuid=? AND t.server IS NULL OR t.server=?", player.getUniqueId().toString(), Main.SERVER)
+                "WHERE pt.uuid=?", player.getUniqueId().toString())
                 .thenAccept(res -> {
                     List<Tag> dbTags = new ArrayList<>();
                     for (DBRow tagRow : res) {
