@@ -41,7 +41,7 @@ public class TagManager {
             blockedTagsPatterns.add(p);
         }
 
-        CraftLibs.getSqlManager().query("SELECT * FROM craftchat_tags WHERE server IS NULL OR server=?", Main.SERVER).thenAccept(res -> {
+        CraftLibs.getSqlManager().query("SELECT * FROM craftchat_tags WHERE server IS NULL OR server=?", Main.SERVER).thenAcceptAsync(res -> {
             for (DBRow tagRow : res) {
                 this.tagList.add(new Tag(tagRow.getInt("id"), tagRow.getString("name"), tagRow.getInt("price")));
             }
@@ -65,7 +65,7 @@ public class TagManager {
 
         CraftLibs.getSqlManager().query("SELECT t.id FROM craftchat_player_tags pt INNER JOIN craftchat_tags t ON t.id=pt.tag_id " +
                 "WHERE pt.uuid=?", player.getUniqueId().toString())
-                .thenAccept(res -> {
+                .thenAcceptAsync(res -> {
                     List<Tag> dbTags = new ArrayList<>();
                     for (DBRow tagRow : res) {
                         Tag tag = getTagById(tagRow.getInt("id"));
@@ -94,7 +94,7 @@ public class TagManager {
         //CraftLibs.getSqlManager().query("SELECT JSON_EXTRACT(`tags`, CONCAT('$.','survival')) as tag_id FROM player_profile WHERE uuid=?", TODO pomocí SQL jsonu
         //CraftLibs.getSqlManager().query("SELECT JSON_EXTRACT(`tags`, CONCAT('$.','survival')) AS tags FROM player_profile WHERE nick='Nerdy42'"
         CraftLibs.getSqlManager().query("SELECT tags FROM player_profile WHERE uuid=?", player.getUniqueId().toString()
-        ).thenAccept(res -> {
+        ).thenAcceptAsync(res -> {
             if (res.size() > 0) {
                 JsonObject jsonObject = new JsonParser().parse(res.get(0).getString("tags")).getAsJsonObject();
                 int tagId = jsonObject.get(Main.SERVER).getAsInt();
@@ -253,7 +253,7 @@ public class TagManager {
         ChatInfo.info(player, "Vytváření tagu...");
 
         CraftLibs.getSqlManager().insertAndReturnLastInsertedId("INSERT INTO craftchat_tags (server,name,price,description) VALUE(?,?,?,?)", Main.SERVER, tag, 0, "Tag koupený za CraftToken")
-                .thenAccept(res -> {
+                .thenAcceptAsync(res -> {
                     Tag createdTag = new Tag(res, tag);
                     craftChatPlayer.giveTag(createdTag);
 

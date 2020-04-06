@@ -87,12 +87,12 @@ public class CraftChatPlayer {
 
     public void removeIgnoredPlayer(Player player) {
         this.ignoredPlayers.remove(player.getName());
-        CraftLibs.getSqlManager().query("DELETE FROM craftchat_ignores WHERE uuid=? AND ignored_uuid=?", this.uuid, player.getUniqueId().toString()).thenAccept(r -> System.out.println("deleted"));
+        CraftLibs.getSqlManager().query("DELETE FROM craftchat_ignores WHERE uuid=? AND ignored_uuid=?", this.uuid, player.getUniqueId().toString()).thenAcceptAsync((data) -> {});
     }
 
     public void addIgnoredPlayer(Player player) {
         this.ignoredPlayers.put(player.getName(), player.getUniqueId().toString());
-        CraftLibs.getSqlManager().query("INSERT INTO craftchat_ignores(uuid,ignored_uuid) VALUES(?,?)", this.uuid, player.getUniqueId().toString()).thenAccept(r -> System.out.println("Inserted"));
+        CraftLibs.getSqlManager().query("INSERT INTO craftchat_ignores(uuid,ignored_uuid) VALUES(?,?)", this.uuid, player.getUniqueId().toString()).thenAcceptAsync(r -> {});
     }
 
     public boolean isCheckForSlashMistake() {
@@ -112,7 +112,7 @@ public class CraftChatPlayer {
             this.chatColor = ChatColor.YELLOW;
             return;
         }
-        CraftLibs.getSqlManager().query("SELECT chatcolor FROM player_settings WHERE nick = ?", this.player.getName()).thenAccept(res -> {
+        CraftLibs.getSqlManager().query("SELECT chatcolor FROM player_settings WHERE nick = ?", this.player.getName()).thenAcceptAsync(res -> {
             for (DBRow row : res) {
                 this.chatColor = Colors.resolveColorById(row.getInt("chatcolor"));
             }
