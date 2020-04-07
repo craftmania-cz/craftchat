@@ -41,9 +41,9 @@ public class TagManager {
             blockedTagsPatterns.add(p);
         }
 
-        CraftLibs.getSqlManager().query("SELECT * FROM craftchat_tags WHERE server IS NULL OR server=? AND type=1", Main.SERVER).thenAcceptAsync(res -> {
+        CraftLibs.getSqlManager().query("SELECT * FROM craftchat_tags WHERE server IS NULL OR server=?", Main.SERVER).thenAcceptAsync(res -> {
             for (DBRow tagRow : res) {
-                this.tagList.add(new Tag(tagRow.getInt("id"), tagRow.getString("name"), tagRow.getInt("price")));
+                this.tagList.add(new Tag(tagRow.getInt("id"), tagRow.getString("name"), tagRow.getInt("price"), tagRow.getInt("type")));
             }
         });
 
@@ -119,7 +119,13 @@ public class TagManager {
 
         switch (type) {
             case BUY:
-                tags = getAllTags();
+                List<Tag> finalPublicTags = new ArrayList<>();
+                getAllTags().forEach(tag -> {
+                    if (tag.getType() == 1) {
+                        finalPublicTags.add(tag);
+                    }
+                });
+                tags = finalPublicTags;
                 title = "Nákup tagů";
                 showOnlyOwned = false;
                 break;
@@ -251,9 +257,9 @@ public class TagManager {
 
         ChatInfo.info(player, "Vytváření tagu...");
 
-        CraftLibs.getSqlManager().insertAndReturnLastInsertedId("INSERT INTO craftchat_tags (server,name,price,description) VALUE(?,?,?,?)", Main.SERVER, tag, 0, "Tag koupený za CraftToken")
+        CraftLibs.getSqlManager().insertAndReturnLastInsertedId("INSERT INTO craftchat_tags (type,server,name,price,description) VALUE(?,?,?,?,?)", 2, Main.SERVER, tag, 0, "Tag koupený za CraftToken")
                 .thenAcceptAsync(res -> {
-                    Tag createdTag = new Tag(res, tag);
+                    Tag createdTag = new Tag(res, tag, 2);
                     craftChatPlayer.giveTag(createdTag);
 
                     player.sendMessage("");
