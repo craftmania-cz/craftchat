@@ -41,7 +41,7 @@ public class TagManager {
             blockedTagsPatterns.add(p);
         }
 
-        CraftLibs.getSqlManager().query("SELECT * FROM craftchat_tags WHERE server IS NULL OR server=?", Main.SERVER).thenAcceptAsync(res -> {
+        CraftLibs.getSqlManager().query("SELECT * FROM craftchat_tags WHERE server IS NULL OR server=? AND type=1", Main.SERVER).thenAcceptAsync(res -> {
             for (DBRow tagRow : res) {
                 this.tagList.add(new Tag(tagRow.getInt("id"), tagRow.getString("name"), tagRow.getInt("price")));
             }
@@ -63,8 +63,7 @@ public class TagManager {
             }
         }*/
 
-        CraftLibs.getSqlManager().query("SELECT t.id FROM craftchat_player_tags pt INNER JOIN craftchat_tags t ON t.id=pt.tag_id " +
-                "WHERE pt.uuid=?", player.getUniqueId().toString())
+        CraftLibs.getSqlManager().query("SELECT t.id FROM craftchat_player_tags pt INNER JOIN craftchat_tags t ON t.id=pt.tag_id WHERE pt.uuid=?", player.getUniqueId().toString())
                 .thenAcceptAsync(res -> {
                     List<Tag> dbTags = new ArrayList<>();
                     for (DBRow tagRow : res) {
