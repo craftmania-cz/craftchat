@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -19,7 +20,7 @@ public class CraftChatPlayer {
     private Player player;
     private ChatGroup chatGroup;
     private Tag selectedTag;
-    private List<Tag> tags;
+    private List<Tag> tags = new ArrayList<>();; // Default
     private HashMap<String, String> ignoredPlayers; //nick, uuid
     private boolean checkForSlashMistake;
     private ChatColor chatColor = ChatColor.WHITE; // Pro VIP
