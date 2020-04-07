@@ -75,6 +75,7 @@ public class CraftChatPlayer {
 
     public void giveTag(Tag tag) {
         this.tags.add(tag);
+        Main.getTagManager().getAllTags().add(tag);
         CraftLibs.getSqlManager().query("INSERT INTO craftchat_player_tags(uuid,tag_id) VALUES(?,?)", this.uuid, tag.getId());
     }
 
