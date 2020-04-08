@@ -11,3 +11,5 @@ commands:
    description: "Zobrazi všechny tagy, které jsou k dispozici"
  ignore:
    description: "Ignore command"
+ chatcolor:
+   description: "Změna barvy"
