@@ -1,6 +1,7 @@
 package cz.nerdy.craftchat.utils;
 
-import org.bukkit.ChatColor;
+
+import net.md_5.bungee.api.ChatColor;
 
 public class Colors {
 

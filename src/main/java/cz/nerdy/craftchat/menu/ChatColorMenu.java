@@ -6,7 +6,7 @@ import cz.craftmania.craftcore.spigot.inventory.builder.content.InventoryContent
 import cz.craftmania.craftcore.spigot.inventory.builder.content.InventoryProvider;
 import cz.nerdy.craftchat.Main;
 import cz.nerdy.craftchat.objects.CraftChatPlayer;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
