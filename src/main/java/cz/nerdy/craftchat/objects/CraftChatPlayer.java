@@ -4,15 +4,13 @@ import cz.craftmania.craftlibs.CraftLibs;
 import cz.craftmania.craftlibs.sql.DBRow;
 import cz.nerdy.craftchat.Main;
 import cz.nerdy.craftchat.utils.Colors;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
 
 public class CraftChatPlayer {
 
