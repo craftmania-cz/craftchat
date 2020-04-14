@@ -67,6 +67,11 @@ public class CraftChatPlayer {
         CraftLibs.getSqlManager().query("UPDATE player_profile SET tags = JSON_REPLACE(tags, '$." + Main.SERVER + "', ?) WHERE uuid=?", tag.getId(), this.uuid);
     }
 
+    public void removeTag() {
+        this.selectedTag = null;
+        CraftLibs.getSqlManager().query("UPDATE player_profile SET tags = JSON_REPLACE(tags, '$." + Main.SERVER + "', ?) WHERE uuid=?", 0, this.uuid);
+    }
+
     public void setSelectedTagWithoutSavingIntoDatabase(Tag tag) {
         this.selectedTag = tag;
     }

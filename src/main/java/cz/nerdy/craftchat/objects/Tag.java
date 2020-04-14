@@ -1,8 +1,5 @@
 package cz.nerdy.craftchat.objects;
 
-import cz.craftmania.craftlibs.CraftLibs;
-import cz.nerdy.craftchat.Main;
-
 public class Tag {
 
     private int id;
