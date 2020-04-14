@@ -267,4 +267,11 @@ public class TagManager {
                     player.sendMessage("");
                 });
     }
+
+    public void resetTag(Player player){
+        CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(player);
+        craftChatPlayer.removeTag();
+
+        ChatInfo.info(player, "Tag byl obnoven");
+    }
 }

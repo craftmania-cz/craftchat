@@ -54,6 +54,13 @@ public class TagsMainMenuGUI implements InventoryProvider {
         });
         contents.set(3, 4, createTag);
 
+        ItemBuilder resetTagItem = new ItemBuilder(Material.BARRIER).setName("§cObnovit výchozí tag").hideAllFlags();
+        ClickableItem resetTag = ClickableItem.of(resetTagItem.build(), e -> {
+            Main.getTagManager().resetTag(player);
+            player.closeInventory();
+        });
+        contents.set(4, 4, resetTag);
+
         ItemStack blueGlassItem = new ItemBuilder(Material.BLUE_STAINED_GLASS_PANE).setName("").hideAllFlags().build();
         ClickableItem blueGlass = ClickableItem.empty(blueGlassItem);
         contents.fillBorders(blueGlass);
