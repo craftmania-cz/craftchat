@@ -1,5 +1,5 @@
 name: CraftChat
-version: 1.0.1
+version: 1.1.1
 author: Nerdy42
 main: cz.nerdy.craftchat.Main
 depend: [CraftLibs, PlaceholderAPI, CraftCore]
