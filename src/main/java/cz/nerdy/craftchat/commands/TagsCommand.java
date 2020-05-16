@@ -18,6 +18,11 @@ public class TagsCommand implements CommandExecutor {
         }
 
         Player player = (Player) sender;
+        if (!Main.sqlEnabled) {
+            ChatInfo.error(player, "Příkazy nejsou dostupné v offline režimu.");
+            return true;
+        }
+
         CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(player);
         
         if (!craftChatPlayer.getChatGroup().isAllowTagChange()) {

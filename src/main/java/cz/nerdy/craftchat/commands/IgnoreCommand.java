@@ -26,6 +26,11 @@ public class IgnoreCommand implements CommandExecutor {
 
         Player player = (Player) sender;
 
+        if (!Main.sqlEnabled) {
+            ChatInfo.error(player, "Příkazy nejsou dostupné v offline režimu.");
+            return true;
+        }
+
         if (args.length == 0) {
             sendList(player);
             return true;
