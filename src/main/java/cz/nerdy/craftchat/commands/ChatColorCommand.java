@@ -40,7 +40,7 @@ public class ChatColorCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (!Main.sqlEnabled) {
-            ChatInfo.error(player, "Příkazy nejsou dostupné v offline režimu.");
+            ChatInfo.error(player, "ento příkaz teď není dostupný. Zkus to za chvíli.");
             return true;
         }
 
