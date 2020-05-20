@@ -52,7 +52,7 @@ public class IgnoreCommand implements CommandExecutor {
             return true;
         }
 
-        if (ignoredPlayer.hasPermission("craftchat.ignorebypass")) {
+        if (ignoredPlayer.hasPermission("craftchat.ignore.block")) {
             ChatInfo.error(player, "Tohoto hráče nemůžeš ignorovat.");
             return true;
         }
