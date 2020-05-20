@@ -52,6 +52,11 @@ public class IgnoreCommand implements CommandExecutor {
             return true;
         }
 
+        if (ignoredPlayer.hasPermission("craftchat.ignorebypass")) {
+            ChatInfo.error(player, "Tohoto hráče nemůžeš ignorovat.");
+            return true;
+        }
+
         CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(player);
         if (craftChatPlayer.hasIgnored(ignoredPlayer)) {
             craftChatPlayer.removeIgnoredPlayer(ignoredPlayer);
