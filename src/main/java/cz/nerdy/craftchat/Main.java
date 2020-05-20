@@ -1,6 +1,5 @@
 package cz.nerdy.craftchat;
 
-import cz.craftmania.craftlibs.CraftLibs;
 import cz.nerdy.craftchat.commands.ChatColorCommand;
 import cz.nerdy.craftchat.commands.IgnoreCommand;
 import cz.nerdy.craftchat.commands.TagsCommand;
@@ -15,7 +14,6 @@ import cz.nerdy.craftchat.objects.CraftChatPlayer;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.libs.jline.internal.Log;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -38,7 +36,6 @@ public class Main extends JavaPlugin {
     private static HashMap<Player, CraftChatPlayer> craftChatPlayers;
 
     public static String SERVER;
-    public static boolean sqlEnabled;
 
     @Override
     public void onEnable() {
@@ -75,14 +72,6 @@ public class Main extends JavaPlugin {
 
         Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
-
-        try {
-            CraftLibs.getSqlManager();
-            sqlEnabled = true;
-        } catch (Exception e) {
-            sqlEnabled = false;
-            System.out.println("SQL není zapnuta. Plugin bude běžet v offline režimu.");
-        }
     }
 
     @Override

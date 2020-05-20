@@ -30,12 +30,10 @@ public class CraftChatPlayer {
         this.ignoredPlayers = Main.getIgnoreManager().getIgnoredPlayers(uuid);
         this.loadChatColor();
 
-        if (Main.sqlEnabled) {
-            Main.getTagManager().getAllTags(player).thenAccept(res -> {
-                this.tags = res;
-                Main.getTagManager().fetchSelectedTag(this, player);
-            });
-        }
+        Main.getTagManager().getAllTags(player).thenAccept(res -> {
+            this.tags = res;
+            Main.getTagManager().fetchSelectedTag(this, player);
+        });
 
         this.checkForSlashMistake = true;
     }
@@ -119,7 +117,6 @@ public class CraftChatPlayer {
             this.chatColor = ChatColor.YELLOW;
             return;
         }
-        if (!Main.sqlEnabled) return;
         CraftLibs.getSqlManager().query("SELECT chatcolor FROM player_settings WHERE nick = ?", this.player.getName()).thenAcceptAsync(res -> {
             for (DBRow row : res) {
                 this.chatColor = Colors.resolveColorById(row.getInt("chatcolor"));

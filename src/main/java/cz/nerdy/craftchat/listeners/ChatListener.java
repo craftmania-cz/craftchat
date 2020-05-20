@@ -123,7 +123,7 @@ public class ChatListener implements Listener {
 
         BaseComponent[] toSend = {prefixComponent, nameComponent, space, suffixComponent, space, playerMessage};
 
-        event.setFormat(prefix + " %1$s: %2$s"); // pro konzoli
+        event.setFormat(prefix + " %s: %s"); // pro konzoli
 
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             if (!event.getRecipients().contains(onlinePlayer)) {

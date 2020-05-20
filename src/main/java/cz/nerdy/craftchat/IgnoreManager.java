@@ -11,7 +11,6 @@ public class IgnoreManager {
 
     public HashMap<String, String> getIgnoredPlayers(String uuid) {
         HashMap<String, String> ignores = new HashMap<>();
-        if (!Main.sqlEnabled) return ignores;
         CraftLibs.getSqlManager().query("SELECT ig.ignored_uuid, pp.nick " +
                 "FROM craftchat_ignores ig INNER JOIN player_profile pp ON pp.uuid=ig.ignored_uuid WHERE ig.uuid=?", uuid).thenAcceptAsync(res -> {
             for (DBRow tagRow : res) {

@@ -1,8 +1,6 @@
 package cz.nerdy.craftchat.commands;
 
 import cz.craftmania.craftcore.spigot.inventory.builder.SmartInventory;
-import cz.craftmania.craftcore.spigot.messages.chat.ChatInfo;
-import cz.nerdy.craftchat.Main;
 import cz.nerdy.craftchat.menu.ChatColorMenu;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -38,11 +36,6 @@ public class ChatColorCommand implements CommandExecutor {
         }
 
         Player player = (Player) sender;
-
-        if (!Main.sqlEnabled) {
-            ChatInfo.error(player, "Tento příkaz teď není dostupný. Zkus to za chvíli.");
-            return true;
-        }
 
         if (player.hasPermission("craftchat.chatcolor")) {
             SmartInventory.builder().size(6, 9).title("Změna barvy psaní").provider(new ChatColorMenu()).build().open(player);

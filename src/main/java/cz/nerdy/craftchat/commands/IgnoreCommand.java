@@ -26,11 +26,6 @@ public class IgnoreCommand implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        if (!Main.sqlEnabled) {
-            ChatInfo.error(player, "Tento příkaz teď není dostupný. Zkus to za chvíli.");
-            return true;
-        }
-
         if (args.length == 0) {
             sendList(player);
             return true;
