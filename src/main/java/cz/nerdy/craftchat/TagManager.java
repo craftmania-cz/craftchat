@@ -1,6 +1,5 @@
 package cz.nerdy.craftchat;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import cz.craftmania.craftcore.spigot.inventory.builder.SmartInventory;
@@ -18,7 +17,6 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.regex.Matcher;
@@ -41,6 +39,7 @@ public class TagManager {
             blockedTagsPatterns.add(p);
         }
 
+        if (!Main.sqlEnabled) return;
         CraftLibs.getSqlManager().query("SELECT * FROM craftchat_tags WHERE server IS NULL OR server=?", Main.SERVER).thenAcceptAsync(res -> {
             for (DBRow tagRow : res) {
                 this.tagList.add(new Tag(tagRow.getInt("id"), tagRow.getString("name"), tagRow.getInt("price"), tagRow.getInt("type")));

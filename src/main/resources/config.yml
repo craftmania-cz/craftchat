@@ -4,8 +4,8 @@ server: survival
 formats:
   default:
     priority: 14
-    prefix_color: GRAY # barva prefixu i tagu
-    name_color: LIGHT_GRAY # barva jmena
+    prefix_color: DARK_GRAY # barva prefixu i tagu
+    name_color: GRAY # barva jmena
     suffix: ' &8» ' # suffix za jmenem
     chat_color: WHITE
     prefix_tooltip:

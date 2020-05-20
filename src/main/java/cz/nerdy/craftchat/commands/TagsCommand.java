@@ -18,6 +18,11 @@ public class TagsCommand implements CommandExecutor {
         }
 
         Player player = (Player) sender;
+        if (!Main.sqlEnabled) {
+            ChatInfo.error(player, "Tento příkaz teď není dostupný. Zkus to za chvíli.");
+            return true;
+        }
+
         CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(player);
         
         if (!craftChatPlayer.getChatGroup().isAllowTagChange()) {
