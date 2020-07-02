@@ -1,6 +1,7 @@
 package cz.nerdy.craftchat;
 
 import java.util.HashMap;
+import java.util.regex.Matcher;
 
 public class ChatManager {
 
@@ -16,7 +17,7 @@ public class ChatManager {
         this.replacements.put("o/", "( ﾟ◡ﾟ)/");
         this.replacements.put("<3", "§c❤");
         this.replacements.put(":star:", "§6✮");
-        this.replacements.put(":shrug:", "¯\\_(ツ)_/¯");
+        this.replacements.put(":shrug:", Matcher.quoteReplacement("¯\\_(ツ)_/¯"));
         this.replacements.put(":tableflip:", "(╯°□°）╯︵ ┻━┻");
         this.replacements.put(":unflip:", "┬─┬ ノ( ゜-゜ノ)");
         this.replacements.put(":fight:", "(ง'̀-'́)ง");
