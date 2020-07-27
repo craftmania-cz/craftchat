@@ -19,6 +19,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 public class ChatListener implements Listener {
 
@@ -74,7 +75,7 @@ public class ChatListener implements Listener {
         if (player.hasPermission("craftchat.replacements")) {
             for (String replacement : replacements.keySet()) {
                 if (message.contains(replacement)) {
-                    message = message.replaceAll(replacement, replacements.get(replacement));
+                    message = message.replaceAll(Pattern.quote(replacement), replacements.get(replacement));
                 }
             }
         }
