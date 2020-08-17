@@ -1,5 +1,6 @@
 package cz.nerdy.craftchat.objects;
 
+import cz.nerdy.craftchat.Main;
 import net.md_5.bungee.api.ChatColor;
 
 import java.util.ArrayList;
@@ -21,19 +22,19 @@ public class ChatGroup {
     public ChatGroup(int priority, String name, String suffix, String prefixColor, String nameColor, String chatColor, List<String> prefixTooltip, List<String> nameTooltip, String nameClickCommand, boolean allowTagChange) {
         this.priority = priority;
         this.name = name;
-        this.suffix = ChatColor.translateAlternateColorCodes('&', suffix);
-        this.prefixColor = ChatColor.valueOf(prefixColor);
-        this.nameColor = ChatColor.valueOf(nameColor);
-        this.chatColor = ChatColor.valueOf(chatColor);
+        this.suffix = Main.getInstance().getPluginCompatibility().translateChatColor(suffix);
+        this.prefixColor = Main.getInstance().getPluginCompatibility().resolveChatColor(prefixColor);
+        this.nameColor = Main.getInstance().getPluginCompatibility().resolveChatColor(nameColor);
+        this.chatColor = Main.getInstance().getPluginCompatibility().resolveChatColor(chatColor);
         List<String> tempList = new ArrayList<>();
         for (String line : prefixTooltip) {
-            tempList.add(ChatColor.translateAlternateColorCodes('&', line));
+            tempList.add(Main.getInstance().getPluginCompatibility().translateChatColor(line));
         }
         this.prefixTooltip = tempList;
 
         tempList = new ArrayList<>();
         for (String line : nameTooltip) {
-            tempList.add(ChatColor.translateAlternateColorCodes('&', line));
+            tempList.add(Main.getInstance().getPluginCompatibility().translateChatColor(line));
         }
         this.nameTooltip = tempList;
         this.nameClickCommand = nameClickCommand;

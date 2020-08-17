@@ -3,6 +3,9 @@ package cz.nerdy.craftchat.utils;
 
 import net.md_5.bungee.api.ChatColor;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Colors {
 
     public static ChatColor resolveColorById(int id) {
@@ -39,5 +42,21 @@ public class Colors {
             default:
                 return ChatColor.WHITE;
         }
+    }
+
+    private static final Pattern pattern = Pattern.compile("(?<!\\\\)(&#[a-fA-F0-9]{6})");
+
+    public static String translateRGB(String message) {
+        Matcher matcher = pattern.matcher(message);
+        message = ChatColor.translateAlternateColorCodes('&', message);
+        String translatedMessage = message;
+        while (matcher.find()) {
+            String color = matcher.group();
+            try {
+                translatedMessage = translatedMessage.replace(color, "" + ChatColor.of(color.substring(1)));
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
+        return translatedMessage;
     }
 }
