@@ -5,10 +5,7 @@ import cz.nerdy.craftchat.commands.IgnoreCommand;
 import cz.nerdy.craftchat.commands.TagsCommand;
 import cz.nerdy.craftchat.listeners.ChatListener;
 import cz.nerdy.craftchat.listeners.PlayerListener;
-import cz.nerdy.craftchat.nms.PluginCompatibility;
-import cz.nerdy.craftchat.nms.Spigot_1_14_4_Compatibility;
-import cz.nerdy.craftchat.nms.Spigot_1_15_2_Compatibility;
-import cz.nerdy.craftchat.nms.Spigot_1_16_1_Compatibility;
+import cz.nerdy.craftchat.nms.*;
 import cz.nerdy.craftchat.objects.ChatGroup;
 import cz.nerdy.craftchat.objects.CraftChatPlayer;
 import net.luckperms.api.LuckPerms;
@@ -104,6 +101,9 @@ public class Main extends JavaPlugin {
             case "v1_16_R1":
                 this.pluginCompatibility = new Spigot_1_16_1_Compatibility();
                 break;
+            case "v1_16_R2":
+                this.pluginCompatibility = new Spigot_1_16_2_Compatibility();
+
         }
         return this.pluginCompatibility != null;
     }

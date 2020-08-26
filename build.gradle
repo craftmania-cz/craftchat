@@ -35,6 +35,7 @@ dependencies {
     compileOnly name: 'spigot-1.14.4'
     compileOnly name: 'spigot-1.15.2'
     compileOnly name: 'spigot-1.16.1'
+    compileOnly name: 'spigot-1.16.2'
     compileOnly name: 'PlaceholderAPI-2.10.4'
 
     // CM Plugins
