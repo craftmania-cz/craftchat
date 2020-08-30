@@ -92,9 +92,6 @@ public class Main extends JavaPlugin {
             return false;
         }
         switch (s) {
-            case "v1_14_R1":
-                this.pluginCompatibility = new Spigot_1_14_4_Compatibility();
-                break;
             case "v1_15_R1":
                 this.pluginCompatibility = new Spigot_1_15_2_Compatibility();
                 break;
