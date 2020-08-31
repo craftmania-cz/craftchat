@@ -36,9 +36,6 @@ public class Colors {
                 return ChatColor.RED;
             case 13:
                 return ChatColor.LIGHT_PURPLE;
-            case 14:
-            case 15:
-                return ChatColor.WHITE;
             default:
                 return ChatColor.WHITE;
         }

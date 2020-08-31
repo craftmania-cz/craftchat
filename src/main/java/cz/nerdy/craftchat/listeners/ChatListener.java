@@ -1,5 +1,6 @@
 package cz.nerdy.craftchat.listeners;
 
+import cz.craftmania.craftcore.spigot.messages.chat.ChatInfo;
 import cz.nerdy.craftchat.Main;
 import cz.nerdy.craftchat.objects.ChatGroup;
 import cz.nerdy.craftchat.objects.CraftChatPlayer;
@@ -42,6 +43,12 @@ public class ChatListener implements Listener {
         }
 
         CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(player);
+
+        if (craftChatPlayer == null) {
+            ChatInfo.error(player, "Nepodařilo se načíst tvé data, zkus to později.");
+            return;
+        }
+
         ChatGroup chatGroup = craftChatPlayer.getChatGroup();
 
         if (message.startsWith("ú") && message.length() > 1 && craftChatPlayer.isCheckForSlashMistake()) {

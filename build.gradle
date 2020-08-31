@@ -23,6 +23,7 @@ repositories {
     mavenCentral()
     maven { url "https://packages.craftmania.cz/repository/craftmania/" }
     maven { url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
+    maven { url "https://repo.extendedclip.com/content/repositories/placeholderapi/" }
     flatDir { dirs 'libs' }
 }
 
@@ -31,19 +32,19 @@ dependencies {
         exclude group: 'net.md-5'
     }
 
-    compileOnly name: 'spigot-1.16.1'
-    compileOnly name: 'spigot-1.14.4'
+    // NMS
+    compileOnly name: 'spigot-1.16.2'
     compileOnly name: 'spigot-1.15.2'
     compileOnly name: 'spigot-1.16.1'
-    compileOnly name: 'spigot-1.16.2'
-    compileOnly name: 'PlaceholderAPI-2.10.4'
 
     // CM Plugins
     compileOnly group: 'cz.craftmania.craftcore', name: 'craftcore', version: '2.2.6'
     compileOnly group: 'cz.craftmania.craftlibs', name: 'craftlibs', version: '1.0.5'
     compileOnly group: 'cz.craftmania.crafteconomy', name: 'crafteconomy', version: '1.2.4'
 
-    compile 'net.luckperms:api:5.0'
+    // Other API
+    compileOnly group: 'me.clip', name: 'placeholderapi', version: '2.10.9'
+    compileOnly 'net.luckperms:api:5.0'
 
 }
 
