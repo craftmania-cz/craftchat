@@ -5,6 +5,7 @@ import cz.nerdy.craftchat.commands.IgnoreCommand;
 import cz.nerdy.craftchat.commands.TagsCommand;
 import cz.nerdy.craftchat.listeners.ChatListener;
 import cz.nerdy.craftchat.listeners.PlayerListener;
+import cz.nerdy.craftchat.luckperms.GroupChangeListener;
 import cz.nerdy.craftchat.nms.*;
 import cz.nerdy.craftchat.objects.ChatGroup;
 import cz.nerdy.craftchat.objects.CraftChatPlayer;
@@ -13,6 +14,7 @@ import net.luckperms.api.LuckPermsProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.List;
@@ -69,6 +71,7 @@ public class Main extends JavaPlugin {
 
         Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
+        new GroupChangeListener(this, luckPerms);
     }
 
     @Override
@@ -121,6 +124,7 @@ public class Main extends JavaPlugin {
         return ignoreManager;
     }
 
+    @Nullable
     public static CraftChatPlayer getCraftChatPlayer(Player player) {
         return craftChatPlayers.getOrDefault(player, null);
     }
@@ -140,6 +144,7 @@ public class Main extends JavaPlugin {
             System.out.println("[CraftChat] updating player: Player not found .. uuid: " + uuid.toString());
             return;
         }
+        System.out.println("[CraftChat] updating player: uuid: " + uuid.toString());
         this.unregisterCraftChatPlayer(player);
         this.registerCraftChatPlayer(player);
     }
