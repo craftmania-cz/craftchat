@@ -16,7 +16,6 @@ public class GroupChangeListener {
 
         // subscribe to an event using a lambda
         eventBus.subscribe(plugin, LogReceiveEvent.class, event -> {
-            System.out.println("LogReceiveEvent");
             Action action = event.getEntry();
             if (action.getTarget().getType() != Action.Target.Type.USER) return;
             Action.Target target = action.getTarget();
@@ -28,7 +27,6 @@ public class GroupChangeListener {
         });
 
         eventBus.subscribe(plugin, LogBroadcastEvent.class, event -> {
-            System.out.println("LogBroadcastEvent");
             Action action = event.getEntry();
             if (action.getTarget().getType() != Action.Target.Type.USER) return;
             Action.Target target = action.getTarget();
