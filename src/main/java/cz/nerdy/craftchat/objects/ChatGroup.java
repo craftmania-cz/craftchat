@@ -11,6 +11,7 @@ public class ChatGroup {
     private int priority;
     private String name;
     private String suffix;
+    private ChatColor suffixColor;
     private ChatColor prefixColor;
     private ChatColor nameColor;
     private ChatColor chatColor;
@@ -19,10 +20,11 @@ public class ChatGroup {
     private String nameClickCommand;
     private boolean allowTagChange;
 
-    public ChatGroup(int priority, String name, String suffix, String prefixColor, String nameColor, String chatColor, List<String> prefixTooltip, List<String> nameTooltip, String nameClickCommand, boolean allowTagChange) {
+    public ChatGroup(int priority, String name, String suffix, String prefixColor, String nameColor, String suffixColor, String chatColor, List<String> prefixTooltip, List<String> nameTooltip, String nameClickCommand, boolean allowTagChange) {
         this.priority = priority;
         this.name = name;
         this.suffix = Main.getInstance().getPluginCompatibility().translateChatColor(suffix);
+        this.suffixColor = Main.getInstance().getPluginCompatibility().resolveChatColor(suffixColor);
         this.prefixColor = Main.getInstance().getPluginCompatibility().resolveChatColor(prefixColor);
         this.nameColor = Main.getInstance().getPluginCompatibility().resolveChatColor(nameColor);
         this.chatColor = Main.getInstance().getPluginCompatibility().resolveChatColor(chatColor);
@@ -79,5 +81,9 @@ public class ChatGroup {
 
     public boolean isAllowTagChange() {
         return allowTagChange;
+    }
+
+    public ChatColor getSuffixColor() {
+        return suffixColor;
     }
 }

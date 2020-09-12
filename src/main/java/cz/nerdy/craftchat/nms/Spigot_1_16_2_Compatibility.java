@@ -20,6 +20,7 @@ public class Spigot_1_16_2_Compatibility implements PluginCompatibility {
     public String translateChatColor(String message) {
         return Colors.translateRGB(message);
     }
+
     @Override
     public ChatColor resolveChatColor(String chatColor) {
         return ChatColor.of(chatColor);

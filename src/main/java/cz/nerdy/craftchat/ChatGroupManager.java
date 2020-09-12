@@ -23,6 +23,7 @@ public class ChatGroupManager {
                     groupSection.getString("suffix"),
                     groupSection.getString("prefix_color"),
                     groupSection.getString("name_color"),
+                    groupSection.getString("suffix_color"),
                     groupSection.getString("chat_color"),
                     groupSection.getStringList("prefix_tooltip"),
                     groupSection.getStringList("name_tooltip"),

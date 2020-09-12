@@ -97,8 +97,10 @@ public class ChatListener implements Listener {
 
         TextComponent space = new TextComponent(TextComponent.fromLegacyText(" "));
 
+        // Prefix
         String prefix = PlaceholderAPI.setPlaceholders(player, craftChatPlayer.getPrefix());
-        TextComponent prefixComponent = new TextComponent(TextComponent.fromLegacyText(prefix));
+        String strippedPrefix = ChatColor.stripColor(prefix); // PlaceholderAPI generuje již obarvený default prefix, je potřeba barvy odstranit
+        TextComponent prefixComponent = new TextComponent(TextComponent.fromLegacyText(strippedPrefix));
         prefixComponent.setColor(chatGroup.getPrefixColor());
         String prefixTooltip = "";
         for (String line : chatGroup.getPrefixTooltip()) {
@@ -106,6 +108,7 @@ public class ChatListener implements Listener {
         }
         prefixComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(prefixTooltip)));
 
+        // Name
         TextComponent nameComponent = new TextComponent(TextComponent.fromLegacyText(player.getName()));
         nameComponent.setColor(chatGroup.getNameColor());
         nameComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
@@ -116,8 +119,12 @@ public class ChatListener implements Listener {
         }
         nameComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(nickTooltip)));
 
+        // Suffix
         TextComponent suffixComponent = new TextComponent(TextComponent.fromLegacyText(chatGroup.getSuffix()));
+        suffixComponent.setColor(chatGroup.getSuffixColor());
+        System.out.println(chatGroup.getSuffix());
 
+        // Text zprávy
         TextComponent playerMessage = new TextComponent(TextComponent.fromLegacyText(message));
         playerMessage.setColor(craftChatPlayer.getSelectedChatColor());
 
