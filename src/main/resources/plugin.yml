@@ -1,6 +1,6 @@
 name: CraftChat
 version: 1.1.1
-author: Nerdy42
+authors: ["Nerdy42", "MrWakeCZ", "iGniSsak", "Murka__"]
 main: cz.nerdy.craftchat.Main
 depend: [CraftLibs, PlaceholderAPI, CraftCore, LuckPerms]
 softdepend: [CraftEconomy]
