@@ -2,22 +2,39 @@ package cz.nerdy.craftchat.luckperms;
 
 import cz.nerdy.craftchat.Main;
 import net.luckperms.api.LuckPerms;
+import net.luckperms.api.actionlog.Action;
 import net.luckperms.api.event.EventBus;
-import net.luckperms.api.event.user.track.UserTrackEvent;
+import net.luckperms.api.event.log.LogBroadcastEvent;
+import net.luckperms.api.event.log.LogReceiveEvent;
 
 public class GroupChangeListener {
-    private final Main plugin;
 
     public GroupChangeListener(Main plugin, LuckPerms luckPerms) {
-        this.plugin = plugin;
 
         // get the LuckPerms event bus
         EventBus eventBus = luckPerms.getEventBus();
 
         // subscribe to an event using a lambda
-        eventBus.subscribe(UserTrackEvent.class, e -> {
-            Main.getInstance().updatePlayer(e.getUser().getUniqueId());
+        eventBus.subscribe(plugin, LogReceiveEvent.class, event -> {
+            Action action = event.getEntry();
+            if (action.getTarget().getType() != Action.Target.Type.USER) return;
+            Action.Target target = action.getTarget();
+            if (!target.getUniqueId().isPresent()) return;
+            if (!action.getDescription().startsWith("parent")) return;
+
+            // Update target player
+            Main.getInstance().updatePlayer(target.getUniqueId().get());
         });
 
+        eventBus.subscribe(plugin, LogBroadcastEvent.class, event -> {
+            Action action = event.getEntry();
+            if (action.getTarget().getType() != Action.Target.Type.USER) return;
+            Action.Target target = action.getTarget();
+            if (!target.getUniqueId().isPresent()) return;
+            if (!action.getDescription().startsWith("parent")) return;
+
+            // Update target player
+            Main.getInstance().updatePlayer(target.getUniqueId().get());
+        });
     }
 }

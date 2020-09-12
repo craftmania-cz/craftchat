@@ -2,9 +2,9 @@ name: CraftChat
 version: 1.1.1
 author: Nerdy42
 main: cz.nerdy.craftchat.Main
-depend: [CraftLibs, PlaceholderAPI, CraftCore]
+depend: [CraftLibs, PlaceholderAPI, CraftCore, LuckPerms]
 softdepend: [CraftEconomy]
-api-version: "1.14"
+api-version: "1.15"
 
 commands:
  tags:
