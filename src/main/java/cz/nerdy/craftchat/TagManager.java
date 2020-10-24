@@ -209,19 +209,25 @@ public class TagManager {
     private boolean validateTag(Player player, String tag) {
         if (tag.length() > 12) {
             player.sendMessage("");
-            player.sendMessage("§cTag nemuze byt delsi nez 12 znaku!");
+            player.sendMessage("§cTag nemůže být delší než 12 znaků!");
+            player.sendMessage("");
+            return false;
+        }
+        if (tag.length() < 3) {
+            player.sendMessage("");
+            player.sendMessage("§cTag nemůže být kratší než 3 znaky!");
             player.sendMessage("");
             return false;
         }
         if (tag.contains(" ")) {
             player.sendMessage("");
-            player.sendMessage("§cNelze vytvorit tag, ktery obsahuje mezeru!");
+            player.sendMessage("§cNelze vytvořit tag, který obsahuje mezeru!");
             player.sendMessage("");
             return false;
         }
         if (tag.contains("&") || tag.contains("§")) {
             player.sendMessage("");
-            player.sendMessage("§cNelze vytvorit tag, ktery obsahuje prefix pro barvy!");
+            player.sendMessage("§cNelze vytvořit tag, který obsahuje prefix pro barvy!");
             player.sendMessage("");
             return false;
         }
@@ -230,14 +236,14 @@ public class TagManager {
             Matcher matcher = pattern.matcher(editedMessage);
             if (matcher.find()) {
                 player.sendMessage("");
-                player.sendMessage("§cTento tag je blokovany, nelze ho vytvorit!");
+                player.sendMessage("§cTento tag je blokovaný, nelze ho vytvořit!");
                 player.sendMessage("");
                 return false;
             }
         }
         if (!tag.matches("[a-zA-Z]+")) {
             player.sendMessage("");
-            player.sendMessage("§cNelze vytvorit tag, ktery obsahuje specialni znaky!");
+            player.sendMessage("§cNelze vytvořit tag, který obsahuje specialní znaky!");
             player.sendMessage("");
             return false;
         }
