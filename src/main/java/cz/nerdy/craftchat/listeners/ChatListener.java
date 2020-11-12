@@ -129,7 +129,6 @@ public class ChatListener implements Listener {
         // Suffix
         TextComponent suffixComponent = new TextComponent(TextComponent.fromLegacyText(chatGroup.getSuffix()));
         suffixComponent.setColor(chatGroup.getSuffixColor());
-        System.out.println(chatGroup.getSuffix());
 
         // Text zprávy
         TextComponent playerMessage = new TextComponent(TextComponent.fromLegacyText(message));
