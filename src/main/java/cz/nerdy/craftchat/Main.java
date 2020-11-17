@@ -103,7 +103,10 @@ public class Main extends JavaPlugin {
                 break;
             case "v1_16_R2":
                 this.pluginCompatibility = new Spigot_1_16_2_Compatibility();
-
+                break;
+            case "v1_16_R3":
+                this.pluginCompatibility = new Spigot_1_16_3_Compatibility();
+                break;
         }
         return this.pluginCompatibility != null;
     }

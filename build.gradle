@@ -36,6 +36,7 @@ dependencies {
     compileOnly name: 'spigot-1.16.2'
     compileOnly name: 'spigot-1.15.2'
     compileOnly name: 'spigot-1.16.1'
+    compileOnly name: 'spigot-1.16.4'
 
     // CM Plugins
     compileOnly group: 'cz.craftmania.craftcore', name: 'craftcore', version: '2.2.6'
