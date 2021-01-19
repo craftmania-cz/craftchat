@@ -26,6 +26,16 @@ public class ChatManager {
         this.replacements.put(":*", "(づ￣ ³￣)づ");
         this.replacements.put(":hype:", "ヾ(⌐■_■)ノ♪");
         this.replacements.put(":cry:", "(ಥ﹏ಥ)");
+
+        this.replacements.put(":herold:", "§f⻠");
+        this.replacements.put(":harold:", "§f⻠");
+        this.replacements.put(":doggo:", "§f⻡");
+        this.replacements.put(":smile:", "§f⻢");
+        this.replacements.put(":aaa:", "§f⻣");
+        this.replacements.put(":pog:", "§f⻤");
+        this.replacements.put(":kek:", "§f⻥");
+        this.replacements.put(":5head:", "§f⻦");
+        this.replacements.put(":shiba:", "§f⻧");
     }
 
     public HashMap<String, String> getReplacements() {
