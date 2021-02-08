@@ -14,16 +14,18 @@ import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class ChatListener implements Listener {
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOW)
     public void onChat(AsyncPlayerChatEvent event) {
         if (event.isCancelled()) {
             return;
@@ -77,12 +79,34 @@ public class ChatListener implements Listener {
             craftChatPlayer.setCheckForSlashMistake(true);
         }
 
+        // VIP replacementy
         HashMap<String, String> replacements = Main.getChatManager().getReplacements();
-        if (player.hasPermission("craftchat.replacements")) {
-            for (String replacement : replacements.keySet()) {
-                if (message.contains(replacement)) {
+        for (String replacement : replacements.keySet()) {
+            if (message.contains(replacement)) {
+                if (player.hasPermission("craftchat.replacements")) {
                     message = message.replaceAll(Pattern.quote(replacement), replacements.get(replacement));
+                } else {
+                    player.sendMessage("§c§l[!] §cNelze používat replacementy, když nemáš VIP!");
+                    event.setCancelled(true);
+                    return;
                 }
+            }
+        }
+
+        for (String value : replacements.values()) {
+            if (message.contains(ChatColor.stripColor(value)) && !player.hasPermission("craftchat.replacements")) {
+                player.sendMessage("§c§l[!] §cNelze používat replacementy, když nemáš VIP!");
+                event.setCancelled(true);
+                return;
+            }
+        }
+
+        List<String> blockedTags = Main.getChatManager().getBlockedTexts();
+        for (String tag : blockedTags) {
+            if (message.contains(tag)) {
+                player.sendMessage("§c§l[!] §cNelze používat prefixy, tagy a extra znaky v chatu!");
+                event.setCancelled(true);
+                return;
             }
         }
 

@@ -1,14 +1,19 @@
 package cz.nerdy.craftchat;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Matcher;
 
 public class ChatManager {
 
     private HashMap<String, String> replacements;
+    private List<String> blockedTexts;
 
     public ChatManager() {
         this.replacements = new HashMap<>();
+        this.blockedTexts = Arrays.asList("⻒", "⻓", "⻔", "⻕", "⻖", "⻗", "⻘", "⻙", "⻚", "⻛", "⻜", "⻝", "⻞", "⻟");
 
         this.loadReplacements();
     }
@@ -40,5 +45,9 @@ public class ChatManager {
 
     public HashMap<String, String> getReplacements() {
         return replacements;
+    }
+
+    public List<String> getBlockedTexts() {
+        return blockedTexts;
     }
 }
