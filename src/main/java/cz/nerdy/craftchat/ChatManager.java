@@ -13,7 +13,7 @@ public class ChatManager {
 
     public ChatManager() {
         this.replacements = new HashMap<>();
-        this.blockedTexts = Arrays.asList("⻒", "⻓", "⻔", "⻕", "⻖", "⻗", "⻘", "⻙", "⻚", "⻛", "⻜", "⻝", "⻞", "⻟");
+        this.blockedTexts = Arrays.asList("⻒", "⻓", "⻔", "⻕", "⻖", "⻗", "⻘", "⻙", "⻚", "⻛", "⻜", "⻝", "⻞", "⻟", "⻩", "⻪", "⻫", "⻬");
 
         this.loadReplacements();
     }
@@ -41,6 +41,7 @@ public class ChatManager {
         this.replacements.put(":kek:", "§f⻥");
         this.replacements.put(":5head:", "§f⻦");
         this.replacements.put(":shiba:", "§f⻧");
+        this.replacements.put(":fp:", "§f⻩");
     }
 
     public HashMap<String, String> getReplacements() {
