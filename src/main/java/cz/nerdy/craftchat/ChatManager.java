@@ -13,14 +13,14 @@ public class ChatManager {
 
     public ChatManager() {
         this.replacements = new HashMap<>();
-        this.blockedTexts = Arrays.asList("⻒", "⻓", "⻔", "⻕", "⻖", "⻗", "⻘", "⻙", "⻚", "⻛", "⻜", "⻝", "⻞", "⻟", "⻩", "⻪", "⻫", "⻬");
+        this.blockedTexts = Arrays.asList("⻒", "⻓", "⻔", "⻕", "⻖", "⻗", "⻘", "⻙", "⻚", "⻛", "⻜", "⻝", "⻞", "⻟", "⻪", "⻫", "⻬");
 
         this.loadReplacements();
     }
 
     private void loadReplacements() {
         this.replacements.put("o/", "( ﾟ◡ﾟ)/");
-        this.replacements.put("<3", "§c❤");
+        //this.replacements.put("<3", "§c❤");
         this.replacements.put(":star:", "§6✮");
         this.replacements.put(":shrug:", Matcher.quoteReplacement("¯\\_(ツ)_/¯"));
         this.replacements.put(":tableflip:", "(╯°□°）╯︵ ┻━┻");
