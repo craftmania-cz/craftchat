@@ -34,6 +34,7 @@ dependencies {
 
     // NMS
     compileOnly name: 'spigot-1.16.4'
+    compileOnly name: 'spigot-1.17'
 
     // CM Plugins
     compileOnly group: 'cz.craftmania.craftcore', name: 'craftcore', version: '2.2.6'

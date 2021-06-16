@@ -5,8 +5,6 @@ import org.bukkit.inventory.ItemStack;
 
 public interface PluginCompatibility {
 
-    String convertItemStackToJson(ItemStack itemStack);
-
     String translateChatColor(String message);
 
     ChatColor resolveChatColor(String chatColor);

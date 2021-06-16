@@ -8,7 +8,6 @@ import org.bukkit.inventory.ItemStack;
 
 public class Spigot_1_16_3_Compatibility implements PluginCompatibility {
 
-    @Override
     public String convertItemStackToJson(ItemStack itemStack){
         net.minecraft.server.v1_16_R3.ItemStack nmsItemStact = CraftItemStack.asNMSCopy(itemStack);
         NBTTagCompound compound = new NBTTagCompound();
