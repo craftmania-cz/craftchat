@@ -23,6 +23,7 @@ public class IgnoreManager {
 
     public boolean hasIgnored(Player player, Player ignoredPlayer) {
         CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(player);
+        if (craftChatPlayer == null) return false;
         return craftChatPlayer.hasIgnored(ignoredPlayer);
     }
 }
