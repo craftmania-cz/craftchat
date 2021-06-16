@@ -33,9 +33,6 @@ dependencies {
     }
 
     // NMS
-    compileOnly name: 'spigot-1.16.2'
-    compileOnly name: 'spigot-1.15.2'
-    compileOnly name: 'spigot-1.16.1'
     compileOnly name: 'spigot-1.16.4'
 
     // CM Plugins
