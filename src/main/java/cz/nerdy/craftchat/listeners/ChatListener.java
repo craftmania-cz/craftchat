@@ -79,12 +79,20 @@ public class ChatListener implements Listener {
             craftChatPlayer.setCheckForSlashMistake(true);
         }
 
+        // Free replacementy
+        HashMap<String, String> freeReplacements = Main.getChatManager().getFreeReplacements();
+        for (String replacement : freeReplacements.keySet()) {
+            if (message.contains(replacement)) {
+                message = message.replaceAll(Pattern.quote(replacement), freeReplacements.get(replacement) + craftChatPlayer.getSelectedChatColor());
+            }
+        }
+
         // VIP replacementy
-        HashMap<String, String> replacements = Main.getChatManager().getReplacements();
-        for (String replacement : replacements.keySet()) {
+        HashMap<String, String> premiumReplacements = Main.getChatManager().getPremiumReplacements();
+        for (String replacement : premiumReplacements.keySet()) {
             if (message.contains(replacement)) {
                 if (player.hasPermission("craftchat.replacements")) {
-                    message = message.replaceAll(Pattern.quote(replacement), replacements.get(replacement));
+                    message = message.replaceAll(Pattern.quote(replacement), premiumReplacements.get(replacement) + craftChatPlayer.getSelectedChatColor());
                 } else {
                     player.sendMessage("§c§l[!] §cNelze používat replacementy, když nemáš VIP!");
                     event.setCancelled(true);
@@ -93,7 +101,7 @@ public class ChatListener implements Listener {
             }
         }
 
-        for (String value : replacements.values()) {
+        for (String value : premiumReplacements.values()) {
             if (message.contains(ChatColor.stripColor(value)) && !player.hasPermission("craftchat.replacements")) {
                 player.sendMessage("§c§l[!] §cNelze používat replacementy, když nemáš VIP!");
                 event.setCancelled(true);
