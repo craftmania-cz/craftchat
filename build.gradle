@@ -25,6 +25,13 @@ repositories {
     maven { url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
     maven { url "https://repo.extendedclip.com/content/repositories/placeholderapi/" }
     flatDir { dirs 'libs' }
+    maven {
+        url "https://maven.pkg.github.com/craftmania-cz/craftcore"
+        credentials {
+            username = GPR_USER
+            password = GPR_TOKEN
+        }
+    }
 }
 
 dependencies {
@@ -37,7 +44,7 @@ dependencies {
     compileOnly name: 'spigot-1.17'
 
     // CM Plugins
-    compileOnly group: 'cz.craftmania.craftcore', name: 'craftcore', version: '2.2.6'
+    compileOnly group: 'cz.craftmania.craftcore', name: 'craftcore', version: '2.6.1-beta'
     compileOnly group: 'cz.craftmania.craftlibs', name: 'craftlibs', version: '1.0.5'
     compileOnly group: 'cz.craftmania.crafteconomy', name: 'crafteconomy', version: '1.2.4'
 

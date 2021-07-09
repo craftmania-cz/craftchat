@@ -1,12 +1,12 @@
 package cz.nerdy.craftchat.objects.menus;
 
-import cz.craftmania.craftcore.spigot.builders.items.ItemBuilder;
-import cz.craftmania.craftcore.spigot.inventory.builder.ClickableItem;
-import cz.craftmania.craftcore.spigot.inventory.builder.content.InventoryContents;
-import cz.craftmania.craftcore.spigot.inventory.builder.content.InventoryProvider;
-import cz.craftmania.craftcore.spigot.inventory.builder.content.Pagination;
-import cz.craftmania.craftcore.spigot.inventory.builder.content.SlotIterator;
-import cz.craftmania.craftcore.spigot.messages.chat.ChatInfo;
+import cz.craftmania.craftcore.builders.items.ItemBuilder;
+import cz.craftmania.craftcore.inventory.builder.ClickableItem;
+import cz.craftmania.craftcore.inventory.builder.content.InventoryContents;
+import cz.craftmania.craftcore.inventory.builder.content.InventoryProvider;
+import cz.craftmania.craftcore.inventory.builder.content.Pagination;
+import cz.craftmania.craftcore.inventory.builder.content.SlotIterator;
+import cz.craftmania.craftcore.messages.chat.ChatInfo;
 import cz.nerdy.craftchat.Main;
 import cz.nerdy.craftchat.TagManager;
 import cz.nerdy.craftchat.objects.CraftChatPlayer;
