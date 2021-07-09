@@ -1,6 +1,6 @@
 package cz.nerdy.craftchat.listeners;
 
-import cz.craftmania.craftcore.spigot.messages.chat.ChatInfo;
+import cz.craftmania.craftcore.messages.chat.ChatInfo;
 import cz.nerdy.craftchat.Main;
 import cz.nerdy.craftchat.objects.ChatGroup;
 import cz.nerdy.craftchat.objects.CraftChatPlayer;

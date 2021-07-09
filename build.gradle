@@ -3,13 +3,12 @@ plugins {
 }
 
 apply plugin: 'java'
-apply plugin: 'maven'
 
 group 'cz.nerdy.craftchat'
-version '1.1.4'
+version '1.1.5-beta'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 16
+targetCompatibility = 16
 
 // Nastaveni UTF
 tasks.withType(JavaCompile) {
@@ -51,10 +50,6 @@ dependencies {
     // Other API
     compileOnly group: 'me.clip', name: 'placeholderapi', version: '2.10.9'
     compileOnly 'net.luckperms:api:5.0'
+    implementation 'org.jetbrains:annotations:16.0.2'
 
-}
-
-task compilePlugin(type: Jar) {
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-    with jar
 }
