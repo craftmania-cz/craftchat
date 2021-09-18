@@ -4,9 +4,14 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import cz.craftmania.craftcore.inventory.builder.SmartInventory;
+import cz.nerdy.craftchat.Main;
 import cz.nerdy.craftchat.menu.ChatColorMenu;
+import cz.nerdy.craftchat.objects.CraftChatPlayer;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.regex.Pattern;
 
     /*
         0 - cerna §0
@@ -29,6 +34,7 @@ import org.bukkit.entity.Player;
 
 @CommandAlias("chatcolor")
 @Description("Změna barvy")
+@CommandPermission("craftchat.chatcolor")
 public class ChatColorCommand extends BaseCommand {
     @Default // Deafult = Přkíaz bez argumentů -> /chatcolor
     public void showChatColorMenu(CommandSender sender) {
@@ -38,12 +44,26 @@ public class ChatColorCommand extends BaseCommand {
 
         Player player = (Player) sender;
 
-        if (player.hasPermission("craftchat.chatcolor")) {
-            SmartInventory.builder().size(6, 9).title("Změna barvy psaní").provider(new ChatColorMenu()).build().open(player);
+        SmartInventory.builder().size(6, 9).title("Změna barvy psaní").provider(new ChatColorMenu()).build().open(player);
+    }
+
+    private static final Pattern pattern = Pattern.compile("^#[a-fA-F0-9]{6}$");
+
+    @Subcommand("custom")
+    @CommandPermission("craftchat.chatcolor.custom")
+    @CommandAlias("chatcolor")
+    @CommandCompletion("[#RRGGBB]")
+    @Description("Změna na custom barvu")
+    public void setCustomColor(Player player, String colorCode) {
+        if (pattern.matcher(colorCode).matches()) {
+            CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(player);
+            craftChatPlayer.setCustomChatColor(colorCode.substring(1));
+            craftChatPlayer.getPlayer().sendMessage("§e§l[*] §eBarva psani nastavena na: " + ChatColor.of(colorCode) + colorCode);
         } else {
-            player.sendMessage("§c§l[!] §cPro psani barevne v chatu musis vlastnit VIP!");
+            player.sendMessage("§c§l[!] §cNesprávný formát! Použij například /chatcolor #3DA1CD");
         }
     }
+
     @HelpCommand
     public void helpCommand(CommandHelp help) {
         help.showHelp();
