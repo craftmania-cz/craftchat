@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.0.0'
 }
 
 apply plugin: 'java'
@@ -21,6 +22,7 @@ clean { delete "./build" }
 repositories {
     mavenCentral()
     maven { url "https://packages.craftmania.cz/repository/craftmania/" }
+    maven { url "https://repo.aikar.co/content/groups/aikar/" }
     maven { url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
     maven { url "https://repo.extendedclip.com/content/repositories/placeholderapi/" }
     flatDir { dirs 'libs' }
@@ -47,9 +49,19 @@ dependencies {
     compileOnly group: 'cz.craftmania.craftlibs', name: 'craftlibs', version: '1.0.5'
     compileOnly group: 'cz.craftmania.crafteconomy', name: 'crafteconomy', version: '1.2.4'
 
+    // Commands
+    implementation 'co.aikar:acf-paper:0.5.0-SNAPSHOT'
+
     // Other API
     compileOnly group: 'me.clip', name: 'placeholderapi', version: '2.10.9'
     compileOnly 'net.luckperms:api:5.0'
     implementation 'org.jetbrains:annotations:16.0.2'
 
 }
+
+shadowJar {
+    relocate 'co.aikar.commands', 'cz.nerdy.craftchat.acf'
+    relocate 'co.aikar.locales', 'cz.nerdy.craftchat.locales'
+}
+
+build.dependsOn shadowJar

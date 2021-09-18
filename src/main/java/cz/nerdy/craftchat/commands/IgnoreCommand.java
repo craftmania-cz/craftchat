@@ -1,5 +1,8 @@
 package cz.nerdy.craftchat.commands;
 
+import co.aikar.commands.BaseCommand;
+import co.aikar.commands.annotation.*;
+import co.aikar.commands.bukkit.contexts.OnlinePlayer;
 import cz.craftmania.craftcore.messages.chat.ChatInfo;
 import cz.nerdy.craftchat.Main;
 import cz.nerdy.craftchat.objects.CraftChatPlayer;
@@ -7,66 +10,58 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.Set;
 
-public class IgnoreCommand implements CommandExecutor {
+@CommandAlias("ignore")
+@Description("Příkazy pro správu ignorací")
+public class IgnoreCommand extends BaseCommand {
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    @Default
+    public void sendList(CommandSender sender) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("Jenom ze hry");
-            return true;
         }
 
         Player player = (Player) sender;
 
-        if (args.length == 0) {
-            sendList(player);
-            return true;
-        }
+        sendList(player);
+    }
 
-        String arg = args[0];
+    @Subcommand("help")
+    public void sendHelp(CommandSender sender) {
+        Player player = (Player) sender;
 
-        if (arg.equalsIgnoreCase("help")) {
-            player.sendMessage("§c§lNápověda");
-            this.sendHelpComponent(player, "§c/ignore §8- §7zobrazí seznam ignorovaných hráčů", "Zobrazí seznam ignorovaných hráčů", "/ignore");
-            this.sendHelpComponent(player, "§c/ignore <hráč> §8- §7zablokovat/odblokovat hráče", "Zablokuje nebo odblokuje hráče", "/ignore ");
-            this.sendHelpComponent(player, "§c/ignore help §8- §7zobrazí nápovědu", "Zobrazí tuto nápovědu", "/ignore help");
-            return true;
-        }
+        player.sendMessage("§c§lNápověda");
+        this.sendHelpComponent(player, "§c/ignore §8- §7zobrazí seznam ignorovaných hráčů", "Zobrazí seznam ignorovaných hráčů", "/ignore");
+        this.sendHelpComponent(player, "§c/ignore <hráč> §8- §7zablokovat/odblokovat hráče", "Zablokuje nebo odblokuje hráče", "/ignore ");
+        this.sendHelpComponent(player, "§c/ignore help §8- §7zobrazí nápovědu", "Zobrazí tuto nápovědu", "/ignore help");
+    }
 
-        Player ignoredPlayer = Bukkit.getPlayer(arg);
+    @CommandAlias("ignore")
+    @Description("Ignorování hráče")
+    @CommandCompletion("*")
+    public void ignorePlayer(CommandSender sender, OnlinePlayer onlinePlayer) {
+        Player ignoredPlayer = onlinePlayer.getPlayer();
+        Player player = (Player) sender;
         if (ignoredPlayer == null) {
             ChatInfo.error(player, "Hráč musí být online");
-            return true;
-        }
-
-        if(ignoredPlayer.getName().equals(player.getName())){
+        } else if (ignoredPlayer.getName().equals(player.getName())){
             ChatInfo.error(player, "Nemůžeš ignorovat sám sebe");
-            return true;
-        }
-
-        if (ignoredPlayer.hasPermission("craftchat.ignore.block")) {
+        } else if (ignoredPlayer.hasPermission("craftchat.ignore.block")) {
             ChatInfo.error(player, "Tohoto hráče nemůžeš ignorovat.");
-            return true;
-        }
-
-        CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(player);
-        if (craftChatPlayer.hasIgnored(ignoredPlayer)) {
-            craftChatPlayer.removeIgnoredPlayer(ignoredPlayer);
-            ChatInfo.success(player, "Hráč byl odebrán ze seznamu");
         } else {
-            craftChatPlayer.addIgnoredPlayer(ignoredPlayer);
-            ChatInfo.success(player, "Od teď ignoruješ hráče " + ignoredPlayer.getName());
+            CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(player);
+            if (craftChatPlayer.hasIgnored(ignoredPlayer)) {
+                craftChatPlayer.removeIgnoredPlayer(ignoredPlayer);
+                ChatInfo.success(player, "Hráč byl odebrán ze seznamu");
+            } else {
+                craftChatPlayer.addIgnoredPlayer(ignoredPlayer);
+                ChatInfo.success(player, "Od teď ignoruješ hráče " + ignoredPlayer.getName());
+            }
         }
-
-        return true;
     }
 
     private void sendList(Player player) {

@@ -1,15 +1,7 @@
 name: CraftChat
 version: 1.1.4
-authors: ["Nerdy42", "MrWakeCZ", "iGniSsak", "Murka__"]
+authors: ["Nerdy42", "MrWakeCZ", "iGniSsak", "Murka__", "Velda_"]
 main: cz.nerdy.craftchat.Main
 depend: [CraftLibs, PlaceholderAPI, CraftCore, LuckPerms]
 softdepend: [CraftEconomy]
 api-version: "1.16"
-
-commands:
- tags:
-   description: "Zobrazi všechny tagy, které jsou k dispozici"
- ignore:
-   description: "Ignore command"
- chatcolor:
-   description: "Změna barvy"
