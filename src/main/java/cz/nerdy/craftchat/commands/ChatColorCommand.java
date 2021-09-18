@@ -1,6 +1,6 @@
 package cz.nerdy.craftchat.commands;
 
-import cz.craftmania.craftcore.spigot.inventory.builder.SmartInventory;
+import cz.craftmania.craftcore.inventory.builder.SmartInventory;
 import cz.nerdy.craftchat.menu.ChatColorMenu;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

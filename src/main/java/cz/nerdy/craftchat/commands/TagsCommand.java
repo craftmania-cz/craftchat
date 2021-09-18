@@ -1,6 +1,6 @@
 package cz.nerdy.craftchat.commands;
 
-import cz.craftmania.craftcore.spigot.messages.chat.ChatInfo;
+import cz.craftmania.craftcore.messages.chat.ChatInfo;
 import cz.nerdy.craftchat.Main;
 import cz.nerdy.craftchat.objects.CraftChatPlayer;
 import org.bukkit.command.Command;

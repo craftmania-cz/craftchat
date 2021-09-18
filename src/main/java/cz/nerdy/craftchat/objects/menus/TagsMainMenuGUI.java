@@ -1,22 +1,14 @@
 package cz.nerdy.craftchat.objects.menus;
 
-import cz.craftmania.craftcore.spigot.builders.items.ItemBuilder;
-import cz.craftmania.craftcore.spigot.inventory.builder.ClickableItem;
-import cz.craftmania.craftcore.spigot.inventory.builder.content.InventoryContents;
-import cz.craftmania.craftcore.spigot.inventory.builder.content.InventoryProvider;
-import cz.craftmania.craftcore.spigot.inventory.builder.content.Pagination;
-import cz.craftmania.craftcore.spigot.inventory.builder.content.SlotIterator;
-import cz.craftmania.craftcore.spigot.messages.chat.ChatInfo;
+import cz.craftmania.craftcore.builders.items.ItemBuilder;
+import cz.craftmania.craftcore.inventory.builder.ClickableItem;
+import cz.craftmania.craftcore.inventory.builder.content.InventoryContents;
+import cz.craftmania.craftcore.inventory.builder.content.InventoryProvider;
 import cz.nerdy.craftchat.Main;
-import cz.nerdy.craftchat.objects.CraftChatPlayer;
-import cz.nerdy.craftchat.objects.Tag;
 import cz.nerdy.craftchat.objects.TagMenuType;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TagsMainMenuGUI implements InventoryProvider {
 
