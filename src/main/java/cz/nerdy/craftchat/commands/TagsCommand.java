@@ -12,7 +12,7 @@ import cz.nerdy.craftchat.objects.CraftChatPlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-@CommandAlias("tags|tagy")
+@CommandAlias("tags")
 @Description("Zobrazi všechny tagy, které jsou k dispozici")
 public class TagsCommand extends BaseCommand {
     @Default
