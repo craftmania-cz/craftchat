@@ -49,9 +49,8 @@ public class ChatColorCommand extends BaseCommand {
 
     private static final Pattern pattern = Pattern.compile("^#[a-fA-F0-9]{6}$");
 
-    @Subcommand("custom")
+    @Default
     @CommandPermission("craftchat.chatcolor.custom")
-    @CommandAlias("chatcolor")
     @CommandCompletion("[#RRGGBB]")
     @Description("Změna na custom barvu")
     public void setCustomColor(Player player, String colorCode) {
