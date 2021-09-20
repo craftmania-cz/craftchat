@@ -40,9 +40,10 @@ public class IgnoreCommand extends BaseCommand {
         this.sendHelpComponent(player, "§c/ignore help §8- §7zobrazí nápovědu", "Zobrazí tuto nápovědu", "/ignore help");
     }
 
-    @CommandAlias("ignore")
+    @Default
+    @CommandCompletion("@players")
+    @Syntax("[nick]")
     @Description("Ignorování hráče")
-    @CommandCompletion("*")
     public void ignorePlayer(CommandSender sender, OnlinePlayer onlinePlayer) {
         Player ignoredPlayer = onlinePlayer.getPlayer();
         Player player = (Player) sender;
