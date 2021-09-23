@@ -1,20 +1,24 @@
 package cz.nerdy.craftchat.commands;
 
+import co.aikar.commands.BaseCommand;
+import co.aikar.commands.CommandHelp;
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.Default;
+import co.aikar.commands.annotation.Description;
+import co.aikar.commands.annotation.HelpCommand;
 import cz.craftmania.craftcore.messages.chat.ChatInfo;
 import cz.nerdy.craftchat.Main;
 import cz.nerdy.craftchat.objects.CraftChatPlayer;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class TagsCommand implements CommandExecutor {
-
-    @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+@CommandAlias("tags")
+@Description("Zobrazi všechny tagy, které jsou k dispozici")
+public class TagsCommand extends BaseCommand {
+    @Default
+    public void showTagsMenu(CommandSender sender) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("Jenom ze hry");
-            return true;
         }
 
         Player player = (Player) sender;
@@ -22,15 +26,12 @@ public class TagsCommand implements CommandExecutor {
         
         if (!craftChatPlayer.getChatGroup().isAllowTagChange()) {
             ChatInfo.error(player, "Tvá skupina má zakázanou změnu tagů");
-            return true;
+        } else {
+            Main.getTagManager().openMainMenu(player);
         }
-
-        String type = "all";
-        if (args.length > 0) {
-            type = args[0];
-        }
-        Main.getTagManager().openMainMenu(player);
-
-        return true;
+    }
+    @HelpCommand
+    public void helpCommand(CommandHelp help) {
+        help.showHelp();
     }
 }

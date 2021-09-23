@@ -1,8 +1,7 @@
 package cz.nerdy.craftchat;
 
-import cz.nerdy.craftchat.commands.ChatColorCommand;
-import cz.nerdy.craftchat.commands.IgnoreCommand;
-import cz.nerdy.craftchat.commands.TagsCommand;
+import co.aikar.commands.PaperCommandManager;
+import cz.nerdy.craftchat.commands.*;
 import cz.nerdy.craftchat.listeners.ChatListener;
 import cz.nerdy.craftchat.listeners.PlayerListener;
 import cz.nerdy.craftchat.luckperms.GroupChangeListener;
@@ -36,6 +35,9 @@ public class Main extends JavaPlugin {
 
     public static String SERVER;
 
+    // Commands manager
+    private PaperCommandManager manager;
+
     @Override
     public void onEnable() {
         System.out.println("Loading CraftChat v" + this.getDescription().getVersion());
@@ -53,10 +55,12 @@ public class Main extends JavaPlugin {
         this.getConfig().options().copyDefaults(true);
         this.saveConfig();
 
-        TagsCommand playerCommands = new TagsCommand();
-        getCommand("tags").setExecutor(playerCommands);
-        getCommand("ignore").setExecutor(new IgnoreCommand());
-        getCommand("chatcolor").setExecutor(new ChatColorCommand());
+        // Aikar command manager
+        manager = new PaperCommandManager(this);
+        manager.enableUnstableAPI("help");
+
+        // Register příkazů
+        loadCommands(manager);
 
         SERVER = getConfig().getString("server");
 
@@ -72,6 +76,12 @@ public class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
         new GroupChangeListener(this, luckPerms);
+    }
+
+    private void loadCommands(PaperCommandManager manager) {
+        manager.registerCommand(new ChatColorCommand());
+        manager.registerCommand(new TagsCommand());
+        manager.registerCommand(new IgnoreCommand());
     }
 
     @Override

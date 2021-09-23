@@ -122,7 +122,18 @@ public class CraftChatPlayer {
         }
         CraftLibs.getSqlManager().query("SELECT chatcolor FROM player_settings WHERE nick = ?", this.player.getName()).thenAcceptAsync(res -> {
             for (DBRow row : res) {
-                this.chatColor = Colors.resolveColorById(row.getInt("chatcolor"));
+                String dbColor = row.getString("chatcolor");
+                // Detekce rozdílu mezi custom barvou a normální VIP barvou
+                if (dbColor.length() == 6) {
+                    if (!this.player.hasPermission("craftchat.chatcolor.custom")) {
+                        this.chatColor = ChatColor.WHITE;
+                        return;
+                    }
+                    this.chatColor = ChatColor.of("#" + dbColor);
+                } else {
+                    int colorId = Integer.valueOf(dbColor);
+                    this.chatColor = Colors.resolveColorById(colorId);
+                }
             }
         });
     }
@@ -133,8 +144,18 @@ public class CraftChatPlayer {
             return;
         }
         this.chatColor = color;
-        CraftLibs.getSqlManager().query("UPDATE player_settings SET chatcolor = " + id + " WHERE nick = ?", this.player.getName());
+        CraftLibs.getSqlManager().query("UPDATE player_settings SET chatcolor = ? WHERE nick = ?", id, this.player.getName());
     }
+
+    public void setCustomChatColor(String colorHex) {
+        if (this.player.hasPermission("craftchat.chatcolor.at")) {
+            this.chatColor = ChatColor.YELLOW;
+            return;
+        }
+        this.chatColor = ChatColor.of("#" + colorHex);
+        CraftLibs.getSqlManager().query("UPDATE player_settings SET chatcolor = ? WHERE nick = ?", colorHex, this.player.getName());
+    }
+
 
     public Player getPlayer() {
         return player;
