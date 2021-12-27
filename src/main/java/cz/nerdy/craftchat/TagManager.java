@@ -257,8 +257,6 @@ public class TagManager {
         }
         this.playersCreatingTag.remove(player);
 
-        CraftTokensAPI.takeTokens(player, 1);
-
         CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(player);
 
         ChatInfo.info(player, "Vytváření tagu...");
@@ -267,9 +265,10 @@ public class TagManager {
                 .thenAcceptAsync(res -> {
                     Tag createdTag = new Tag(res, tag, 2);
                     craftChatPlayer.giveTag(createdTag);
+                    CraftTokensAPI.takeTokens(player, 1);
 
                     player.sendMessage("");
-                    player.sendMessage("§aTvuj tag §f" + tag + " §abyl uspesne vytvoren! Nyni si ho aktivuj v §e/tags");
+                    player.sendMessage("§aTvůj tag §f" + tag + " §abyl úspěšně vytvořen! Nyní si ho aktivuj v §e/tags");
                     player.sendMessage("");
                 });
     }
