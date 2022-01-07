@@ -55,6 +55,9 @@ public class CraftChatPlayer {
     }
 
     public String getPrefix() {
+        if (Main.getInstance().isDisabledTags()) {
+            return chatGroup.getDefaultPrefix() + " ";
+        }
         if (Main.SERVER.equals("prison")) {
             return (this.selectedTag == null ? "%craftprison_player_rank%%craftprison_player_prestige% ▏ %luckperms_prefix%" : "%craftprison_player_rank%%craftprison_player_prestige% ▏ " + this.selectedTag.getPrefix() + " ");
         }

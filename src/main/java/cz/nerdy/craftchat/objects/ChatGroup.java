@@ -10,6 +10,7 @@ public class ChatGroup {
 
     private int priority;
     private String name;
+    private String prefix;
     private String suffix;
     private ChatColor suffixColor;
     private ChatColor prefixColor;
@@ -24,6 +25,7 @@ public class ChatGroup {
     public ChatGroup(
             int priority,
             String name,
+            String prefix,
             String suffix,
             String prefixColor,
             String nameColor,
@@ -37,6 +39,7 @@ public class ChatGroup {
     ) {
         this.priority = priority;
         this.name = name;
+        this.prefix = prefix;
         this.suffix = Main.getInstance().getPluginCompatibility().translateChatColor(suffix);
         this.suffixColor = Main.getInstance().getPluginCompatibility().resolveChatColor(suffixColor);
         this.prefixColor = Main.getInstance().getPluginCompatibility().resolveChatColor(prefixColor);
@@ -104,5 +107,9 @@ public class ChatGroup {
 
     public String getCustomPermission() {
         return customPermission;
+    }
+
+    public String getDefaultPrefix() {
+        return prefix;
     }
 }
