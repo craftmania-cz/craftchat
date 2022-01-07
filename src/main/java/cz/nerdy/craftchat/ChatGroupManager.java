@@ -28,7 +28,8 @@ public class ChatGroupManager {
                     groupSection.getStringList("prefix_tooltip"),
                     groupSection.getStringList("name_tooltip"),
                     groupSection.getString("name_click_command"),
-                    groupSection.getBoolean("allow_tag_change")
+                    groupSection.getBoolean("allow_tag_change"),
+                    groupSection.getString("custom_permission")
             );
             this.chatGroups.add(chatGroup);
         }
@@ -50,6 +51,9 @@ public class ChatGroupManager {
         SortedSet<Integer> groupPriorities = new TreeSet<>(groupMap.keySet());
         for (int priority : groupPriorities) {
             ChatGroup group = groupMap.get(priority);
+            if (group.getCustomPermission() != null && player.hasPermission(group.getCustomPermission())) {
+                return group;
+            }
             if (player.hasPermission("craftchat.format." + group.getName())) {
                 return group;
             }

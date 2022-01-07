@@ -1,3 +1,4 @@
+# Server ID pro kontrolu tagů a jiných věcí
 server: survival
 
 # Defaultni config
@@ -16,6 +17,7 @@ formats:
       - '&a&lMoney: &f{money_formatted}&a$'
     name_click_command: '/pm %player_name%'
     allow_tag_change: true # zakazani zmeny tagu
+    #custom_permission: 'extra.pravo.na.nastaveni'
 
 # Regexy pro blokovane tagy
 blocked-tags:
