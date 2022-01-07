@@ -61,9 +61,6 @@ public class Main extends JavaPlugin {
         manager = new PaperCommandManager(this);
         manager.enableUnstableAPI("help");
 
-        // Register příkazů
-        loadCommands(manager);
-
         SERVER = getConfig().getString("server");
         disabledTags = getConfig().getBoolean("settings.disable-tags", false);
 
@@ -73,10 +70,11 @@ public class Main extends JavaPlugin {
         if (!disabledTags) {
             tagManager = new TagManager();
         }
-
         luckPerms = LuckPermsProvider.get();
-
         craftChatPlayers = new HashMap<>();
+        
+        // Register příkazů
+        loadCommands(manager);
 
         Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
@@ -164,6 +162,10 @@ public class Main extends JavaPlugin {
         this.registerCraftChatPlayer(player);
     }
 
+    /**
+     * True když jsou tagy deaktivovány.
+     * @return {@link Boolean}
+     */
     public boolean isDisabledTags() {
         return disabledTags;
     }
