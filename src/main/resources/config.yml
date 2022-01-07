@@ -1,14 +1,16 @@
 # Server ID pro kontrolu tagů a jiných věcí
 server: survival
 
-# Komlpetně deaktivuje tagy
+# Různé nastavení pro servery
 settings:
+  # Deaktivováním se začne používat 'prefix' nastavní v každé skupině
   disable-tags: false
 
 # Defaultni config
 formats:
   default:
     priority: 14
+    prefix: ''
     prefix_color: GRAY # barva prefixu i tagu
     name_color: LIGHT_GRAY # barva jmena
     suffix_color: GRAY # barva suffixu
