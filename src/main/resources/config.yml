@@ -1,6 +1,10 @@
 # Server ID pro kontrolu tagů a jiných věcí
 server: survival
 
+# Komlpetně deaktivuje tagy
+settings:
+  disable-tags: false
+
 # Defaultni config
 formats:
   default:

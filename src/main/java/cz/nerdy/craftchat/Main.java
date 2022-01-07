@@ -34,6 +34,7 @@ public class Main extends JavaPlugin {
     private static HashMap<Player, CraftChatPlayer> craftChatPlayers;
 
     public static String SERVER;
+    private boolean disabledTags = false;
 
     // Commands manager
     private PaperCommandManager manager;
@@ -52,8 +53,9 @@ public class Main extends JavaPlugin {
             throw new RuntimeException("Could not find PlaceholderAPI!! Plugin can not work without it!");
         }
 
-        this.getConfig().options().copyDefaults(true);
-        this.saveConfig();
+        //Config
+        getConfig().options().copyDefaults(true);
+        saveDefaultConfig();
 
         // Aikar command manager
         manager = new PaperCommandManager(this);
@@ -63,11 +65,14 @@ public class Main extends JavaPlugin {
         loadCommands(manager);
 
         SERVER = getConfig().getString("server");
+        disabledTags = getConfig().getBoolean("settings.disable-tags", false);
 
         chatManager = new ChatManager();
-        tagManager = new TagManager();
         chatGroupManager = new ChatGroupManager();
         ignoreManager = new IgnoreManager();
+        if (!disabledTags) {
+            tagManager = new TagManager();
+        }
 
         luckPerms = LuckPermsProvider.get();
 
@@ -80,8 +85,10 @@ public class Main extends JavaPlugin {
 
     private void loadCommands(PaperCommandManager manager) {
         manager.registerCommand(new ChatColorCommand());
-        manager.registerCommand(new TagsCommand());
         manager.registerCommand(new IgnoreCommand());
+        if (!disabledTags) {
+            manager.registerCommand(new TagsCommand());
+        }
     }
 
     @Override
@@ -155,5 +162,9 @@ public class Main extends JavaPlugin {
         System.out.println("[CraftChat] updating player: uuid: " + uuid.toString());
         this.unregisterCraftChatPlayer(player);
         this.registerCraftChatPlayer(player);
+    }
+
+    public boolean isDisabledTags() {
+        return disabledTags;
     }
 }

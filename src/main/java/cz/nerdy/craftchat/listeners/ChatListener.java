@@ -34,7 +34,7 @@ public class ChatListener implements Listener {
         Player player = event.getPlayer();
         String message = event.getMessage();
 
-        if (Main.getTagManager().isCreatingTag(player)) {
+        if (!Main.getInstance().isDisabledTags() && Main.getTagManager().isCreatingTag(player)) {
             if (message.equalsIgnoreCase("stop")) {
                 Main.getTagManager().stopTagCreation(player);
             } else {

@@ -30,10 +30,12 @@ public class CraftChatPlayer {
         this.ignoredPlayers = Main.getIgnoreManager().getIgnoredPlayers(uuid);
         this.loadChatColor();
 
-        Main.getTagManager().getAllTags(player).thenAccept(res -> {
-            this.tags = res;
-            Main.getTagManager().fetchSelectedTag(this, player);
-        });
+        if (!Main.getInstance().isDisabledTags()) {
+            Main.getTagManager().getAllTags(player).thenAccept(res -> {
+                this.tags = res;
+                Main.getTagManager().fetchSelectedTag(this, player);
+            });
+        }
 
         this.checkForSlashMistake = true;
     }
