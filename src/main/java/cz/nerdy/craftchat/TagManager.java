@@ -1,12 +1,10 @@
 package cz.nerdy.craftchat;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import cz.craftmania.craftcore.inventory.builder.SmartInventory;
 import cz.craftmania.craftcore.messages.chat.ChatInfo;
-import cz.craftmania.crafteconomy.api.CraftCoinsAPI;
-import cz.craftmania.crafteconomy.api.CraftTokensAPI;
+import cz.craftmania.crafteconomy.api.EconomyAPI;
 import cz.craftmania.craftlibs.CraftLibs;
 import cz.craftmania.craftlibs.sql.DBRow;
 import cz.nerdy.craftchat.objects.CraftChatPlayer;
@@ -18,7 +16,6 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.regex.Matcher;
@@ -160,11 +157,11 @@ public class TagManager {
     }
 
     public boolean buyTag(Player player, Tag tag) {
-        if (CraftCoinsAPI.getCoins(player) < tag.getPrice()) {
+        if (EconomyAPI.CRAFT_COINS.get(player) < tag.getPrice()) {
             return false;
         }
 
-        CraftCoinsAPI.takeCoins(player, tag.getPrice());
+        EconomyAPI.CRAFT_COINS.take(player, tag.getPrice());
         this.giveTag(tag, player);
 
         return true;
@@ -181,7 +178,7 @@ public class TagManager {
     }
 
     public void startTagCreation(Player player) {
-        if (CraftTokensAPI.getTokens(player) < 1) {
+        if (EconomyAPI.CRAFT_TOKENS.get(player) < 1) {
             ChatInfo.error(player, "Nemáš dostatečný počet CT");
             return;
         }
@@ -265,7 +262,7 @@ public class TagManager {
                 .thenAcceptAsync(res -> {
                     Tag createdTag = new Tag(res, tag, 2);
                     craftChatPlayer.giveTag(createdTag);
-                    CraftTokensAPI.takeTokens(player, 1);
+                    EconomyAPI.CRAFT_TOKENS.take(player, 1);
 
                     player.sendMessage("");
                     player.sendMessage("§aTvůj tag §f" + tag + " §abyl úspěšně vytvořen! Nyní si ho aktivuj v §e/tags");

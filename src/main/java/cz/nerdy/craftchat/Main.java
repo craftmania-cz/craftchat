@@ -72,7 +72,7 @@ public class Main extends JavaPlugin {
         }
         luckPerms = LuckPermsProvider.get();
         craftChatPlayers = new HashMap<>();
-        
+
         // Register příkazů
         loadCommands(manager);
 
