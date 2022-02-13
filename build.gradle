@@ -27,24 +27,14 @@ repositories {
     maven { url "https://repo.extendedclip.com/content/repositories/placeholderapi/" }
     flatDir { dirs 'libs' }
     maven {
-        url "https://maven.pkg.github.com/craftmania-cz/craftcore"
-        credentials {
-            username = GPR_USER
-            password = GPR_TOKEN
+        url "https://gitlab.com/api/v4/groups/craftmania/-/packages/maven"
+        name "GitLab"
+        credentials(HttpHeaderCredentials) {
+            name = 'Private-Token'
+            value = GITLAB_TOKEN
         }
-    }
-    maven {
-        url "https://maven.pkg.github.com/craftmania-cz/craftlibs"
-        credentials {
-            username = GPR_USER
-            password = GPR_TOKEN
-        }
-    }
-    maven {
-        url "https://maven.pkg.github.com/craftmania-cz/crafteconomy"
-        credentials {
-            username = GPR_USER
-            password = GPR_TOKEN
+        authentication {
+            header(HttpHeaderAuthentication)
         }
     }
 }
@@ -61,7 +51,7 @@ dependencies {
     // CM Plugins
     compileOnly group: 'cz.craftmania.craftcore', name: 'craftcore', version: '2.6.2.1'
     compileOnly group: 'cz.craftmania.craftlibs', name: 'craftlibs', version: '1.1.9'
-    compileOnly group: 'cz.craftmania.crafteconomy', name: 'crafteconomy', version: '1.5.2'
+    compileOnly group: 'cz.craftmania.crafteconomy', name: 'crafteconomy', version: '2.0.1'
 
     // Commands
     implementation 'co.aikar:acf-paper:0.5.0-SNAPSHOT'
