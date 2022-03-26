@@ -6,7 +6,7 @@ import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
 import co.aikar.commands.annotation.HelpCommand;
-import cz.craftmania.craftcore.messages.chat.ChatInfo;
+import cz.craftmania.craftlibs.utils.ChatInfo;
 import cz.nerdy.craftchat.Main;
 import cz.nerdy.craftchat.objects.CraftChatPlayer;
 import org.bukkit.command.CommandSender;
@@ -25,7 +25,7 @@ public class TagsCommand extends BaseCommand {
         CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(player);
         
         if (!craftChatPlayer.getChatGroup().isAllowTagChange()) {
-            ChatInfo.error(player, "Tvá skupina má zakázanou změnu tagů");
+            ChatInfo.DANGER.send(player, "Na tomto serveru si nelze změnit tag.");
         } else {
             Main.getTagManager().openMainMenu(player);
         }

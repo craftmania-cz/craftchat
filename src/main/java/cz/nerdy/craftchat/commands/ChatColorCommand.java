@@ -4,6 +4,7 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import cz.craftmania.craftcore.inventory.builder.SmartInventory;
+import cz.craftmania.craftlibs.utils.ChatInfo;
 import cz.nerdy.craftchat.Main;
 import cz.nerdy.craftchat.menu.ChatColorMenu;
 import cz.nerdy.craftchat.objects.CraftChatPlayer;
@@ -36,14 +37,13 @@ import java.util.regex.Pattern;
 @Description("Změna barvy")
 @CommandPermission("craftchat.chatcolor")
 public class ChatColorCommand extends BaseCommand {
-    @Default // Deafult = Přkíaz bez argumentů -> /chatcolor
+
+    @Default
     public void showChatColorMenu(CommandSender sender) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("Tento příkaz může používat pouze hráč!");
         }
-
         Player player = (Player) sender;
-
         SmartInventory.builder().size(6, 9).title("Změna barvy psaní").provider(new ChatColorMenu()).build().open(player);
     }
 
@@ -57,9 +57,9 @@ public class ChatColorCommand extends BaseCommand {
         if (pattern.matcher(colorCode).matches()) {
             CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(player);
             craftChatPlayer.setCustomChatColor(colorCode.substring(1));
-            craftChatPlayer.getPlayer().sendMessage("§e§l[*] §eBarva psani nastavena na: " + ChatColor.of(colorCode) + colorCode);
+            ChatInfo.SUCCESS.send(player, "Barva psani nastavena na: " + ChatColor.of(colorCode) + colorCode);
         } else {
-            player.sendMessage("§c§l[!] §cNesprávný formát! Použij například /chatcolor #3DA1CD");
+            ChatInfo.DANGER.send(player, "Nesprávný formát! Použij například /chatcolor #3DA1CD");
         }
     }
 

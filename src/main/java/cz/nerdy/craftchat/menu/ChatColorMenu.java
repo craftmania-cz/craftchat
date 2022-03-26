@@ -4,6 +4,7 @@ import cz.craftmania.craftcore.builders.items.ItemBuilder;
 import cz.craftmania.craftcore.inventory.builder.ClickableItem;
 import cz.craftmania.craftcore.inventory.builder.content.InventoryContents;
 import cz.craftmania.craftcore.inventory.builder.content.InventoryProvider;
+import cz.craftmania.craftlibs.utils.ChatInfo;
 import cz.nerdy.craftchat.Main;
 import cz.nerdy.craftchat.objects.CraftChatPlayer;
 import net.md_5.bungee.api.ChatColor;
@@ -22,74 +23,74 @@ public class ChatColorMenu implements InventoryProvider {
 
         contents.set(2, 1, ClickableItem.of(new ItemBuilder(Material.RED_TULIP).setName("§c§lČervená").build(), click -> {
             craftChatPlayer.setChatColor(ChatColor.RED, 12);
-            craftChatPlayer.getPlayer().sendMessage("§e§l[*] §eBarva psani nastavena na: §c§lČervená");
             craftChatPlayer.getPlayer().closeInventory();
+            ChatInfo.INFO.send(player, "Barva psani nastavena na: §c§lČervená");
         }));
         contents.set(2, 2, ClickableItem.of(new ItemBuilder(Material.CYAN_DYE).setName("§3§lTyrkysová").build(), click -> {
             craftChatPlayer.setChatColor(ChatColor.DARK_AQUA, 3);
-            craftChatPlayer.getPlayer().sendMessage("§e§l[*] §eBarva psani nastavena na: 3§lTyrkysová");
             craftChatPlayer.getPlayer().closeInventory();
+            ChatInfo.INFO.send(player, "Barva psani nastavena na: 3§lTyrkysová");
         }));
         contents.set(2, 3, ClickableItem.of(new ItemBuilder(Material.LIME_DYE).setName("§a§lZelená").build(), click -> {
             craftChatPlayer.setChatColor(ChatColor.GREEN, 10);
-            craftChatPlayer.getPlayer().sendMessage("§e§l[*] §eBarva psani nastavena na: §a§lZelená");
             craftChatPlayer.getPlayer().closeInventory();
+            ChatInfo.INFO.send(player, "Barva psani nastavena na: §a§lZelená");
         }));
         contents.set(2, 4, ClickableItem.of(new ItemBuilder(Material.PINK_DYE).setName("§d§lRůžová").build(), click -> {
             craftChatPlayer.setChatColor(ChatColor.LIGHT_PURPLE, 13);
-            craftChatPlayer.getPlayer().sendMessage("§e§l[*] §eBarva psani nastavena na: §d§lRůžová");
             craftChatPlayer.getPlayer().closeInventory();
+            ChatInfo.INFO.send(player, "Barva psani nastavena na: §d§lRůžová");
         }));
         contents.set(2, 5, ClickableItem.of(new ItemBuilder(Material.GOLD_INGOT).setName("§6§lZlatá").build(), click -> {
             craftChatPlayer.setChatColor(ChatColor.GOLD, 6);
-            craftChatPlayer.getPlayer().sendMessage("§e§l[*] §eBarva psani nastavena na: §6§lZlatá");
             craftChatPlayer.getPlayer().closeInventory();
+            ChatInfo.INFO.send(player, "Barva psani nastavena na: §6§lZlatá");
         }));
         contents.set(2, 6, ClickableItem.of(new ItemBuilder(Material.PURPLE_DYE).setName("§5§lFialová").build(), click -> {
             craftChatPlayer.setChatColor(ChatColor.DARK_PURPLE, 5);
-            craftChatPlayer.getPlayer().sendMessage("§e§l[*] §eBarva psani nastavena na: §5§lFialová");
             craftChatPlayer.getPlayer().closeInventory();
+            ChatInfo.INFO.send(player, "Barva psani nastavena na: §5§lFialová");
         }));
         contents.set(2, 7, ClickableItem.of(new ItemBuilder(Material.GREEN_DYE).setName("§2§lTmavě zelená").build(), click -> {
             craftChatPlayer.setChatColor(ChatColor.DARK_GREEN, 2);
-            craftChatPlayer.getPlayer().sendMessage("§e§l[*] §eBarva psani nastavena na: §2§lTmavě zelená");
             craftChatPlayer.getPlayer().closeInventory();
+            ChatInfo.INFO.send(player, "Barva psani nastavena na: §2§lTmavě zelená");
         }));
 
         contents.set(3, 1, ClickableItem.of(new ItemBuilder(Material.LIGHT_GRAY_DYE).setName("§7§lSvětle šedá").build(), click -> {
             craftChatPlayer.setChatColor(ChatColor.GRAY, 7);
-            craftChatPlayer.getPlayer().sendMessage("§e§l[*] §eBarva psani nastavena na: §7§lSvětle šedá");
             craftChatPlayer.getPlayer().closeInventory();
+            ChatInfo.INFO.send(player, "Barva psani nastavena na: §7§lSvětle šedá");
         }));
         contents.set(3, 2, ClickableItem.of(new ItemBuilder(Material.GRAY_DYE).setName("§8Šedá").build(), click -> {
             craftChatPlayer.setChatColor(ChatColor.DARK_GRAY, 8);
-            craftChatPlayer.getPlayer().sendMessage("§e§l[*] §eBarva psani nastavena na: §8Šedá");
             craftChatPlayer.getPlayer().closeInventory();
+            ChatInfo.INFO.send(player, "Barva psani nastavena na: §8Šedá");
         }));
         contents.set(3, 3, ClickableItem.of(new ItemBuilder(Material.WHITE_DYE).setName("§f§lBílá").build(), click -> {
             craftChatPlayer.setChatColor(ChatColor.WHITE, 15);
-            craftChatPlayer.getPlayer().sendMessage("§e§l[*] §eBarva psani nastavena na: §f§lBílá");
             craftChatPlayer.getPlayer().closeInventory();
+            ChatInfo.INFO.send(player, "Barva psani nastavena na: §f§lBílá");
         }));
         contents.set(3, 4, ClickableItem.of(new ItemBuilder(Material.BLUE_DYE).setName("§9§lModrá").build(), click -> {
             craftChatPlayer.setChatColor(ChatColor.BLUE, 9);
-            craftChatPlayer.getPlayer().sendMessage("§e§l[*] §eBarva psani nastavena na: §9§lModrá");
             craftChatPlayer.getPlayer().closeInventory();
+            ChatInfo.INFO.send(player, "Barva psani nastavena na: §9§lModrá");
         }));
         contents.set(3, 5, ClickableItem.of(new ItemBuilder(Material.LAPIS_LAZULI).setName("§1§lTmavě modrá").build(), click -> {
             craftChatPlayer.setChatColor(ChatColor.DARK_BLUE, 1);
-            craftChatPlayer.getPlayer().sendMessage("§e§l[*] §eBarva psani nastavena na: §1§lTmavě modrá");
             craftChatPlayer.getPlayer().closeInventory();
+            ChatInfo.INFO.send(player, "Barva psani nastavena na: §1§lTmavě modrá");
         }));
         contents.set(3, 6, ClickableItem.of(new ItemBuilder(Material.LIGHT_BLUE_DYE).setName("§b§lSvětle modrá").build(), click -> {
             craftChatPlayer.setChatColor(ChatColor.AQUA, 11);
-            craftChatPlayer.getPlayer().sendMessage("§e§l[*] §eBarva psani nastavena na: §b§lSvětle modrá");
             craftChatPlayer.getPlayer().closeInventory();
+            ChatInfo.INFO.send(player, "Barva psani nastavena na: §b§lSvětle modrá");
         }));
         contents.set(3, 7, ClickableItem.of(new ItemBuilder(Material.NETHER_WART).setName("§4§lTmavě červená").build(), click -> {
             craftChatPlayer.setChatColor(ChatColor.DARK_RED, 4);
-            craftChatPlayer.getPlayer().sendMessage("§e§l[*] §eBarva psani nastavena na: §4§lTmavě červená");
             craftChatPlayer.getPlayer().closeInventory();
+            ChatInfo.INFO.send(player, "Barva psani nastavena na: §4§lTmavě červená");
         }));
 
     }

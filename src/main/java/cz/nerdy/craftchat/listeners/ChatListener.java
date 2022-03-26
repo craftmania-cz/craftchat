@@ -1,6 +1,6 @@
 package cz.nerdy.craftchat.listeners;
 
-import cz.craftmania.craftcore.messages.chat.ChatInfo;
+import cz.craftmania.craftlibs.utils.ChatInfo;
 import cz.nerdy.craftchat.Main;
 import cz.nerdy.craftchat.objects.ChatGroup;
 import cz.nerdy.craftchat.objects.CraftChatPlayer;
@@ -47,7 +47,7 @@ public class ChatListener implements Listener {
         CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(player);
 
         if (craftChatPlayer == null) {
-            ChatInfo.error(player, "Nepodařilo se načíst tvé data, zkus to později.");
+            ChatInfo.DANGER.send(player, "Při načítání tvých dat nastala chyba, zkus to znova později.");
             return;
         }
 
@@ -94,7 +94,7 @@ public class ChatListener implements Listener {
                 if (player.hasPermission("craftchat.replacements")) {
                     message = message.replaceAll(Pattern.quote(replacement), premiumReplacements.get(replacement) + craftChatPlayer.getSelectedChatColor());
                 } else {
-                    player.sendMessage("§c§l[!] §cNelze používat replacementy, když nemáš VIP!");
+                    ChatInfo.DANGER.send(player, "Nelze používat replacementy, když nemáš VIP!");
                     event.setCancelled(true);
                     return;
                 }
@@ -103,7 +103,7 @@ public class ChatListener implements Listener {
 
         for (String value : premiumReplacements.values()) {
             if (message.contains(ChatColor.stripColor(value)) && !player.hasPermission("craftchat.replacements")) {
-                player.sendMessage("§c§l[!] §cNelze používat replacementy, když nemáš VIP!");
+                ChatInfo.DANGER.send(player, "Nelze používat replacementy, když nemáš VIP!");
                 event.setCancelled(true);
                 return;
             }
@@ -112,7 +112,7 @@ public class ChatListener implements Listener {
         List<String> blockedTags = Main.getChatManager().getBlockedTexts();
         for (String tag : blockedTags) {
             if (message.contains(tag)) {
-                player.sendMessage("§c§l[!] §cNelze používat prefixy, tagy a extra znaky v chatu!");
+                ChatInfo.DANGER.send(player, "Nelze používat prefixy, tagy a extra znaky v chatu");
                 event.setCancelled(true);
                 return;
             }

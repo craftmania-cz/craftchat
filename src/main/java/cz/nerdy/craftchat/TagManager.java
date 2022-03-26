@@ -3,10 +3,10 @@ package cz.nerdy.craftchat;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import cz.craftmania.craftcore.inventory.builder.SmartInventory;
-import cz.craftmania.craftcore.messages.chat.ChatInfo;
 import cz.craftmania.crafteconomy.api.EconomyAPI;
 import cz.craftmania.craftlibs.CraftLibs;
 import cz.craftmania.craftlibs.sql.DBRow;
+import cz.craftmania.craftlibs.utils.ChatInfo;
 import cz.nerdy.craftchat.objects.CraftChatPlayer;
 import cz.nerdy.craftchat.objects.Tag;
 import cz.nerdy.craftchat.objects.TagMenuType;
@@ -99,7 +99,7 @@ public class TagManager {
                     return;
                 }
                 Tag tag = this.getTagById(tagId);
-                ChatInfo.success(player, "Předchozí tag načten §7(" + tag.getPrefix() + ")");
+                ChatInfo.SUCCESS.send(player, "Předchozí tag načten §7(" + tag.getPrefix() + "{c})");
 
                 craftChatPlayer.setSelectedTagWithoutSavingIntoDatabase(tag);
             } else {
@@ -179,7 +179,7 @@ public class TagManager {
 
     public void startTagCreation(Player player) {
         if (EconomyAPI.CRAFT_TOKENS.get(player) < 1) {
-            ChatInfo.error(player, "Nemáš dostatečný počet CT");
+            ChatInfo.DANGER.send(player, "Nemáš dostatek CraftTokens. Můžeš si je zakoupit na https://store.craftmania.cz/");
             return;
         }
 
@@ -256,7 +256,7 @@ public class TagManager {
 
         CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(player);
 
-        ChatInfo.info(player, "Vytváření tagu...");
+        ChatInfo.SERVER.send(player, "Vytvářím tag, čekej prosím...");
 
         CraftLibs.getSqlManager().insertAndReturnLastInsertedId("INSERT INTO craftchat_tags (type,server,name,price,description) VALUE(?,?,?,?,?)", 2, Main.SERVER, tag, 0, "Tag koupený za CraftToken")
                 .thenAcceptAsync(res -> {
@@ -273,7 +273,6 @@ public class TagManager {
     public void resetTag(Player player){
         CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(player);
         craftChatPlayer.removeTag();
-
-        ChatInfo.info(player, "Tag byl obnoven");
+        ChatInfo.INFO.send(player, "Tag byl obnoven na základní.");
     }
 }

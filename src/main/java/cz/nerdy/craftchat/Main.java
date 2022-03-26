@@ -8,6 +8,7 @@ import cz.nerdy.craftchat.luckperms.GroupChangeListener;
 import cz.nerdy.craftchat.nms.*;
 import cz.nerdy.craftchat.objects.ChatGroup;
 import cz.nerdy.craftchat.objects.CraftChatPlayer;
+import cz.nerdy.craftchat.utils.Logger;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import org.bukkit.Bukkit;
@@ -41,16 +42,14 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        System.out.println("Loading CraftChat v" + this.getDescription().getVersion());
+        Logger.info("Loading CraftChat v" + this.getDescription().getVersion());
         instance = this;
 
-        if (!setupCompatibility()) {
-            System.out.println("Nepodporovana verze serveru!");
-            this.getPluginLoader().disablePlugin(this);
-        }
+        setupCompatibility();
 
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) {
-            throw new RuntimeException("Could not find PlaceholderAPI!! Plugin can not work without it!");
+            Logger.danger("Na serveru se nenachazi PlacerholderAPI. Plugin nelze spustit.");
+            Bukkit.getPluginManager().disablePlugin(this);
         }
 
         //Config
@@ -62,20 +61,28 @@ public class Main extends JavaPlugin {
         manager.enableUnstableAPI("help");
 
         SERVER = getConfig().getString("server");
-        disabledTags = getConfig().getBoolean("settings.disable-tags", false);
+        Logger.info("Server zaevidovany jako: " + SERVER);
 
+        // Settings
         chatManager = new ChatManager();
         chatGroupManager = new ChatGroupManager();
         ignoreManager = new IgnoreManager();
+
+        disabledTags = getConfig().getBoolean("settings.disable-tags", false);
         if (!disabledTags) {
             tagManager = new TagManager();
+            Logger.info("Aktivace manageru: Tags");
+        } else {
+            Logger.info("Tagy jsou deaktivovany. Plugin bude pouzivat default prefixy.");
         }
+
         luckPerms = LuckPermsProvider.get();
         craftChatPlayers = new HashMap<>();
 
         // Register příkazů
         loadCommands(manager);
 
+        // Events
         Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
         new GroupChangeListener(this, luckPerms);
@@ -102,23 +109,10 @@ public class Main extends JavaPlugin {
         return pluginCompatibility;
     }
 
-    private boolean setupCompatibility() {
-        String s;
-        try {
-            s = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
-        } catch (ArrayIndexOutOfBoundsException ex) {
-            return false;
-        }
-        switch (s) {
-            case "v1_16_R3":
-                this.pluginCompatibility = new Spigot_1_16_3_Compatibility();
-                break;
-            case "v1_17_R1":
-            case "v1_18_R1":
-                this.pluginCompatibility = new Spigot_1_17_0_Compatibility();
-                break;
-        }
-        return this.pluginCompatibility != null;
+    private void setupCompatibility() {
+        String serverVersion = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
+        Logger.info("Detekovana verze serveru: " + serverVersion);
+        this.pluginCompatibility = new Spigot_1_17_0_Compatibility();
     }
 
     public static ChatManager getChatManager() {
@@ -154,10 +148,10 @@ public class Main extends JavaPlugin {
     public void updatePlayer(UUID uuid) {
         Player player = Bukkit.getPlayer(uuid);
         if (player == null) {
-            System.out.println("[CraftChat] updating player: Player not found .. uuid: " + uuid.toString());
+            Logger.danger("Update dat hrace skrz UUID: Hrac je null -> UUID: " + uuid);
             return;
         }
-        System.out.println("[CraftChat] updating player: uuid: " + uuid.toString());
+        Logger.info("Update dat hrace " + player.getName() + " (" + uuid + ").");
         this.unregisterCraftChatPlayer(player);
         this.registerCraftChatPlayer(player);
     }

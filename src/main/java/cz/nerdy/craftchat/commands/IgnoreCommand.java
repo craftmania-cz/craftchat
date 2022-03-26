@@ -3,7 +3,7 @@ package cz.nerdy.craftchat.commands;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import co.aikar.commands.bukkit.contexts.OnlinePlayer;
-import cz.craftmania.craftcore.messages.chat.ChatInfo;
+import cz.craftmania.craftlibs.utils.ChatInfo;
 import cz.nerdy.craftchat.Main;
 import cz.nerdy.craftchat.objects.CraftChatPlayer;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -24,16 +24,13 @@ public class IgnoreCommand extends BaseCommand {
         if (!(sender instanceof Player)) {
             sender.sendMessage("Jenom ze hry");
         }
-
         Player player = (Player) sender;
-
         sendList(player);
     }
 
     @Subcommand("help")
     public void sendHelp(CommandSender sender) {
         Player player = (Player) sender;
-
         player.sendMessage("§c§lNápověda");
         this.sendHelpComponent(player, "§c/ignore §8- §7zobrazí seznam ignorovaných hráčů", "Zobrazí seznam ignorovaných hráčů", "/ignore");
         this.sendHelpComponent(player, "§c/ignore <hráč> §8- §7zablokovat/odblokovat hráče", "Zablokuje nebo odblokuje hráče", "/ignore ");
@@ -48,19 +45,19 @@ public class IgnoreCommand extends BaseCommand {
         Player ignoredPlayer = onlinePlayer.getPlayer();
         Player player = (Player) sender;
         if (ignoredPlayer == null) {
-            ChatInfo.error(player, "Hráč musí být online");
+            ChatInfo.DANGER.send(player, "Hráč musí být připojený na serveru.");
         } else if (ignoredPlayer.getName().equals(player.getName())){
-            ChatInfo.error(player, "Nemůžeš ignorovat sám sebe");
+            ChatInfo.DANGER.send(player, "Nemůžeš ignorovat sám sebe.");
         } else if (ignoredPlayer.hasPermission("craftchat.ignore.block")) {
-            ChatInfo.error(player, "Tohoto hráče nemůžeš ignorovat.");
+            ChatInfo.DANGER.send(player, "Tohoto hráče nemůžeš ignorovat.");
         } else {
             CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(player);
             if (craftChatPlayer.hasIgnored(ignoredPlayer)) {
                 craftChatPlayer.removeIgnoredPlayer(ignoredPlayer);
-                ChatInfo.success(player, "Hráč byl odebrán ze seznamu");
+                ChatInfo.SUCCESS.send(player, "Hráč byl odebrán z ignore seznamu. Nyní ti může odeslat msg.");
             } else {
                 craftChatPlayer.addIgnoredPlayer(ignoredPlayer);
-                ChatInfo.success(player, "Od teď ignoruješ hráče " + ignoredPlayer.getName());
+                ChatInfo.SUCCESS.send(player, "Od teď ignoruješ hráče §e" + ignoredPlayer.getName());
             }
         }
     }
@@ -75,7 +72,6 @@ public class IgnoreCommand extends BaseCommand {
             TextComponent removeComponent = new TextComponent(TextComponent.fromLegacyText("§7[§c✘§7]"));
             removeComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText("§7Klikni pro obdlokování")));
             removeComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ignore " + nick));
-
             TextComponent playerComponent = new TextComponent("§8- §7" + nick + " ");
             BaseComponent[] baseComponent = {playerComponent, removeComponent};
             player.spigot().sendMessage(baseComponent);
@@ -86,7 +82,6 @@ public class IgnoreCommand extends BaseCommand {
         TextComponent textComponent = new TextComponent(TextComponent.fromLegacyText(text));
         textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(hoverText)));
         textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, suggestCommand));
-
         player.spigot().sendMessage(textComponent);
     }
 }

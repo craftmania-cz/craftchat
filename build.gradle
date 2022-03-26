@@ -20,12 +20,11 @@ clean { delete "./target" }
 clean { delete "./build" }
 
 repositories {
+    flatDir { dirs 'libs' }
     mavenCentral()
-    maven { url "https://packages.craftmania.cz/repository/craftmania/" }
     maven { url "https://repo.aikar.co/content/groups/aikar/" }
     maven { url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
     maven { url "https://repo.extendedclip.com/content/repositories/placeholderapi/" }
-    flatDir { dirs 'libs' }
     maven {
         url "https://gitlab.com/api/v4/groups/craftmania/-/packages/maven"
         name "GitLab"
@@ -45,7 +44,6 @@ dependencies {
     }
 
     // NMS
-    compileOnly name: 'spigot-1.16.4'
     compileOnly name: 'spigot-1.17'
 
     // CM Plugins
@@ -58,8 +56,8 @@ dependencies {
 
     // Other API
     compileOnly group: 'me.clip', name: 'placeholderapi', version: '2.10.9'
-    compileOnly 'net.luckperms:api:5.0'
-    implementation 'org.jetbrains:annotations:16.0.2'
+    compileOnly 'net.luckperms:api:5.4'
+    implementation 'org.jetbrains:annotations:23.0.0'
 
 }
 
