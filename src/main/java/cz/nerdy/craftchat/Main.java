@@ -4,6 +4,7 @@ import co.aikar.commands.PaperCommandManager;
 import cz.nerdy.craftchat.commands.*;
 import cz.nerdy.craftchat.listeners.ChatListener;
 import cz.nerdy.craftchat.listeners.PlayerListener;
+import cz.nerdy.craftchat.listeners.external.LandsChatListener;
 import cz.nerdy.craftchat.luckperms.GroupChangeListener;
 import cz.nerdy.craftchat.nms.*;
 import cz.nerdy.craftchat.objects.ChatGroup;
@@ -18,6 +19,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Main extends JavaPlugin {
@@ -86,6 +88,10 @@ public class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
         new GroupChangeListener(this, luckPerms);
+
+        if (Objects.equals(SERVER, "survival")) {
+            Bukkit.getPluginManager().registerEvents(new LandsChatListener(), this);
+        }
     }
 
     private void loadCommands(PaperCommandManager manager) {

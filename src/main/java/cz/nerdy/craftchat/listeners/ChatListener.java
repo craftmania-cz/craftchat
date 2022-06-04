@@ -44,6 +44,11 @@ public class ChatListener implements Listener {
             return;
         }
 
+        // Lands chat
+        if (Main.getChatManager().getActiveLandChat().contains(player)) {
+            return;
+        }
+
         CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(player);
 
         if (craftChatPlayer == null) {

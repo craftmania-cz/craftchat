@@ -1,5 +1,8 @@
 package cz.nerdy.craftchat;
 
+import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -10,8 +13,10 @@ public class ChatManager {
     private final HashMap<String, String> premiumReplacements;
     private final HashMap<String, String> freeReplacements;
     private final List<String> blockedTexts;
+    private final List<Player> activeLandChat;
 
     public ChatManager() {
+        this.activeLandChat = new ArrayList<>();
         this.premiumReplacements = new HashMap<>();
         this.freeReplacements = new HashMap<>();
         this.blockedTexts = Arrays.asList(
@@ -82,5 +87,9 @@ public class ChatManager {
 
     public List<String> getBlockedTexts() {
         return blockedTexts;
+    }
+
+    public List<Player> getActiveLandChat() {
+        return activeLandChat;
     }
 }
