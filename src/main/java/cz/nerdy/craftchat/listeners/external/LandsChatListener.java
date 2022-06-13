@@ -17,7 +17,6 @@ public class LandsChatListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onLandsChatCommand(PlayerCommandPreprocessEvent event) {
-        System.out.println(event.getMessage());
         if (!event.getMessage().equals("/lands chat")
                 && !event.getMessage().equals("/land chat")
                 && !event.getMessage().equals("/nation chat")
