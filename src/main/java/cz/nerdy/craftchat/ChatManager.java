@@ -21,7 +21,7 @@ public class ChatManager {
         this.freeReplacements = new HashMap<>();
         this.blockedTexts = Arrays.asList(
                 "⻒", "⻓", "⻔", "⻕", "⻖", "⻗", "⻘", "⻙", "⻚", "⻛", "⻜", "⻝", "⻞", "⻟", "⻪", "⻫", "⻬", "⻯", "⻮", "⻭", "⻰", "⻱",
-                "⻲", "⻳", "⼀", "⼢", "⼣", "夑", "夐", "⼧");
+                "⻲", "⻳", "⼀", "⼢", "⼣", "夑", "夐", "⼧", "夔", "솄", "솶");
 
         this.loadPremiumReplacements();
         this.loadFreeReplacements();
@@ -64,6 +64,7 @@ public class ChatManager {
         this.premiumReplacements.put(":job:", "§f⻑");
         this.premiumReplacements.put(":pag:", "§f⻐");
         this.premiumReplacements.put(":pagman:", "§f⻐");
+        this.premiumReplacements.put(":pugman:", "§f⻐");
         this.premiumReplacements.put(":pogo:", "§f⻏");
         this.premiumReplacements.put(":cry:", "§f⼰");
         this.premiumReplacements.put(":blush:", "§f⼭");
@@ -75,6 +76,16 @@ public class ChatManager {
         this.premiumReplacements.put(":hug:", "§f⼳");
         this.premiumReplacements.put(":jam:", "§f⼴");
         this.premiumReplacements.put(":party:", "§f⼵");
+        this.premiumReplacements.put(":sus:", "§f쇒");
+        this.premiumReplacements.put(":mw:", "§f쇑");
+        this.premiumReplacements.put(":monkaw:", "§f쇑");
+        this.premiumReplacements.put(":old:", "§f쇐");
+        this.premiumReplacements.put(":yep:", "§f쇏");
+        this.premiumReplacements.put(":bedge:", "§f쇎");
+        this.premiumReplacements.put(":pray:", "§f쇍");
+        this.premiumReplacements.put(":fs:", "§f쇌");
+        this.premiumReplacements.put(":clueless:", "§f");
+        this.premiumReplacements.put(":clue:", "§f쇋");
     }
 
     public HashMap<String, String> getPremiumReplacements() {
