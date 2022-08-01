@@ -21,6 +21,7 @@ public class LandsChatListener implements Listener {
                 && !event.getMessage().equals("/land chat")
                 && !event.getMessage().equals("/nation chat")
                 && !event.getMessage().equals("/nations chat")
+                && !event.getMessage().equals("/chat")
         ) {
             return;
         }
