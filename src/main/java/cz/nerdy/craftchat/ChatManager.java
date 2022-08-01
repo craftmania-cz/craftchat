@@ -84,7 +84,7 @@ public class ChatManager {
         this.premiumReplacements.put(":bedge:", "§f쇎");
         this.premiumReplacements.put(":pray:", "§f쇍");
         this.premiumReplacements.put(":fs:", "§f쇌");
-        this.premiumReplacements.put(":clueless:", "§f");
+        this.premiumReplacements.put(":clueless:", "§f쇋");
         this.premiumReplacements.put(":clue:", "§f쇋");
     }
 
