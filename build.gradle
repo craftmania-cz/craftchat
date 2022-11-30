@@ -6,10 +6,10 @@ plugins {
 apply plugin: 'java'
 
 group 'cz.nerdy.craftchat'
-version '1.1.6'
+version '1.2.0'
 
-sourceCompatibility = 16
-targetCompatibility = 16
+sourceCompatibility = 17
+targetCompatibility = 17
 
 // Nastaveni UTF
 tasks.withType(JavaCompile) {
@@ -23,7 +23,7 @@ repositories {
     flatDir { dirs 'libs' }
     mavenCentral()
     maven { url "https://repo.aikar.co/content/groups/aikar/" }
-    maven { url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
+    maven { url "https://repo.papermc.io/repository/maven-public/" }
     maven { url "https://repo.extendedclip.com/content/repositories/placeholderapi/" }
     maven {
         url "https://gitlab.com/api/v4/groups/craftmania/-/packages/maven"
@@ -39,9 +39,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly('org.spigotmc:spigot-api:1.16.1-R0.1-SNAPSHOT') {
-        exclude group: 'net.md-5'
-    }
+    compileOnly("io.papermc.paper:paper-api:1.19.2-R0.1-SNAPSHOT")
 
     // NMS
     compileOnly name: 'spigot-1.17'

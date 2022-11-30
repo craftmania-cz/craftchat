@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
 
+@Deprecated
 public class ChatListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOW)
