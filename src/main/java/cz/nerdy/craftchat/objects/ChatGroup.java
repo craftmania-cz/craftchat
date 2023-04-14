@@ -1,6 +1,7 @@
 package cz.nerdy.craftchat.objects;
 
 import cz.nerdy.craftchat.Main;
+import lombok.Getter;
 import net.md_5.bungee.api.ChatColor;
 
 import java.util.ArrayList;
@@ -8,108 +9,58 @@ import java.util.List;
 
 public class ChatGroup {
 
-    private int priority;
-    private String name;
-    private String prefix;
-    private String suffix;
-    private ChatColor suffixColor;
-    private ChatColor prefixColor;
-    private ChatColor nameColor;
-    private ChatColor chatColor;
-    private List<String> prefixTooltip;
-    private List<String> nameTooltip;
-    private String nameClickCommand;
-    private boolean allowTagChange;
-    private String customPermission;
+    @Getter int priority;
+    @Getter String name;
+    @Getter String prefixFormat;
+    @Getter List<String> prefixTooltip;
+    @Getter String prefixClickCommand;
+    @Getter String nameFormat;
+    @Getter List<String> nameTooltip;
+    @Getter String nameClickCommand;
+    @Getter String suffixFormat;
+    @Getter String messageFormat;
+    @Getter boolean allowTagChange;
+    @Getter String tagFormat;
+    @Getter String customPermission;
 
     public ChatGroup(
             int priority,
             String name,
-            String prefix,
-            String suffix,
-            String prefixColor,
-            String nameColor,
-            String suffixColor,
-            String chatColor,
+            String prefixFormat,
             List<String> prefixTooltip,
+            String prefixClickCommand,
+            String nameFormat,
             List<String> nameTooltip,
             String nameClickCommand,
+            String messageFormat,
             boolean allowTagChange,
+            String tagFormat,
             String customPermission
     ) {
         this.priority = priority;
         this.name = name;
-        this.prefix = prefix;
-        this.suffix = Main.getInstance().getPluginCompatibility().translateChatColor(suffix);
-        this.suffixColor = Main.getInstance().getPluginCompatibility().resolveChatColor(suffixColor);
-        this.prefixColor = Main.getInstance().getPluginCompatibility().resolveChatColor(prefixColor);
-        this.nameColor = Main.getInstance().getPluginCompatibility().resolveChatColor(nameColor);
-        this.chatColor = Main.getInstance().getPluginCompatibility().resolveChatColor(chatColor);
+        this.prefixFormat = prefixFormat;
+        this.prefixClickCommand = prefixClickCommand;
+        this.nameFormat = nameFormat;
+        this.messageFormat = messageFormat;
         List<String> tempList = new ArrayList<>();
-        for (String line : prefixTooltip) {
-            tempList.add(Main.getInstance().getPluginCompatibility().translateChatColor(line));
+        for (String line : prefixTooltip) { //todo: adventure + minimessage + placeholderpai
+            tempList.add(line);
         }
         this.prefixTooltip = tempList;
 
         tempList = new ArrayList<>();
-        for (String line : nameTooltip) {
-            tempList.add(Main.getInstance().getPluginCompatibility().translateChatColor(line));
+        for (String line : nameTooltip) { //todo: adventure + minimessage + placeholderpai
+            tempList.add(line);
         }
         this.nameTooltip = tempList;
         this.nameClickCommand = nameClickCommand;
         this.allowTagChange = allowTagChange;
+        this.tagFormat = tagFormat;
         this.customPermission = customPermission;
     }
 
-    public int getPriority() {
-        return priority;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getSuffix() {
-        return suffix;
-    }
-
-    public ChatColor getPrefixColor() {
-        return prefixColor;
-    }
-
-    public ChatColor getNameColor() {
-        return nameColor;
-    }
-
-    public ChatColor getChatColor() {
-        return chatColor;
-    }
-
-    public List<String> getPrefixTooltip() {
-        return prefixTooltip;
-    }
-
-    public List<String> getNameTooltip() {
-        return nameTooltip;
-    }
-
-    public String getNameClickCommand() {
-        return nameClickCommand;
-    }
-
-    public boolean isAllowTagChange() {
-        return allowTagChange;
-    }
-
-    public ChatColor getSuffixColor() {
-        return suffixColor;
-    }
-
-    public String getCustomPermission() {
-        return customPermission;
-    }
-
     public String getDefaultPrefix() {
-        return prefix;
+        return "DefaultPrefix";
     }
 }

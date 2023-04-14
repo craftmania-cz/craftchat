@@ -99,7 +99,7 @@ public class TagManager {
                     return;
                 }
                 Tag tag = this.getTagById(tagId);
-                ChatInfo.SUCCESS.send(player, "Předchozí tag načten §7(" + tag.getPrefix() + "{c})");
+                ChatInfo.SUCCESS.send(player, "Předchozí tag načten §7(" + tag.getPrefixAsSTring() + "{c})");
 
                 craftChatPlayer.setSelectedTagWithoutSavingIntoDatabase(tag);
             } else {

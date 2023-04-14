@@ -6,23 +6,23 @@ settings:
   # Deaktivováním se začne používat 'prefix' nastavní v každé skupině
   disable-tags: false
 
-# Defaultni config
-formats:
+format-groups:
   default:
-    priority: 14
-    prefix: ''
-    prefix_color: GRAY # barva prefixu i tagu
-    name_color: LIGHT_GRAY # barva jmena
-    suffix_color: GRAY # barva suffixu
-    suffix: '»' # suffix za jmenem
-    chat_color: WHITE
-    prefix_tooltip:
-      - '&7&lZakladni rank'
-    name_tooltip:
-      - '&d&lNick: &f%player_name%'
-      - '&a&lMoney: &f{money_formatted}&a$'
-    name_click_command: '/pm %player_name%'
-    allow_tag_change: true # zakazani zmeny tagu
+    priority: 1 # Vyšší dá override nižší
+    prefix:
+      format: "<color:dark_gray>Hráč</color>"
+      tooltip:
+        - "<color:gray>Základní rank</color>"
+      click_action: "/msg <name>"
+      tags:
+        allowed: true
+        format: "<color:dark_gray><selected_tag></color>"
+    name:
+      format: "<color:gray><player></color>"
+      tooltip:
+        - "<color:gray>Jméno lol</color>"
+      click_action: "/msg <name>"
+    message_format: "<prefix> <name> » <color:white><message></color>"
     #custom_permission: 'extra.pravo.na.nastaveni'
 
 # Regexy pro blokovane tagy

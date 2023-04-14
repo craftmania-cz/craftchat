@@ -2,11 +2,10 @@ package cz.nerdy.craftchat;
 
 import co.aikar.commands.PaperCommandManager;
 import cz.nerdy.craftchat.commands.*;
-import cz.nerdy.craftchat.listeners.ChatListener;
+import cz.nerdy.craftchat.listeners.AsyncChatListener;
 import cz.nerdy.craftchat.listeners.PlayerListener;
 import cz.nerdy.craftchat.listeners.external.LandsChatListener;
 import cz.nerdy.craftchat.luckperms.GroupChangeListener;
-import cz.nerdy.craftchat.nms.*;
 import cz.nerdy.craftchat.objects.ChatGroup;
 import cz.nerdy.craftchat.objects.CraftChatPlayer;
 import cz.nerdy.craftchat.utils.Logger;
@@ -26,7 +25,6 @@ public class Main extends JavaPlugin {
 
     private static Main instance;
     private List<ChatGroup> chatGroups;
-    private PluginCompatibility pluginCompatibility;
     private static ChatManager chatManager;
     private static TagManager tagManager;
     private static ChatGroupManager chatGroupManager;
@@ -46,8 +44,6 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         Logger.info("Loading CraftChat v" + this.getDescription().getVersion());
         instance = this;
-
-        setupCompatibility();
 
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) {
             Logger.danger("Na serveru se nenachazi PlacerholderAPI. Plugin nelze spustit.");
@@ -85,7 +81,8 @@ public class Main extends JavaPlugin {
         loadCommands(manager);
 
         // Events
-        Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
+        //Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
+        Bukkit.getPluginManager().registerEvents(new AsyncChatListener(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
         new GroupChangeListener(this, luckPerms);
 
@@ -109,16 +106,6 @@ public class Main extends JavaPlugin {
 
     public static Main getInstance() {
         return instance;
-    }
-
-    public PluginCompatibility getPluginCompatibility() {
-        return pluginCompatibility;
-    }
-
-    private void setupCompatibility() {
-        String serverVersion = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
-        Logger.info("Detekovana verze serveru: " + serverVersion);
-        this.pluginCompatibility = new Spigot_1_17_0_Compatibility();
     }
 
     public static ChatManager getChatManager() {

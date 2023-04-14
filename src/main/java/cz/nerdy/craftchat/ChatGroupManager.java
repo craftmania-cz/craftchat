@@ -14,28 +14,27 @@ public class ChatGroupManager {
 
         this.chatGroups = new ArrayList<>();
 
-        ConfigurationSection configurationSection = Main.getInstance().getConfig().getConfigurationSection("formats");
+        ConfigurationSection configurationSection = Main.getInstance().getConfig().getConfigurationSection("format-groups");
         for (String key : configurationSection.getKeys(false)) {
             ConfigurationSection groupSection = configurationSection.getConfigurationSection(key);
             ChatGroup chatGroup = new ChatGroup(
                     groupSection.getInt("priority"),
                     key,
-                    groupSection.getString("prefix"),
-                    groupSection.getString("suffix"),
-                    groupSection.getString("prefix_color"),
-                    groupSection.getString("name_color"),
-                    groupSection.getString("suffix_color"),
-                    groupSection.getString("chat_color"),
-                    groupSection.getStringList("prefix_tooltip"),
-                    groupSection.getStringList("name_tooltip"),
-                    groupSection.getString("name_click_command"),
-                    groupSection.getBoolean("allow_tag_change"),
+                    groupSection.getString("prefix.format"),
+                    groupSection.getStringList("prefix.tooltip"),
+                    groupSection.getString("prefix.click_action"),
+                    groupSection.getString("name.format"),
+                    groupSection.getStringList("name.tooltip"),
+                    groupSection.getString("name.click_action"),
+                    groupSection.getString("message_format"),
+                    groupSection.getBoolean("prefix.tags.allowed"),
+                    groupSection.getString("prefix.tags.format"),
                     groupSection.getString("custom_permission")
             );
             this.chatGroups.add(chatGroup);
         }
 
-        System.out.println("Nacteno celkem " + this.chatGroups.size() + " groupek.");
+        System.out.println("Nacteno celkem " + this.chatGroups.size() + " groupek."); //todo: log
     }
 
     public List<ChatGroup> getChatGroups() {
@@ -46,16 +45,19 @@ public class ChatGroupManager {
         HashMap<Integer, ChatGroup> groupMap = new HashMap<>();
 
         for (ChatGroup chatGroup : this.getChatGroups()) {
+            System.out.println("chatGroup: " + chatGroup.getName());
             groupMap.put(chatGroup.getPriority(), chatGroup);
         }
 
         SortedSet<Integer> groupPriorities = new TreeSet<>(groupMap.keySet());
+        System.out.println(Arrays.toString(groupPriorities.toArray()));
         for (int priority : groupPriorities) {
             ChatGroup group = groupMap.get(priority);
             if (group.getCustomPermission() != null && player.hasPermission(group.getCustomPermission())) {
                 return group;
             }
             if (player.hasPermission("craftchat.format." + group.getName())) {
+                System.out.println("ma pravo na: " + group.getName());
                 return group;
             }
         }

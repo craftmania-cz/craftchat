@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 
 @Deprecated
 public class ChatListener implements Listener {
-
+/*
     @EventHandler(priority = EventPriority.LOW)
     public void onChat(AsyncPlayerChatEvent event) {
         if (event.isCancelled()) {
@@ -187,7 +187,7 @@ public class ChatListener implements Listener {
             }
             onlinePlayer.spigot().sendMessage(toSend);
         }
-    }
+    }*/
 
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent event) {

@@ -1,5 +1,10 @@
 package cz.nerdy.craftchat.objects;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.ComponentLike;
+import net.kyori.adventure.text.event.HoverEvent;
+import org.jetbrains.annotations.NotNull;
+
 public class Tag {
 
     private int id;
@@ -25,8 +30,19 @@ public class Tag {
         return id;
     }
 
-    public String getPrefix() {
+    public String getPrefixAsSTring() {
         return prefix;
+    }
+
+    public ComponentLike getPrefixAsComponent() {
+        HoverEvent<Component> hoverEvent = null;
+        if (this.type == 1) {
+            hoverEvent = HoverEvent.showText(Component.text("§7Tento prefix byl zakoupen v §fCshop\n§7K zakoupení použij §b/cshop"));
+        }
+        if (this.type == 2) {
+            hoverEvent = HoverEvent.showText(Component.text("§7Tento prefix byl vytvořen hráčem."));
+        }
+        return Component.text(prefix).hoverEvent(hoverEvent);
     }
 
     public int getPrice() {

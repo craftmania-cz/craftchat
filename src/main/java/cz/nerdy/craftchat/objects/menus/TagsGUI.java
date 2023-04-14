@@ -49,10 +49,10 @@ public class TagsGUI implements InventoryProvider {
             boolean hasTag = craftChatPlayer.hasTag(tag);
             if (showOnlyOwned && hasTag) {
                 String[] lore = new String[]{"§7Klikni pro nastavení"};
-                ItemStack item = new ItemBuilder(Material.NAME_TAG).setName(tag.getPrefix()).setLore(lore).hideAllFlags().build();
+                ItemStack item = new ItemBuilder(Material.NAME_TAG).setName(tag.getPrefixAsSTring()).setLore(lore).hideAllFlags().build();
                 items.add(ClickableItem.of(item, e -> {
                     craftChatPlayer.setSelectedTag(tag);
-                    ChatInfo.info(player, "Nastavil jsi si tag: " + tag.getPrefix());
+                    ChatInfo.info(player, "Nastavil jsi si tag: " + tag.getPrefixAsSTring());
                     player.closeInventory();
                 }));
             } else {
@@ -60,10 +60,10 @@ public class TagsGUI implements InventoryProvider {
                     continue;
                 }
                 String[] lore = new String[]{"§7Cena: §e" + tag.getPrice() + "CC"};
-                ItemStack item = new ItemBuilder(Material.NAME_TAG).setName(tag.getPrefix()).setLore(lore).hideAllFlags().build();
+                ItemStack item = new ItemBuilder(Material.NAME_TAG).setName(tag.getPrefixAsSTring()).setLore(lore).hideAllFlags().build();
                 items.add(ClickableItem.of(item, e -> {
                     if (Main.getTagManager().buyTag(player, tag)) {
-                        ChatInfo.success(player, "Tag " + tag.getPrefix() + " byl úspěšně zakoupen");
+                        ChatInfo.success(player, "Tag " + tag.getPrefixAsSTring() + " byl úspěšně zakoupen");
                     } else {
                         ChatInfo.error(player, "Nemáš dostatek CC k nákupu tohoto tagu");
                     }
