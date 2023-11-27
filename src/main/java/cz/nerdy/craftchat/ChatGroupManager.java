@@ -45,13 +45,16 @@ public class ChatGroupManager {
         HashMap<Integer, ChatGroup> groupMap = new HashMap<>();
 
         for (ChatGroup chatGroup : this.getChatGroups()) {
-            System.out.println("chatGroup: " + chatGroup.getName());
+            System.out.println("chatGroup: " + chatGroup.getName() + ", priority: " + chatGroup.getPriority());
             groupMap.put(chatGroup.getPriority(), chatGroup);
         }
 
-        SortedSet<Integer> groupPriorities = new TreeSet<>(groupMap.keySet());
-        System.out.println(Arrays.toString(groupPriorities.toArray()));
-        for (int priority : groupPriorities) {
+        List<Integer> groupPrioritiesList = new ArrayList<>(groupMap.keySet());
+        Collections.sort(groupPrioritiesList);
+        Collections.reverse(groupPrioritiesList);
+        System.out.println(Arrays.toString(groupPrioritiesList.toArray()));
+        for (int priority : groupPrioritiesList) {
+            System.out.println("checking: " + groupPrioritiesList.get(priority));
             ChatGroup group = groupMap.get(priority);
             if (group.getCustomPermission() != null && player.hasPermission(group.getCustomPermission())) {
                 return group;
