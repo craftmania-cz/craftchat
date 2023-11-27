@@ -51,7 +51,7 @@ public class AsyncChatListener implements Listener {
         CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(event.getPlayer());
 
         Component prefix = craftChatPlayer.getPrefix();
-        Component nameFormat = MiniMessage.miniMessage().deserialize(PlaceholderAPI.setPlaceholders(event.getPlayer(), craftChatPlayer.getChatGroup().getNameFormat()), Placeholder.component("player", event.getPlayer().name()));
+        Component nameFormat = craftChatPlayer.getNameWithHover(); //MiniMessage.miniMessage().deserialize(PlaceholderAPI.setPlaceholders(event.getPlayer(), craftChatPlayer.getChatGroup().getNameFormat()), Placeholder.component("player", event.getPlayer().name()));
         //TODO Colors
 
         Component originalMessageAsComponent = LegacyComponentSerializer.legacyAmpersand()

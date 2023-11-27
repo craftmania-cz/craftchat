@@ -75,6 +75,16 @@ public class CraftChatPlayer {
         );
     }
 
+    public @NotNull Component getNameWithHover() {
+        Component hoverText = MiniMessage.miniMessage().deserialize(String.join("\n", PlaceholderAPI.setPlaceholders(this.player, this.chatGroup.nameTooltip)));
+        HoverEvent<Component> hoverEvent = HoverEvent.showText(hoverText);
+        return MiniMessage.miniMessage().deserialize(PlaceholderAPI.setPlaceholders(
+                this.player,
+                this.chatGroup.getNameFormat()),
+                Placeholder.component("player", Component.text(this.player.getName()).hoverEvent(hoverEvent))
+        );
+    }
+
     public boolean hasTag(Tag tag) {
         return this.tags.contains(tag);
     }

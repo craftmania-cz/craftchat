@@ -9,11 +9,17 @@ import cz.nerdy.craftchat.luckperms.GroupChangeListener;
 import cz.nerdy.craftchat.objects.ChatGroup;
 import cz.nerdy.craftchat.objects.CraftChatPlayer;
 import cz.nerdy.craftchat.utils.Logger;
+import me.clip.placeholderapi.PlaceholderAPI;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.tag.Tag;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -147,6 +153,29 @@ public class Main extends JavaPlugin {
         Logger.info("Update dat hrace " + player.getName() + " (" + uuid + ").");
         this.unregisterCraftChatPlayer(player);
         this.registerCraftChatPlayer(player);
+    }
+
+    /**
+     * Creates a tag resolver capable of resolving PlaceholderAPI tags for a given player.
+     *
+     * @param player the player
+     * @return the tag resolver
+     */
+    public @NotNull TagResolver papiTag(final @NotNull Player player) {
+        return TagResolver.resolver("papi", (argumentQueue, context) -> {
+            // Get the string placeholder that they want to use.
+            final String papiPlaceholder = argumentQueue.popOr("papi tag requires an argument").value();
+
+            // Then get PAPI to parse the placeholder for the given player.
+            final String parsedPlaceholder = PlaceholderAPI.setPlaceholders(player, '%' + papiPlaceholder + '%');
+            System.out.println(parsedPlaceholder);
+
+            // We need to turn this ugly legacy string into a nice component.
+            final Component componentPlaceholder = LegacyComponentSerializer.legacySection().deserialize(parsedPlaceholder);
+
+            // Finally, return the tag instance to insert the placeholder!
+            return Tag.selfClosingInserting(componentPlaceholder);
+        });
     }
 
     /**
