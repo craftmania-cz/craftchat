@@ -8,6 +8,7 @@ import java.util.*;
 
 public class ChatGroupManager {
 
+    @lombok.Getter
     private List<ChatGroup> chatGroups;
 
     public ChatGroupManager() {
@@ -37,30 +38,27 @@ public class ChatGroupManager {
         System.out.println("Nacteno celkem " + this.chatGroups.size() + " groupek."); //todo: log
     }
 
-    public List<ChatGroup> getChatGroups() {
-        return chatGroups;
+    public ChatGroup getDefaultChatGroup() {
+        return chatGroups.get(0);
     }
 
     public ChatGroup getChatGroup(Player player) {
         HashMap<Integer, ChatGroup> groupMap = new HashMap<>();
 
         for (ChatGroup chatGroup : this.getChatGroups()) {
-            System.out.println("chatGroup: " + chatGroup.getName() + ", priority: " + chatGroup.getPriority());
             groupMap.put(chatGroup.getPriority(), chatGroup);
         }
 
         List<Integer> groupPrioritiesList = new ArrayList<>(groupMap.keySet());
         Collections.sort(groupPrioritiesList);
         Collections.reverse(groupPrioritiesList);
-        System.out.println(Arrays.toString(groupPrioritiesList.toArray()));
         for (int priority : groupPrioritiesList) {
-            System.out.println("checking: " + groupPrioritiesList.get(priority));
             ChatGroup group = groupMap.get(priority);
             if (group.getCustomPermission() != null && player.hasPermission(group.getCustomPermission())) {
                 return group;
             }
             if (player.hasPermission("craftchat.format." + group.getName())) {
-                System.out.println("ma pravo na: " + group.getName());
+                System.out.println("Detekovana role: " + group.getName());
                 return group;
             }
         }

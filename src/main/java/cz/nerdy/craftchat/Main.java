@@ -1,6 +1,7 @@
 package cz.nerdy.craftchat;
 
 import co.aikar.commands.PaperCommandManager;
+import cz.craftmania.craftlibs.utils.ChatInfo;
 import cz.nerdy.craftchat.commands.*;
 import cz.nerdy.craftchat.listeners.AsyncChatListener;
 import cz.nerdy.craftchat.listeners.PlayerListener;
@@ -9,6 +10,7 @@ import cz.nerdy.craftchat.luckperms.GroupChangeListener;
 import cz.nerdy.craftchat.objects.ChatGroup;
 import cz.nerdy.craftchat.objects.CraftChatPlayer;
 import cz.nerdy.craftchat.utils.Logger;
+import lombok.Getter;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.tag.Tag;
@@ -20,7 +22,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,16 +30,14 @@ import java.util.UUID;
 
 public class Main extends JavaPlugin {
 
-    private static Main instance;
+    private static @Getter Main instance;
     private List<ChatGroup> chatGroups;
-    private static ChatManager chatManager;
-    private static TagManager tagManager;
-    private static ChatGroupManager chatGroupManager;
-    private static IgnoreManager ignoreManager;
-
-    private static LuckPerms luckPerms;
-
-    private static HashMap<Player, CraftChatPlayer> craftChatPlayers;
+    private static @Getter ChatManager chatManager;
+    private static @Getter TagManager tagManager;
+    private static @Getter ChatGroupManager chatGroupManager;
+    private static @Getter IgnoreManager ignoreManager;
+    private static @Getter LuckPerms luckPerms;
+    private static @Getter HashMap<Player, CraftChatPlayer> craftChatPlayers;
 
     public static String SERVER;
     private boolean disabledTags = false;
@@ -110,33 +109,19 @@ public class Main extends JavaPlugin {
         instance = null;
     }
 
-    public static Main getInstance() {
-        return instance;
-    }
-
-    public static ChatManager getChatManager() {
-        return chatManager;
-    }
-
-    public static TagManager getTagManager() {
-        return tagManager;
-    }
-
-    public static ChatGroupManager getChatGroupManager() {
-        return chatGroupManager;
-    }
-
-    public static IgnoreManager getIgnoreManager() {
-        return ignoreManager;
-    }
-
-    @Nullable
     public static CraftChatPlayer getCraftChatPlayer(Player player) {
-        return craftChatPlayers.getOrDefault(player, null);
+        if (craftChatPlayers.containsKey(player)) {
+            return craftChatPlayers.get(player);
+        }
+        return new CraftChatPlayer(player, getChatGroupManager().getDefaultChatGroup());
     }
 
     public void registerCraftChatPlayer(Player player) {
         CraftChatPlayer craftChatPlayer = new CraftChatPlayer(player);
+        if (craftChatPlayer.getChatGroup() == null) {
+            ChatInfo.ERROR.send(player, "Nastala chyba při načítání tvého chat profilu. Zkus se přihlásit znovu v případě opakování nahlaš toto na našem Discord serveru.");
+            craftChatPlayer = new CraftChatPlayer(player, getChatGroupManager().getDefaultChatGroup());
+        }
         craftChatPlayers.put(player, craftChatPlayer);
     }
 

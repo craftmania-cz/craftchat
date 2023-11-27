@@ -2,6 +2,7 @@ package cz.nerdy.craftchat.objects;
 
 import cz.craftmania.craftlibs.CraftLibs;
 import cz.craftmania.craftlibs.sql.DBRow;
+import cz.craftmania.craftlibs.utils.ChatInfo;
 import cz.nerdy.craftchat.Main;
 import cz.nerdy.craftchat.utils.Colors;
 import lombok.Getter;
@@ -45,6 +46,15 @@ public class CraftChatPlayer {
                 Main.getTagManager().fetchSelectedTag(this, player);
             });
         }
+        this.checkForSlashMistake = true;
+    }
+
+    public CraftChatPlayer(Player player, ChatGroup chatGroup) {
+        this.uuid = player.getUniqueId().toString();
+        this.player = player;
+        this.chatGroup = chatGroup;
+        this.ignoredPlayers = new HashMap<>();
+        this.chatColor = NamedTextColor.WHITE;
         this.checkForSlashMistake = true;
     }
 
