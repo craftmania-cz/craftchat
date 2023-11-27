@@ -25,15 +25,13 @@ repositories {
     maven { url "https://repo.aikar.co/content/groups/aikar/" }
     maven { url "https://repo.papermc.io/repository/maven-public/" }
     maven { url "https://repo.extendedclip.com/content/repositories/placeholderapi/" }
+    maven { url "https://maven.pkg.github.com/craftmania-cz/craftlibs" }
+    maven { url "https://maven.pkg.github.com/craftmania-cz/craftcore" }
     maven {
-        url "https://gitlab.com/api/v4/groups/craftmania/-/packages/maven"
-        name "GitLab"
-        credentials(HttpHeaderCredentials) {
-            name = 'Private-Token'
-            value = GITLAB_TOKEN
-        }
-        authentication {
-            header(HttpHeaderAuthentication)
+        url = uri("https://maven.pkg.github.com/craftmania-cz/crafteconomy")
+        credentials {
+            username = GPR_USER
+            password = GPR_TOKEN
         }
     }
 }
@@ -45,9 +43,9 @@ dependencies {
     compileOnly name: 'spigot-1.17'
 
     // CM Plugins
-    compileOnly group: 'cz.craftmania.craftcore', name: 'craftcore', version: '2.6.2.1'
-    compileOnly group: 'cz.craftmania.craftlibs', name: 'craftlibs', version: '1.1.9'
-    compileOnly group: 'cz.craftmania.crafteconomy', name: 'crafteconomy', version: '2.0.1'
+    compileOnly group: 'cz.craftmania.craftcore', name: 'craftcore', version: '2.11'
+    compileOnly group: 'cz.craftmania.craftlibs', name: 'craftlibs', version: '1.1.17'
+    compileOnly group: 'cz.craftmania.crafteconomy', name: 'crafteconomy', version: '2.1.1'
 
     // Commands
     implementation 'co.aikar:acf-paper:0.5.0-SNAPSHOT'
@@ -55,11 +53,9 @@ dependencies {
     // Other API
     compileOnly group: 'me.clip', name: 'placeholderapi', version: '2.10.9'
     compileOnly 'net.luckperms:api:5.4'
-    implementation 'org.jetbrains:annotations:23.0.0'
 
-    compileOnly 'org.projectlombok:lombok:1.18.24'
-    annotationProcessor 'org.projectlombok:lombok:1.18.24'
-
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
 }
 
 shadowJar {
