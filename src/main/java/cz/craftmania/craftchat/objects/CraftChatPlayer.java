@@ -1,10 +1,9 @@
-package cz.nerdy.craftchat.objects;
+package cz.craftmania.craftchat.objects;
 
+import cz.craftmania.craftchat.utils.Colors;
 import cz.craftmania.craftlibs.CraftLibs;
 import cz.craftmania.craftlibs.sql.DBRow;
-import cz.craftmania.craftlibs.utils.ChatInfo;
-import cz.nerdy.craftchat.Main;
-import cz.nerdy.craftchat.utils.Colors;
+import cz.craftmania.craftchat.Main;
 import lombok.Getter;
 import lombok.Setter;
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -19,9 +18,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 public class CraftChatPlayer {
 

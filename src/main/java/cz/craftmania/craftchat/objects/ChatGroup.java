@@ -1,8 +1,6 @@
-package cz.nerdy.craftchat.objects;
+package cz.craftmania.craftchat.objects;
 
-import cz.nerdy.craftchat.Main;
 import lombok.Getter;
-import net.md_5.bungee.api.ChatColor;
 
 import java.util.ArrayList;
 import java.util.List;

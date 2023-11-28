@@ -1,14 +1,13 @@
-package cz.nerdy.craftchat.menu;
+package cz.craftmania.craftchat.menu;
 
 import cz.craftmania.craftcore.builders.items.ItemBuilder;
 import cz.craftmania.craftcore.inventory.builder.ClickableItem;
 import cz.craftmania.craftcore.inventory.builder.content.InventoryContents;
 import cz.craftmania.craftcore.inventory.builder.content.InventoryProvider;
 import cz.craftmania.craftlibs.utils.ChatInfo;
-import cz.nerdy.craftchat.Main;
-import cz.nerdy.craftchat.objects.CraftChatPlayer;
+import cz.craftmania.craftchat.Main;
+import cz.craftmania.craftchat.objects.CraftChatPlayer;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 

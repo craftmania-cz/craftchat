@@ -1,6 +1,6 @@
-package cz.nerdy.craftchat.luckperms;
+package cz.craftmania.craftchat.luckperms;
 
-import cz.nerdy.craftchat.Main;
+import cz.craftmania.craftchat.Main;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.actionlog.Action;
 import net.luckperms.api.event.EventBus;

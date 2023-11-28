@@ -1,4 +1,4 @@
-package cz.nerdy.craftchat.utils;
+package cz.craftmania.craftchat.utils;
 
 
 import net.kyori.adventure.text.format.NamedTextColor;

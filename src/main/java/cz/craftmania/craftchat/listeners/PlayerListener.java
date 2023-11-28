@@ -1,6 +1,6 @@
-package cz.nerdy.craftchat.listeners;
+package cz.craftmania.craftchat.listeners;
 
-import cz.nerdy.craftchat.Main;
+import cz.craftmania.craftchat.Main;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;

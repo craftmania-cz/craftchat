@@ -1,17 +1,17 @@
-package cz.nerdy.craftchat;
+package cz.craftmania.craftchat;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import cz.craftmania.craftchat.objects.CraftChatPlayer;
+import cz.craftmania.craftchat.objects.Tag;
 import cz.craftmania.craftcore.inventory.builder.SmartInventory;
 import cz.craftmania.crafteconomy.api.EconomyAPI;
 import cz.craftmania.craftlibs.CraftLibs;
 import cz.craftmania.craftlibs.sql.DBRow;
 import cz.craftmania.craftlibs.utils.ChatInfo;
-import cz.nerdy.craftchat.objects.CraftChatPlayer;
-import cz.nerdy.craftchat.objects.Tag;
-import cz.nerdy.craftchat.objects.TagMenuType;
-import cz.nerdy.craftchat.objects.menus.TagsGUI;
-import cz.nerdy.craftchat.objects.menus.TagsMainMenuGUI;
+import cz.craftmania.craftchat.objects.TagMenuType;
+import cz.craftmania.craftchat.objects.menus.TagsGUI;
+import cz.craftmania.craftchat.objects.menus.TagsMainMenuGUI;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 

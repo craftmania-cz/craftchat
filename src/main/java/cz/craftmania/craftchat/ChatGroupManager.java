@@ -1,6 +1,6 @@
-package cz.nerdy.craftchat;
+package cz.craftmania.craftchat;
 
-import cz.nerdy.craftchat.objects.ChatGroup;
+import cz.craftmania.craftchat.objects.ChatGroup;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 

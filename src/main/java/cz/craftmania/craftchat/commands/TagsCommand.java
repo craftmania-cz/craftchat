@@ -1,4 +1,4 @@
-package cz.nerdy.craftchat.commands;
+package cz.craftmania.craftchat.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
@@ -7,8 +7,8 @@ import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
 import co.aikar.commands.annotation.HelpCommand;
 import cz.craftmania.craftlibs.utils.ChatInfo;
-import cz.nerdy.craftchat.Main;
-import cz.nerdy.craftchat.objects.CraftChatPlayer;
+import cz.craftmania.craftchat.Main;
+import cz.craftmania.craftchat.objects.CraftChatPlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

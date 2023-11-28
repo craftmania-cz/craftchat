@@ -1,4 +1,4 @@
-package cz.nerdy.craftchat.utils;
+package cz.craftmania.craftchat.utils;
 
 import cz.craftmania.crafteconomy.Main;
 import org.bukkit.Bukkit;

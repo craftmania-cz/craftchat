@@ -1,4 +1,4 @@
-package cz.nerdy.craftchat.objects;
+package cz.craftmania.craftchat.objects;
 
 public enum TagMenuType {
 

@@ -1,15 +1,16 @@
-package cz.nerdy.craftchat;
+package cz.craftmania.craftchat;
 
 import co.aikar.commands.PaperCommandManager;
+import cz.craftmania.craftchat.commands.ChatColorCommand;
+import cz.craftmania.craftchat.commands.TagsCommand;
+import cz.craftmania.craftchat.listeners.AsyncChatListener;
+import cz.craftmania.craftchat.listeners.PlayerListener;
+import cz.craftmania.craftchat.listeners.external.LandsChatListener;
+import cz.craftmania.craftchat.objects.ChatGroup;
+import cz.craftmania.craftchat.objects.CraftChatPlayer;
+import cz.craftmania.craftchat.utils.Logger;
 import cz.craftmania.craftlibs.utils.ChatInfo;
-import cz.nerdy.craftchat.commands.*;
-import cz.nerdy.craftchat.listeners.AsyncChatListener;
-import cz.nerdy.craftchat.listeners.PlayerListener;
-import cz.nerdy.craftchat.listeners.external.LandsChatListener;
-import cz.nerdy.craftchat.luckperms.GroupChangeListener;
-import cz.nerdy.craftchat.objects.ChatGroup;
-import cz.nerdy.craftchat.objects.CraftChatPlayer;
-import cz.nerdy.craftchat.utils.Logger;
+import cz.craftmania.craftchat.luckperms.GroupChangeListener;
 import lombok.Getter;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.Component;

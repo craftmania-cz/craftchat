@@ -1,13 +1,13 @@
-package cz.nerdy.craftchat.commands;
+package cz.craftmania.craftchat.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
+import cz.craftmania.craftchat.menu.ChatColorMenu;
+import cz.craftmania.craftchat.objects.CraftChatPlayer;
 import cz.craftmania.craftcore.inventory.builder.SmartInventory;
 import cz.craftmania.craftlibs.utils.ChatInfo;
-import cz.nerdy.craftchat.Main;
-import cz.nerdy.craftchat.menu.ChatColorMenu;
-import cz.nerdy.craftchat.objects.CraftChatPlayer;
+import cz.craftmania.craftchat.Main;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

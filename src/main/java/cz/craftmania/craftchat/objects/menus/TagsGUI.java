@@ -1,5 +1,10 @@
-package cz.nerdy.craftchat.objects.menus;
+package cz.craftmania.craftchat.objects.menus;
 
+import cz.craftmania.craftchat.Main;
+import cz.craftmania.craftchat.TagManager;
+import cz.craftmania.craftchat.objects.CraftChatPlayer;
+import cz.craftmania.craftchat.objects.Tag;
+import cz.craftmania.craftchat.objects.TagMenuType;
 import cz.craftmania.craftcore.builders.items.ItemBuilder;
 import cz.craftmania.craftcore.inventory.builder.ClickableItem;
 import cz.craftmania.craftcore.inventory.builder.content.InventoryContents;
@@ -7,11 +12,6 @@ import cz.craftmania.craftcore.inventory.builder.content.InventoryProvider;
 import cz.craftmania.craftcore.inventory.builder.content.Pagination;
 import cz.craftmania.craftcore.inventory.builder.content.SlotIterator;
 import cz.craftmania.craftcore.messages.chat.ChatInfo;
-import cz.nerdy.craftchat.Main;
-import cz.nerdy.craftchat.TagManager;
-import cz.nerdy.craftchat.objects.CraftChatPlayer;
-import cz.nerdy.craftchat.objects.Tag;
-import cz.nerdy.craftchat.objects.TagMenuType;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

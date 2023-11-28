@@ -1,4 +1,4 @@
-package cz.nerdy.craftchat.objects;
+package cz.craftmania.craftchat.objects;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;

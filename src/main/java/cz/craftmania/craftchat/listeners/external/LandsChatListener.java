@@ -1,7 +1,7 @@
-package cz.nerdy.craftchat.listeners.external;
+package cz.craftmania.craftchat.listeners.external;
 
 import cz.craftmania.craftlibs.CraftLibs;
-import cz.nerdy.craftchat.Main;
+import cz.craftmania.craftchat.Main;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

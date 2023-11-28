@@ -1,7 +1,7 @@
-package cz.nerdy.craftchat.listeners;
+package cz.craftmania.craftchat.listeners;
 
-import cz.nerdy.craftchat.Main;
-import cz.nerdy.craftchat.objects.CraftChatPlayer;
+import cz.craftmania.craftchat.objects.CraftChatPlayer;
+import cz.craftmania.craftchat.Main;
 import io.papermc.paper.chat.ChatRenderer;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -36,12 +36,15 @@ public class AsyncChatListener implements Listener {
         CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(event.getPlayer());
 
         Component prefix = craftChatPlayer.getPrefix();
-        Component nameFormat = craftChatPlayer.getNameWithHover(); //MiniMessage.miniMessage().deserialize(PlaceholderAPI.setPlaceholders(event.getPlayer(), craftChatPlayer.getChatGroup().getNameFormat()), Placeholder.component("player", event.getPlayer().name()));
-        //TODO Colors
+        Component nameFormat = craftChatPlayer.getNameWithHover();
 
         Component originalMessageAsComponent = LegacyComponentSerializer.legacyAmpersand()
                 .deserialize(plainTextMessage)
-                .color(craftChatPlayer.getSelectedChatColor());
+                .color(craftChatPlayer.getSelectedChatColor())
+                .replaceText(builder -> {
+                    builder.matchLiteral(":rage:");
+                    builder.replacement(Component.text("§f⼮").hoverEvent(HoverEvent.showText(Component.text("§7Rage §f:rage:"))));
+        });
 
 
         event.message(originalMessageAsComponent);
