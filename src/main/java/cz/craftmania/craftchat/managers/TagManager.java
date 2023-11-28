@@ -1,7 +1,8 @@
-package cz.craftmania.craftchat;
+package cz.craftmania.craftchat.managers;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import cz.craftmania.craftchat.Main;
 import cz.craftmania.craftchat.objects.CraftChatPlayer;
 import cz.craftmania.craftchat.objects.Tag;
 import cz.craftmania.craftcore.inventory.builder.SmartInventory;

@@ -1,7 +1,7 @@
 package cz.craftmania.craftchat.objects.menus;
 
 import cz.craftmania.craftchat.Main;
-import cz.craftmania.craftchat.TagManager;
+import cz.craftmania.craftchat.managers.TagManager;
 import cz.craftmania.craftchat.objects.CraftChatPlayer;
 import cz.craftmania.craftchat.objects.Tag;
 import cz.craftmania.craftchat.objects.TagMenuType;

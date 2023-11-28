@@ -1,5 +1,6 @@
-package cz.craftmania.craftchat;
+package cz.craftmania.craftchat.managers;
 
+import cz.craftmania.craftchat.Main;
 import cz.craftmania.craftchat.objects.ChatGroup;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;

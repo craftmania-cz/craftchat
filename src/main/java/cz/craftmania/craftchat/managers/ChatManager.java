@@ -1,4 +1,4 @@
-package cz.craftmania.craftchat;
+package cz.craftmania.craftchat.managers;
 
 import org.bukkit.entity.Player;
 
