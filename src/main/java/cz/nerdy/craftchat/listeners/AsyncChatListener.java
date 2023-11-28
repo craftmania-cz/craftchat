@@ -5,12 +5,11 @@ import cz.nerdy.craftchat.objects.CraftChatPlayer;
 import io.papermc.paper.chat.ChatRenderer;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.clip.placeholderapi.PlaceholderAPI;
-import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -30,22 +29,8 @@ public class AsyncChatListener implements Listener {
             return;
         }
 
-        // Ignore manager
-        for (Audience viewer : event.viewers()) {
-            if(viewer instanceof Player source) {
-                if (viewer == event.getPlayer() || source.hasPermission("craftchat.ignore.bypass")) {
-                    continue;
-                }
-
-                if (Main.getIgnoreManager().hasIgnored(source, event.getPlayer())) { //TODO: Check
-                    event.viewers().remove(viewer);
-                }
-            }
-        }
-
         String plainTextMessage = LegacyComponentSerializer.legacyAmpersand().serialize(event.message());
         System.out.println("plain " + plainTextMessage);
-
 
         // Formatovani dle groups
         CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(event.getPlayer());

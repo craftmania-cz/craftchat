@@ -30,7 +30,6 @@ public class CraftChatPlayer {
     private final @Getter ChatGroup chatGroup;
     private @Getter Tag selectedTag;
     private @Getter List<Tag> tags = new ArrayList<>();
-    private HashMap<String, String> ignoredPlayers;
     private @Getter @Setter boolean checkForSlashMistake;
     private TextColor chatColor = null;
 
@@ -38,7 +37,6 @@ public class CraftChatPlayer {
         this.uuid = player.getUniqueId().toString();
         this.player = player;
         this.chatGroup = Main.getChatGroupManager().getChatGroup(player);
-        this.ignoredPlayers = Main.getIgnoreManager().getIgnoredPlayers(uuid);
         this.loadChatColor();
         if (!Main.getInstance().isDisabledTags()) {
             Main.getTagManager().getAllTags(player).thenAccept(res -> {
@@ -53,7 +51,6 @@ public class CraftChatPlayer {
         this.uuid = player.getUniqueId().toString();
         this.player = player;
         this.chatGroup = chatGroup;
-        this.ignoredPlayers = new HashMap<>();
         this.chatColor = NamedTextColor.WHITE;
         this.checkForSlashMistake = true;
     }
@@ -117,24 +114,6 @@ public class CraftChatPlayer {
         this.tags.add(tag);
         Main.getTagManager().getAllTags().add(tag);
         CraftLibs.getSqlManager().query("INSERT INTO craftchat_player_tags(uuid,tag_id) VALUES(?,?)", this.uuid, tag.getId());
-    }
-
-    public boolean hasIgnored(Player player) {
-        return this.ignoredPlayers.containsValue(player.getUniqueId().toString());
-    }
-
-    public Set<String> getIgnoredPlayers() {
-        return this.ignoredPlayers.keySet();
-    }
-
-    public void removeIgnoredPlayer(Player player) {
-        this.ignoredPlayers.remove(player.getName());
-        CraftLibs.getSqlManager().query("DELETE FROM craftchat_ignores WHERE uuid=? AND ignored_uuid=?", this.uuid, player.getUniqueId().toString()).thenAcceptAsync((data) -> {});
-    }
-
-    public void addIgnoredPlayer(Player player) {
-        this.ignoredPlayers.put(player.getName(), player.getUniqueId().toString());
-        CraftLibs.getSqlManager().query("INSERT INTO craftchat_ignores(uuid,ignored_uuid) VALUES(?,?)", this.uuid, player.getUniqueId().toString()).thenAcceptAsync(r -> {});
     }
 
     /**

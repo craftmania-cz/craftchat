@@ -35,7 +35,6 @@ public class Main extends JavaPlugin {
     private static @Getter ChatManager chatManager;
     private static @Getter TagManager tagManager;
     private static @Getter ChatGroupManager chatGroupManager;
-    private static @Getter IgnoreManager ignoreManager;
     private static @Getter LuckPerms luckPerms;
     private static @Getter HashMap<Player, CraftChatPlayer> craftChatPlayers;
 
@@ -69,7 +68,6 @@ public class Main extends JavaPlugin {
         // Settings
         chatManager = new ChatManager();
         chatGroupManager = new ChatGroupManager();
-        ignoreManager = new IgnoreManager();
 
         disabledTags = getConfig().getBoolean("settings.disable-tags", false);
         if (!disabledTags) {
@@ -98,7 +96,6 @@ public class Main extends JavaPlugin {
 
     private void loadCommands(PaperCommandManager manager) {
         manager.registerCommand(new ChatColorCommand());
-        manager.registerCommand(new IgnoreCommand());
         if (!disabledTags) {
             manager.registerCommand(new TagsCommand());
         }
