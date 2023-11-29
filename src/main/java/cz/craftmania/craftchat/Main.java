@@ -8,10 +8,13 @@ import cz.craftmania.craftchat.listeners.PlayerListener;
 import cz.craftmania.craftchat.listeners.external.LandsChatListener;
 import cz.craftmania.craftchat.managers.ChatGroupManager;
 import cz.craftmania.craftchat.managers.ChatManager;
+import cz.craftmania.craftchat.managers.EmoteManager;
 import cz.craftmania.craftchat.managers.TagManager;
 import cz.craftmania.craftchat.objects.ChatGroup;
 import cz.craftmania.craftchat.objects.CraftChatPlayer;
 import cz.craftmania.craftchat.utils.Logger;
+import cz.craftmania.craftchat.utils.configs.Config;
+import cz.craftmania.craftchat.utils.configs.ConfigAPI;
 import cz.craftmania.craftlibs.utils.ChatInfo;
 import cz.craftmania.craftchat.luckperms.GroupChangeListener;
 import lombok.Getter;
@@ -39,8 +42,10 @@ public class Main extends JavaPlugin {
     private static @Getter ChatManager chatManager;
     private static @Getter TagManager tagManager;
     private static @Getter ChatGroupManager chatGroupManager;
+    private static @Getter EmoteManager emoteManager;
     private static @Getter LuckPerms luckPerms;
     private static @Getter HashMap<Player, CraftChatPlayer> craftChatPlayers;
+    private @Getter ConfigAPI configAPI;
 
     public static String SERVER;
     private boolean disabledTags = false;
@@ -58,9 +63,13 @@ public class Main extends JavaPlugin {
             Bukkit.getPluginManager().disablePlugin(this);
         }
 
-        //Config
+        // Config
         getConfig().options().copyDefaults(true);
         saveDefaultConfig();
+
+        // Nacteni config souboru
+        configAPI = new ConfigAPI(this);
+        loadConfiguration();
 
         // Aikar command manager
         manager = new PaperCommandManager(this);
@@ -72,6 +81,8 @@ public class Main extends JavaPlugin {
         // Settings
         chatManager = new ChatManager();
         chatGroupManager = new ChatGroupManager();
+        emoteManager = new EmoteManager();
+        emoteManager.loadEmotes();
 
         disabledTags = getConfig().getBoolean("settings.disable-tags", false);
         if (!disabledTags) {
@@ -170,5 +181,14 @@ public class Main extends JavaPlugin {
      */
     public boolean isDisabledTags() {
         return disabledTags;
+    }
+
+    public Config getEmotesConfig() {
+        return configAPI.getConfig("emotes");
+    }
+
+    private void loadConfiguration() {
+        Config questFile = new Config(this.configAPI, "emotes");
+        configAPI.registerConfig(questFile);
     }
 }

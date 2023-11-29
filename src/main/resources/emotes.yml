@@ -1,0 +1,14 @@
+# Tento soubor obsahuje všechny emoty, které se budou zobrazovat v chatu.
+emote_list:
+  test:
+    name: "Test"
+    type: "IMAGE"
+    toReplace: ":test:"
+    replaceWith: "YO TEST"
+    #permission: "craftchat.emote.test"
+
+  test2:
+    name: "Test2"
+    type: "TEXT"
+    toReplace: ":test:"
+    replaceWith: "YO TEST"
