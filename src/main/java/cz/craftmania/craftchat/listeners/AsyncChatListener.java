@@ -7,13 +7,12 @@ import io.papermc.paper.chat.ChatRenderer;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.TextReplacementConfig;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -33,8 +32,20 @@ public class AsyncChatListener implements Listener {
             return;
         }
 
+        Player player = event.getPlayer();
+
         String plainTextMessage = LegacyComponentSerializer.legacyAmpersand().serialize(event.message());
         //System.out.println("plain " + plainTextMessage);
+
+        if (!Main.getInstance().isDisabledTags() && Main.getTagManager().isCreatingTag(player)) {
+            if (plainTextMessage.equalsIgnoreCase("stop")) {
+                Main.getTagManager().stopTagCreation(player);
+            } else {
+                Main.getTagManager().createTag(player, plainTextMessage);
+            }
+            event.setCancelled(true);
+            return;
+        }
 
         // Formatovani dle groups
         CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(event.getPlayer());
