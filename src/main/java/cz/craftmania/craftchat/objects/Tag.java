@@ -3,6 +3,7 @@ package cz.craftmania.craftchat.objects;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.event.HoverEvent;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.jetbrains.annotations.NotNull;
 
 public class Tag {
@@ -42,7 +43,8 @@ public class Tag {
         if (this.type == 2) {
             hoverEvent = HoverEvent.showText(Component.text("§7Tento prefix byl vytvořen hráčem."));
         }
-        return Component.text(prefix).hoverEvent(hoverEvent);
+        Component prefixComponent = MiniMessage.miniMessage().deserialize(prefix);
+        return prefixComponent.hoverEvent(hoverEvent);
     }
 
     public int getPrice() {
