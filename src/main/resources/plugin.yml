@@ -1,5 +1,5 @@
 name: CraftChat
-version: 2.0.0-ALPHA
+version: 2.0.1-ALPHA
 authors: ["Nerdy42", "MrWakeCZ", "iGniSsak", "Murka__", "Velda_"]
 main: cz.craftmania.craftchat.Main
 depend: [CraftLibs, PlaceholderAPI, CraftCore, LuckPerms]
