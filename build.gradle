@@ -6,7 +6,7 @@ plugins {
 apply plugin: 'java'
 
 group 'cz.craftmania.craftchat'
-version '2.0.0-BETA'
+version '2.0.1-BETA'
 
 sourceCompatibility = 17
 targetCompatibility = 17
@@ -38,9 +38,6 @@ repositories {
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT")
-
-    // NMS
-    compileOnly name: 'spigot-1.17'
 
     // CM Plugins
     compileOnly group: 'cz.craftmania.craftcore', name: 'craftcore', version: '2.11'
