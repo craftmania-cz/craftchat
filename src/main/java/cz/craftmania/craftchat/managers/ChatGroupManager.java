@@ -2,6 +2,7 @@ package cz.craftmania.craftchat.managers;
 
 import cz.craftmania.craftchat.Main;
 import cz.craftmania.craftchat.objects.ChatGroup;
+import cz.craftmania.craftchat.utils.Logger;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
@@ -36,7 +37,7 @@ public class ChatGroupManager {
             this.chatGroups.add(chatGroup);
         }
 
-        System.out.println("Nacteno celkem " + this.chatGroups.size() + " groupek."); //todo: log
+        Logger.info("Nacteno celkem " + this.chatGroups.size() + " chat skupin.");
     }
 
     public ChatGroup getDefaultChatGroup() {
@@ -59,7 +60,7 @@ public class ChatGroupManager {
                 return group;
             }
             if (player.hasPermission("craftchat.format." + group.getName())) {
-                System.out.println("Detekovana role: " + group.getName());
+                Logger.info("Detekovana role: " + group.getName());
                 return group;
             }
         }
