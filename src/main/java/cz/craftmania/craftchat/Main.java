@@ -137,13 +137,16 @@ public class Main extends JavaPlugin {
         craftChatPlayers.remove(player);
     }
 
+    /**
+     * Aktualizace dat hráče primárně LuckPerms pluginu.
+     * @param uuid {@link UUID}
+     */
     public void updatePlayer(UUID uuid) {
         Player player = Bukkit.getPlayer(uuid);
         if (player == null) {
-            Logger.danger("Update dat hrace skrz UUID: Hrac je null -> UUID: " + uuid);
             return;
         }
-        Logger.info("Update dat hrace " + player.getName() + " (" + uuid + ").");
+        Logger.info("[LP] Update dat hrace " + player.getName() + " (" + uuid + ").");
         this.unregisterCraftChatPlayer(player);
         this.registerCraftChatPlayer(player);
     }
