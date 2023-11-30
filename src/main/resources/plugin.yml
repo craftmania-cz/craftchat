@@ -3,5 +3,5 @@ version: 2.0.0-ALPHA
 authors: ["Nerdy42", "MrWakeCZ", "iGniSsak", "Murka__", "Velda_"]
 main: cz.craftmania.craftchat.Main
 depend: [CraftLibs, PlaceholderAPI, CraftCore, LuckPerms]
-softdepend: [CraftEconomy, Lands]
+softdepend: [CraftEconomy]
 api-version: "1.19"

@@ -5,11 +5,9 @@ import cz.craftmania.craftchat.commands.ChatColorCommand;
 import cz.craftmania.craftchat.commands.TagsCommand;
 import cz.craftmania.craftchat.listeners.AsyncChatListener;
 import cz.craftmania.craftchat.listeners.PlayerListener;
-import cz.craftmania.craftchat.listeners.external.LandsChatListener;
 import cz.craftmania.craftchat.managers.ChatGroupManager;
 import cz.craftmania.craftchat.managers.EmoteManager;
 import cz.craftmania.craftchat.managers.TagManager;
-import cz.craftmania.craftchat.objects.ChatGroup;
 import cz.craftmania.craftchat.objects.CraftChatPlayer;
 import cz.craftmania.craftchat.utils.Logger;
 import cz.craftmania.craftchat.utils.configs.Config;
@@ -17,20 +15,13 @@ import cz.craftmania.craftchat.utils.configs.ConfigAPI;
 import cz.craftmania.craftlibs.utils.ChatInfo;
 import cz.craftmania.craftchat.luckperms.GroupChangeListener;
 import lombok.Getter;
-import me.clip.placeholderapi.PlaceholderAPI;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.tag.Tag;
-import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -95,14 +86,9 @@ public class Main extends JavaPlugin {
         loadCommands(manager);
 
         // Events
-        //Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
         Bukkit.getPluginManager().registerEvents(new AsyncChatListener(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
         new GroupChangeListener(this, luckPerms);
-
-        if (Objects.equals(SERVER, "survival")) {
-            Bukkit.getPluginManager().registerEvents(new LandsChatListener(), this);
-        }
     }
 
     private void loadCommands(PaperCommandManager manager) {
