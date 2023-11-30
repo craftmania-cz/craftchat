@@ -12,3 +12,8 @@ emote_list:
     type: "TEXT"
     toReplace: ":test:"
     replaceWith: "YO TEST"
+
+# Tento list obsahuje všechny textury, nebo emoty z RP které mají ŠINASAKI ZNAK
+# a mají být zablokovány aby nebyly přes celý chat.
+blocked_emotes:
+  - "test"

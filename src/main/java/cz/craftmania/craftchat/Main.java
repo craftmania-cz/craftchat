@@ -7,7 +7,6 @@ import cz.craftmania.craftchat.listeners.AsyncChatListener;
 import cz.craftmania.craftchat.listeners.PlayerListener;
 import cz.craftmania.craftchat.listeners.external.LandsChatListener;
 import cz.craftmania.craftchat.managers.ChatGroupManager;
-import cz.craftmania.craftchat.managers.ChatManager;
 import cz.craftmania.craftchat.managers.EmoteManager;
 import cz.craftmania.craftchat.managers.TagManager;
 import cz.craftmania.craftchat.objects.ChatGroup;
@@ -38,8 +37,6 @@ import java.util.UUID;
 public class Main extends JavaPlugin {
 
     private static @Getter Main instance;
-    private List<ChatGroup> chatGroups;
-    private static @Getter ChatManager chatManager;
     private static @Getter TagManager tagManager;
     private static @Getter ChatGroupManager chatGroupManager;
     private static @Getter EmoteManager emoteManager;
@@ -79,7 +76,6 @@ public class Main extends JavaPlugin {
         Logger.info("Server zaevidovany jako: " + SERVER);
 
         // Settings
-        chatManager = new ChatManager();
         chatGroupManager = new ChatGroupManager();
         emoteManager = new EmoteManager();
         emoteManager.loadEmotes();
@@ -150,29 +146,6 @@ public class Main extends JavaPlugin {
         Logger.info("Update dat hrace " + player.getName() + " (" + uuid + ").");
         this.unregisterCraftChatPlayer(player);
         this.registerCraftChatPlayer(player);
-    }
-
-    /**
-     * Creates a tag resolver capable of resolving PlaceholderAPI tags for a given player.
-     *
-     * @param player the player
-     * @return the tag resolver
-     */
-    public @NotNull TagResolver papiTag(final @NotNull Player player) {
-        return TagResolver.resolver("papi", (argumentQueue, context) -> {
-            // Get the string placeholder that they want to use.
-            final String papiPlaceholder = argumentQueue.popOr("papi tag requires an argument").value();
-
-            // Then get PAPI to parse the placeholder for the given player.
-            final String parsedPlaceholder = PlaceholderAPI.setPlaceholders(player, '%' + papiPlaceholder + '%');
-            System.out.println(parsedPlaceholder);
-
-            // We need to turn this ugly legacy string into a nice component.
-            final Component componentPlaceholder = LegacyComponentSerializer.legacySection().deserialize(parsedPlaceholder);
-
-            // Finally, return the tag instance to insert the placeholder!
-            return Tag.selfClosingInserting(componentPlaceholder);
-        });
     }
 
     /**

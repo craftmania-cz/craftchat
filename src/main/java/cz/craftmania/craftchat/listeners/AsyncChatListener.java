@@ -3,6 +3,7 @@ package cz.craftmania.craftchat.listeners;
 import cz.craftmania.craftchat.objects.CraftChatPlayer;
 import cz.craftmania.craftchat.Main;
 import cz.craftmania.craftchat.objects.Emote;
+import cz.craftmania.craftlibs.utils.ChatInfo;
 import io.papermc.paper.chat.ChatRenderer;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -32,11 +33,21 @@ public class AsyncChatListener implements Listener {
             return;
         }
 
-        Player player = event.getPlayer();
+        final @NotNull Player player = event.getPlayer();
 
+        // Zpráva bez formátování
         String plainTextMessage = LegacyComponentSerializer.legacyAmpersand().serialize(event.message());
-        //System.out.println("plain " + plainTextMessage);
 
+        // Blokování zpráv s blokovanými texturami
+        for (String blockedTexture : Main.getEmoteManager().getBlockedTextures()) {
+            if (plainTextMessage.contains(blockedTexture)) {
+                event.setCancelled(true);
+                ChatInfo.ERROR.send(player, "Tvoje zpráva obsahuje zablokovanou texturu!");
+                return;
+            }
+        }
+
+        // Vytváření tagů (pokud je aktivní)
         if (!Main.getInstance().isDisabledTags() && Main.getTagManager().isCreatingTag(player)) {
             if (plainTextMessage.equalsIgnoreCase("stop")) {
                 Main.getTagManager().stopTagCreation(player);
@@ -50,13 +61,16 @@ public class AsyncChatListener implements Listener {
         // Formatovani dle groups
         CraftChatPlayer craftChatPlayer = Main.getCraftChatPlayer(event.getPlayer());
 
+        // Již vygenerované componenty s formátováním
         Component prefix = craftChatPlayer.getPrefix();
         Component nameFormat = craftChatPlayer.getNameWithHover();
 
+        // Colorizace zprávy + vybraný chatcolor
         Component originalMessageAsComponent = LegacyComponentSerializer.legacyAmpersand()
                 .deserialize(plainTextMessage)
                 .color(craftChatPlayer.getSelectedChatColor());
 
+        // Detekce emotes a nahrazení componentou
         for (Emote emote : Main.getEmoteManager().getEmotes()) {
             if (plainTextMessage.contains(emote.getToReplace())) {
                 if (emote.getType() == null || emote.getReplaceWith() == null) {
@@ -76,8 +90,10 @@ public class AsyncChatListener implements Listener {
             }
         }
 
-
+        // Nastavení formátu pro konzoli
         event.message(originalMessageAsComponent);
+
+        // Nastavení renderu do chatu
         Component finalOriginalMessageAsComponent = originalMessageAsComponent;
         event.renderer(ChatRenderer.viewerUnaware((source, sourceDisplayName, msg) -> {
             return MiniMessage.miniMessage().deserialize(

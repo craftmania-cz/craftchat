@@ -3,8 +3,8 @@ package cz.craftmania.craftchat.managers;
 import cz.craftmania.craftchat.Main;
 import cz.craftmania.craftchat.objects.Emote;
 import cz.craftmania.craftchat.objects.EmoteType;
+import cz.craftmania.craftchat.utils.Logger;
 import cz.craftmania.craftchat.utils.configs.Config;
-import cz.craftmania.crafteconomy.utils.Logger;
 import lombok.Getter;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -15,9 +15,10 @@ public class EmoteManager {
 
     @Getter
     private final List<Emote> emotes = new ArrayList<>();
+    @Getter
+    private final List<String> blockedTextures = new ArrayList<>();
 
     public void loadEmotes() {
-
         Logger.info("Načítání chat emotů:");
         Config emoteConfig = Main.getInstance().getConfigAPI().getConfig("emotes");
         if (emoteConfig == null) {
@@ -42,8 +43,18 @@ public class EmoteManager {
                         + emoteObject.getToReplace() + ", replaceWith: " + emoteObject.getReplaceWith() + ", permission: " + emoteObject.getPermission());
             }
         } catch (Exception exception) {
+            Logger.danger("Nastala chyba při načítání emote listu: ");
             exception.printStackTrace();
-
         }
+
+        Logger.info("Načítání blokovaných textur:");
+        List<String> blockedTexturesConfig = emoteConfig.getConfig().getStringList("blocked_textures");
+        try {
+            blockedTextures.addAll(blockedTexturesConfig);
+        } catch (Exception exception) {
+            Logger.danger("Nastala chyba při načítání blokovaných textur: ");
+            exception.printStackTrace();
+        }
+        Logger.info("Načteno " + blockedTextures.size() + " blokovaných textur");
     }
 }
