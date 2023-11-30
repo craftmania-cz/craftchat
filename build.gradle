@@ -48,7 +48,7 @@ dependencies {
     compileOnly group: 'cz.craftmania.crafteconomy', name: 'crafteconomy', version: '2.1.1'
 
     // Commands
-    implementation 'co.aikar:acf-paper:0.5.0-SNAPSHOT'
+    implementation 'co.aikar:acf-paper:0.5.1-SNAPSHOT'
 
     // Other API
     compileOnly group: 'me.clip', name: 'placeholderapi', version: '2.10.9'

@@ -14,44 +14,25 @@ import org.bukkit.entity.Player;
 
 import java.util.regex.Pattern;
 
-    /*
-        0 - cerna §0
-        1 - modra §1
-        2 - zelena §2
-        3 - tmave-tyrkysova §3
-        4 - tmave-cervena §4
-        5 - fialova §5
-        6 - zlata §6
-        7 - seda §7
-        8 - tmave-seda §8
-        9 - modra §9
-        a - lime §a (10)
-        b - svetle-modra §b (11)
-        c - cervena §c (12)
-        d - ruzova §d (13)
-        e - zluta §e (14) - AT
-        f - bila §f (15 - default)
-     */
+import static co.aikar.commands.ACFBukkitUtil.sendMsg;
 
 @CommandAlias("chatcolor")
 @Description("Změna barvy")
 @CommandPermission("craftchat.chatcolor")
 public class ChatColorCommand extends BaseCommand {
 
-    @Default
-    public void showChatColorMenu(CommandSender sender) {
-        if (!(sender instanceof Player)) {
-            sender.sendMessage("Tento příkaz může používat pouze hráč!");
-        }
-        Player player = (Player) sender;
-        SmartInventory.builder().size(6, 9).title("Změna barvy psaní").provider(new ChatColorMenu()).build().open(player);
-    }
-
     private static final Pattern pattern = Pattern.compile("^#[a-fA-F0-9]{6}$");
 
     @Default
+    public void showChatColorMenu(CommandSender sender) {
+        if (sender instanceof Player player) {
+            SmartInventory.builder().size(6, 9).title("Změna barvy psaní").provider(new ChatColorMenu()).build().open(player);
+        }
+    }
+
+    @Default
     @CommandPermission("craftchat.chatcolor.custom")
-    @CommandCompletion("[#RRGGBB]")
+    @CommandCompletion("#RRGGBB")
     @Description("Změna na custom barvu")
     public void setCustomColor(Player player, String colorCode) {
         if (pattern.matcher(colorCode).matches()) {
@@ -59,12 +40,12 @@ public class ChatColorCommand extends BaseCommand {
             craftChatPlayer.setCustomChatColor(colorCode.substring(1));
             ChatInfo.SUCCESS.send(player, "Barva psani nastavena na: " + ChatColor.of(colorCode) + colorCode);
         } else {
-            ChatInfo.DANGER.send(player, "Nesprávný formát! Použij například /chatcolor #3DA1CD");
+            ChatInfo.ERROR.send(player, "Nesprávný formát! Použij například §f/chatcolor #3DA1CD");
         }
     }
 
     @HelpCommand
-    public void helpCommand(CommandHelp help) {
+    public void helpCommand(Player player, CommandHelp help) {
         help.showHelp();
     }
 }

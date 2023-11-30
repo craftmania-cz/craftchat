@@ -4,4 +4,4 @@ authors: ["Nerdy42", "MrWakeCZ", "iGniSsak", "Murka__", "Velda_"]
 main: cz.craftmania.craftchat.Main
 depend: [CraftLibs, PlaceholderAPI, CraftCore, LuckPerms]
 softdepend: [CraftEconomy]
-api-version: "1.19"
+api-version: "1.20"
